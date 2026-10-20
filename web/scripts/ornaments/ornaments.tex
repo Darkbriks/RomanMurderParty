@@ -1,0 +1,11 @@
+% The four pgfornament ornaments of murderparty.sty, one per page, for the reader site.
+% Page order matters: build.sh maps page 1..4 to partie, chapitre, scene, fin.
+\documentclass[multi=ornement,border=0pt]{standalone}
+\usepackage{pgfornament}
+\newenvironment{ornement}{}{}
+\begin{document}
+\begin{ornement}\pgfornament[width=3.2cm]{69}\end{ornement} % \ornementpartie
+\begin{ornement}\pgfornament[width=1.8cm]{80}\end{ornement} % \ornementchapitre
+\begin{ornement}\pgfornament[width=1.1cm]{11}\end{ornement} % \ornementscene
+\begin{ornement}\pgfornament[width=2.6cm]{84}\end{ornement} % \ornementfin
+\end{document}

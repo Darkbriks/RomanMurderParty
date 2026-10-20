@@ -1,0 +1,18 @@
+{
+  "name": "@rmp/converter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@rmp/model": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2"
+  },
+  "scripts": {
+    "convert": "tsx src/cli.ts"
+  }
+}

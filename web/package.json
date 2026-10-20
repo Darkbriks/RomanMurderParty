@@ -1,0 +1,21 @@
+{
+  "name": "rmp-web",
+  "private": true,
+  "type": "module",
+  "workspaces": ["model", "converter", "site"],
+  "scripts": {
+    "test": "vitest run",
+    "pdfs": "bash scripts/build-pdfs.sh",
+    "data": "tsx scripts/build-data.ts --repo .. --pdf-dir ../build/web --out site/static --working-tree",
+    "data:ci": "tsx scripts/build-data.ts --repo .. --pdf-dir ../build/web --out site/static",
+    "dev": "npm run dev -w site",
+    "build": "npm run build -w site",
+    "e2e": "npm run e2e -w site",
+    "ci": "npm test && npm run pdfs && npm run data:ci && npm run build && npm run e2e"
+  },
+  "devDependencies": {
+    "tsx": "^4",
+    "typescript": "^6",
+    "vitest": "^5"
+  }
+}

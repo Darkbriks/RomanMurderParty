@@ -1,0 +1,26 @@
+% Pages de début : faux-titre, titre, épigraphe éventuelle.
+
+% Faux-titre
+\thispagestyle{empty}
+\null\vfill
+\begin{center}{\Large\itshape \letitre}\end{center}
+\vfill\null
+\cleardoublepage
+
+% Titre
+\thispagestyle{empty}
+\null\vspace{0.18\textheight}
+\begin{center}
+  {\fontsize{26}{30}\selectfont\itshape \letitre\par}
+  \vspace{1.2\baselineskip}
+  \ornementpartie\par
+  \vspace{1.2\baselineskip}
+  {\small\scshape roman\par}
+  \vfill
+  {\large \lauteur\par}
+\end{center}
+\cleardoublepage
+
+% Dédicace et épigraphe (facultatives, définies dans roman.tex)
+\imprimerdedicace
+\imprimerepigraphe

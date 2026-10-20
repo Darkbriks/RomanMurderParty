@@ -1,0 +1,119 @@
+name: Publish
+
+on:
+  push:
+    branches: [main]
+    tags: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # A tag push only republishes the head of main: the github-pages environment
+  # accepts deployments from main alone, so the tag run dispatches a main run.
+  retrigger:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - run: gh workflow run publish.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+
+  pdf:
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    container: texlive/texlive:latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the final and brouillon PDFs
+        run: bash web/scripts/build-pdfs.sh
+      - name: Summarise the passages to rework
+        run: |
+          {
+            grep -h 'passage(s) marques a reprendre' build/web/final/roman.log || echo 'Aucun passage à reprendre.'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: pdfs
+          path: |
+            build/web/*/roman.pdf
+            build/web/*/roman.mpmap
+
+  site:
+    needs: pdf
+    runs-on: ubuntu-latest
+    steps:
+      # The archiver walks `git log --first-parent` and maps tags: it needs the full history.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+        working-directory: web
+      - run: npm test
+        working-directory: web
+      - uses: actions/download-artifact@v8
+        with:
+          name: pdfs
+          path: build/web
+      - run: npm run data:ci
+        working-directory: web
+      - run: npm run build
+        working-directory: web
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+      - run: npx playwright install --with-deps chromium
+        working-directory: web
+      - run: npm run e2e
+        working-directory: web
+      - if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: site-preview
+          path: web/site/build
+      - if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: web/site/build
+
+  deploy:
+    needs: site
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # "Re-run jobs" reuses the original commit: never let an old run replace a newer site.
+      - id: head
+        run: |
+          main=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [ "$main" = "$GITHUB_SHA" ]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=false" >> "$GITHUB_OUTPUT"
+            echo "Deploy skipped: this run built $GITHUB_SHA but main is now at $main." >> "$GITHUB_STEP_SUMMARY"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - id: deployment
+        if: steps.head.outputs.current == 'true'
+        uses: actions/deploy-pages@v5

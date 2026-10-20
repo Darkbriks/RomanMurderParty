@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
+    <script>
+      // Runs before first paint so the stored theme, font size and TOC state never flash the defaults,
+      // nor the prerendered scrolling chapter when the reader turns pages or reads the book's pages
+      // (global.css hides it until the app is ready, or for 3 s at most should it fail to start).
+      // Keep in sync with prefs.ts (validation, FONT_STEPS_PX) and startPrefs() in prefs.svelte.ts.
+      (function () {
+        var root = document.documentElement;
+        var steps = [16, 18, 20, 22, 25];
+        var theme = null;
+        var step = 1;
+        var toc = null;
+        var pending = null;
+        try {
+          var raw = localStorage.getItem('rmp.prefs.v1');
+          if (raw) {
+            var p = JSON.parse(raw);
+            if (p && (p.theme === 'paper' || p.theme === 'sepia' || p.theme === 'dark')) theme = p.theme;
+            if (p && Number.isInteger(p.fontStep) && p.fontStep >= 0 && p.fontStep < steps.length) step = p.fontStep;
+            if (p && typeof p.tocOpen === 'boolean') toc = p.tocOpen ? 'open' : 'closed';
+            if (p && (p.mode === 'paged' || p.mode === 'book')) pending = p.mode;
+          }
+        } catch (e) {}
+        if (!theme) {
+          try {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'paper';
+          } catch (e) {
+            theme = 'paper';
+          }
+        }
+        root.setAttribute('data-theme', theme);
+        root.style.setProperty('--font-size', steps[step] + 'px');
+        if (toc) root.setAttribute('data-toc', toc);
+        if (pending) {
+          root.setAttribute('data-pending-mode', pending);
+          setTimeout(function () {
+            root.removeAttribute('data-pending-mode');
+          }, 3000);
+        }
+      })();
+    </script>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
