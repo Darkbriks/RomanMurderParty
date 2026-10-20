@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Book, Chapter, Part } from '@rmp/model';
   import { t } from '#lib/i18n/index.ts';
-  import { chapterTitleOf, writePosition } from '#lib/position/position.ts';
+  import { afterNavigate } from '$app/navigation';
+  import { chapterTitleOf, writePosition, type SavedPosition } from '#lib/position/position.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
   import Blocks from '#lib/render/Blocks.svelte';
   import ChapterHeading from '#lib/render/ChapterHeading.svelte';
@@ -50,46 +51,73 @@
     return () => cancelAnimationFrame(frame);
   });
 
-  // The reading position: the first block in view, saved 500 ms after the reader stops moving and
-  // when the page is left. The cover resumes from it (see lib/position).
+  // The reading position: the first block in view, saved 500 ms after the reader stops moving. The
+  // snapshot is taken when the movement happens, so a save that is still pending can be flushed
+  // later (leaving by in-app navigation, a chapter change, the tab being hidden) without reading
+  // the DOM of another chapter.
   let saveTimer: ReturnType<typeof setTimeout> | undefined;
+  let pending: SavedPosition | null = null;
 
-  function savePosition() {
-    clearTimeout(saveTimer);
+  function barHeight(): number {
+    return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar-height')) || 48;
+  }
+
+  function snapshot(): SavedPosition {
     const blocks = document.querySelectorAll<HTMLElement>('[data-chapter-body] > [data-block-id]');
-    const top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar-height')) || 48;
+    const top = barHeight();
     const first = [...blocks].find((el) => el.getBoundingClientRect().bottom > top + 1);
+    return {
+      chapter: chapter.number,
+      blockId: first?.dataset.blockId ?? null,
+      chapterTitle: chapterTitleOf(chapter),
+      sha: book.meta.version.sha,
+      savedAt: new Date().toISOString(),
+    };
+  }
+
+  /** Writes the pending snapshot now, if there is one. */
+  function flushPosition() {
+    clearTimeout(saveTimer);
+    if (!pending) return;
+    const position = pending;
+    pending = null;
     try {
-      writePosition(localStorage, {
-        chapter: chapter.number,
-        blockId: first?.dataset.blockId ?? null,
-        chapterTitle: chapterTitleOf(chapter),
-        sha: book.meta.version.sha,
-        savedAt: new Date().toISOString(),
-      });
+      writePosition(localStorage, position);
     } catch {
       // storage blocked: the reader simply cannot resume
     }
   }
 
   function scheduleSave() {
+    pending = snapshot();
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(savePosition, 500);
+    saveTimer = setTimeout(flushPosition, 500);
   }
 
   $effect(() => {
-    // Opening a chapter counts as reading it. A #block-id in the URL (the cover's resume button)
-    // first scrolls to that block.
+    // Opening a chapter counts as reading it.
     void chapter.id;
+    scheduleSave();
+    // Leaving the chapter (another chapter, the cover) keeps the last position.
+    return flushPosition;
+  });
+
+  // A #block-id in the URL (the cover's resume button) scrolls to that block. This runs after the
+  // navigation, whose own scroll handling looks for an element with that id (blocks carry
+  // data-block-id, so it finds none and resets to the top) and would otherwise undo ours.
+  afterNavigate(() => {
     const id = decodeURIComponent(location.hash.slice(1));
     const target = id ? document.querySelector<HTMLElement>(`[data-chapter-body] [data-block-id="${CSS.escape(id)}"]`) : null;
-    if (target) {
-      const bar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar-height')) || 48;
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - bar - 16 });
-    }
-    scheduleSave();
-    return () => clearTimeout(saveTimer);
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - barHeight() - 16 });
   });
+
+  function onVisibility() {
+    if (document.visibilityState === 'hidden') {
+      scheduleSave();
+      flushPosition();
+    }
+  }
 
   function onTap(event: MouseEvent) {
     // A tap on the text brings the bar back, unless it follows a link or selects text.
@@ -104,7 +132,7 @@
   <span class="which" lang="fr"><span class="numeral">{c.numeral}</span>{#if c.title}.{' '}{plainText(c.title)}{/if}</span>
 {/snippet}
 
-<svelte:window onscroll={() => { onScroll(); scheduleSave(); }} onresize={onScroll} onpagehide={savePosition} />
+<svelte:window onscroll={() => { onScroll(); scheduleSave(); }} onresize={onScroll} onpagehide={flushPosition} onvisibilitychange={onVisibility} />
 
 <div class="progress" class:raised={barHidden} role="progressbar" aria-label={t(prefs.lang, 'readingProgress')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
   <span style:transform="scaleX({progress})"></span>

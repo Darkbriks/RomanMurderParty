@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { book, chapterByNumber, downloads, gotoReady, headingText, lastChapter, resumeLabel, updateDate } from './book.ts';
+import { book, chapterByNumber, chapters, loadDownloads, visibleBlockIds, gotoReady, headingText, lastChapter, plain, resumeLabel, updateDate } from './book.ts';
 
 // Expectations come from the built data (e2e/book.ts), never from today's wording of the novel.
 const settingsButton = (page: Page) => page.getByRole('button', { name: 'Réglages de lecture' });
@@ -42,6 +42,38 @@ test('resume after reading chapter 2', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toContainText(headingText(chapterByNumber(2).chapter));
 });
 
+test('resume lands on the saved block, below the fold', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  // The chapter with the most visible blocks is the likeliest to have one below the fold.
+  const info = chapters.reduce((a, b) => (visibleBlockIds(b.chapter).length > visibleBlockIds(a.chapter).length ? b : a));
+  await gotoReady(page, `read/${info.chapter.number}/`);
+  const blockId = await page.evaluate(() => {
+    const blocks = [...document.querySelectorAll<HTMLElement>('[data-chapter-body] > [data-block-id]')];
+    return blocks.find((b) => b.getBoundingClientRect().top > window.innerHeight * 1.5)?.dataset.blockId ?? null;
+  });
+  test.skip(!blockId, 'no chapter has a block below the fold at 1280x800');
+  const title = info.chapter.title ? plain(info.chapter.title) : null;
+  await page.evaluate(
+    ([chapter, id, chapterTitle]) =>
+      localStorage.setItem('rmp.position.v1', JSON.stringify({ chapter, blockId: id, chapterTitle, sha: 'x', savedAt: '2026-10-20T10:00:00Z' })),
+    [info.chapter.number, blockId, title] as const,
+  );
+  await gotoReady(page, '');
+  await resumeLink(page).click();
+  await expect(page).toHaveURL(new RegExp(`/read/${info.chapter.number}/#`));
+  await expect(page.locator(`[data-block-id="${blockId}"]`)).toBeInViewport();
+});
+
+test('leaving a chapter right after scrolling keeps the position', async ({ page }) => {
+  test.skip(lastChapter < 2, 'the book has a single chapter');
+  await gotoReady(page, 'read/1/');
+  await page.mouse.wheel(0, 400);
+  await page.getByRole('link', { name: /Chapitre suivant/ }).click();
+  await expect(page).toHaveURL(/\/read\/2\/$/);
+  const saved = await page.evaluate(() => localStorage.getItem('rmp.position.v1'));
+  expect(JSON.parse(saved!).chapter).toBe(1);
+});
+
 test('resume survives a reload of the cover without hydration errors', async ({ page }) => {
   const messages: string[] = [];
   page.on('console', (m) => messages.push(`${m.type()}: ${m.text()}`));
@@ -57,11 +89,13 @@ test('resume survives a reload of the cover without hydration errors', async ({ 
 });
 
 test('pdf menu lists both variants and links work', async ({ page }) => {
+  const downloads = loadDownloads();
+  test.skip(downloads.length === 0, 'static/data/downloads.json is missing or lists no file (run npm run data)');
   await gotoReady(page, '');
   await pdfButton(page).click();
   const links = page.locator('#download-panel a[download]');
-  await expect(links).toHaveCount(downloads.items.length);
-  for (const item of downloads.items) {
+  await expect(links).toHaveCount(downloads.length);
+  for (const item of downloads) {
     const link = page.locator(`#download-panel a[download="${item.filename}"]`);
     await expect(link).toBeVisible();
     const res = await page.request.get(await link.evaluate((a: HTMLAnchorElement) => a.href));
@@ -74,9 +108,11 @@ test('pdf menu lists both variants and links work', async ({ page }) => {
 });
 
 test('pdf menu is in the reader top bar', async ({ page }) => {
+  const downloads = loadDownloads();
+  test.skip(downloads.length === 0, 'static/data/downloads.json is missing or lists no file (run npm run data)');
   await gotoReady(page, 'read/1/');
   await pdfButton(page).click();
-  await expect(page.locator('#download-panel a[download]')).toHaveCount(downloads.items.length);
+  await expect(page.locator('#download-panel a[download]')).toHaveCount(downloads.length);
 });
 
 test('characters page groups people', async ({ page }) => {

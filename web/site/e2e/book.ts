@@ -10,7 +10,7 @@ const REPO = fileURLToPath(new URL('../../../', import.meta.url));
 
 const index = JSON.parse(readFileSync(`${DATA}versions.json`, 'utf8')) as {
   latest: string;
-  versions: { sha: string; model: string }[];
+  versions: { sha: string; model: string; date?: string }[];
 };
 const latest = index.versions.find((v) => v.sha === index.latest);
 if (!latest) throw new Error(`static/data/versions.json: no entry for latest ${index.latest} (run npm run data)`);
@@ -213,7 +213,14 @@ export interface DownloadItem {
   bytes: number;
   filename: string;
 }
-export const downloads = JSON.parse(readFileSync(`${DATA}downloads.json`, 'utf8')) as { items: DownloadItem[] };
+/** The downloads the site lists; empty when downloads.json is missing, so a spec can skip instead of failing at import. */
+export function loadDownloads(): DownloadItem[] {
+  try {
+    return (JSON.parse(readFileSync(`${DATA}downloads.json`, 'utf8')) as { items: DownloadItem[] }).items;
+  } catch {
+    return [];
+  }
+}
 
 /** The date the cover shows as « Mis à jour le … », or null when the latest version is the working tree. */
 export function updateDate(lang: 'fr' | 'en'): string | null {
@@ -223,7 +230,7 @@ export function updateDate(lang: 'fr' | 'en'): string | null {
     month: 'long',
     year: 'numeric',
     timeZone: 'Europe/Paris',
-  }).format(new Date(book.meta.version.date));
+  }).format(new Date(latest?.date ?? book.meta.version.date)); // as the cover does
 }
 
 /** What the cover's resume line reads for a chapter visited in the French interface. */
