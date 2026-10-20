@@ -75,6 +75,15 @@ describe('layout files', () => {
     );
   });
 
+  it('front file accepts literals equal to the book texts and nothing else', () => {
+    const src = layout('f.tex', '\\begin{center}Titre provisoire\\par Antoine\\end{center}');
+    checkFrontFile('f.tex', src, ['Titre provisoire', 'Autre', 'Antoine']);
+    expect(message(() => checkFrontFile('f.tex', src, ['Titre provisoire']))).toBe(
+      'f.tex:1:36: text in a layout file is not published on the site: "Antoine"',
+    );
+    expect(() => checkFrontFile('f.tex', layout('f.tex', 'Titre provisoire Plus'), ['Titre provisoire'])).toThrow('Titre provisoire Plus');
+  });
+
   it('front file passes on the frozen fixture', async () => {
     checkFrontFile('annexes/liminaires.tex', layout('annexes/liminaires.tex', await read(fixture, 'annexes/liminaires.tex')));
   });

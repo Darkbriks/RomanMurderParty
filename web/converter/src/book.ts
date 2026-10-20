@@ -19,7 +19,13 @@ async function parseFile(source: SourceReader, file: string, grammar: Grammar): 
 export async function convertBook(source: SourceReader, version: VersionInfo): Promise<Book> {
   const root = readRoot(await source.readText(ROOT_FILE), ROOT_FILE);
 
-  for (const file of root.front) checkFrontFile(file, await parseFile(source, file, LAYOUT_GRAMMAR));
+  const text = (nodes: Node[]): string => plainText(buildInlines(nodes)).trim();
+  const titleNodes = root.title ?? root.runningTitle;
+  if (!titleNodes) throw new ConversionError({ file: ROOT_FILE, line: 1, column: 1 }, 'no \\titre in roman.tex');
+  const title = text(titleNodes);
+
+  const bookTexts = [title, root.runningTitle ? text(root.runningTitle) : title, root.author ? text(root.author) : ''];
+  for (const file of root.front) checkFrontFile(file, await parseFile(source, file, LAYOUT_GRAMMAR), bookTexts);
 
   const files: { file: string; nodes: Node[] }[] = [];
   for (const file of root.parts) files.push({ file, nodes: await parseFile(source, file, PART_GRAMMAR) });
@@ -31,11 +37,6 @@ export async function convertBook(source: SourceReader, version: VersionInfo): P
     if (characters) throw new ConversionError(null, `more than one file lists the characters (${file})`);
     characters = found;
   }
-
-  const text = (nodes: Node[]): string => plainText(buildInlines(nodes)).trim();
-  const titleNodes = root.title ?? root.runningTitle;
-  if (!titleNodes) throw new ConversionError({ file: ROOT_FILE, line: 1, column: 1 }, 'no \\titre in roman.tex');
-  const title = text(titleNodes);
 
   return BookSchema.parse({
     schemaVersion: 1,

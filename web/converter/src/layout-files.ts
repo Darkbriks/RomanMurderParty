@@ -47,6 +47,7 @@ function check(
   nodes: Node[],
   onPersonnages: ((env: EnvNode) => void) | null,
   seen: Set<string> = new Set(),
+  allowed: readonly string[] = [],
 ): void {
   // Words are separate text nodes; a run of text and spaces is one literal.
   let run = '';
@@ -54,7 +55,7 @@ function check(
   const flush = (): void => {
     const literal = run.trim().replace(/\s+/g, ' ');
     if (literal !== '') {
-      if (!LAYOUT_LITERALS.includes(literal)) {
+      if (!LAYOUT_LITERALS.includes(literal) && !allowed.includes(literal)) {
         throw new ConversionError(runLoc, `text in a layout file is not published on the site: "${literal}"`);
       }
       seen.add(literal);
@@ -78,7 +79,7 @@ function check(
       case 'parbreak':
         break;
       case 'group':
-        check(node.children, onPersonnages, seen);
+        check(node.children, onPersonnages, seen, allowed);
         break;
       case 'command':
         if (!(node.name in LAYOUT_COMMANDS) && !LENGTHS.has(node.name)) {
@@ -90,7 +91,7 @@ function check(
           if (!onPersonnages) throw new ConversionError(node.loc, 'unexpected \\begin{personnages} in a front file');
           onPersonnages(node);
         } else {
-          check(node.body, onPersonnages, seen);
+          check(node.body, onPersonnages, seen, allowed);
         }
         break;
     }
@@ -98,9 +99,13 @@ function check(
   flush();
 }
 
-/** Throws unless the front file only lays out the pages the site rebuilds itself. */
-export function checkFrontFile(_file: string, nodes: Node[]): void {
-  check(nodes, null);
+/**
+ * Throws unless the front file only lays out the pages the site rebuilds itself. `bookTexts` are the
+ * book's title, running title and author: older layouts typeset them as literals, and the site
+ * already shows them from roman.tex.
+ */
+export function checkFrontFile(_file: string, nodes: Node[], bookTexts: readonly string[] = []): void {
+  check(nodes, null, new Set(), bookTexts.map((t) => t.trim().replace(/\s+/g, ' ')).filter((t) => t !== ''));
 }
 
 /** Reads the dramatis personae from a back file, or null if it has none. */
