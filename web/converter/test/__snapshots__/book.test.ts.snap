@@ -1,0 +1,2417 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`convertBook on the frozen fixture > repository snapshot 1`] = `
+{
+  "characters": {
+    "groups": [
+      {
+        "id": "g1",
+        "name": "La maison Whitmore",
+        "people": [
+          {
+            "description": [
+              {
+                "text": "Mécène, hôtesse de la soirée.",
+                "type": "text",
+              },
+            ],
+            "details": "48 ans",
+            "id": "g1.1",
+            "name": "Lady Margaret Whitmore",
+          },
+          {
+            "description": [
+              {
+                "text": "Sa fille, soprano du duo des Perles de Londres.",
+                "type": "text",
+              },
+            ],
+            "details": "24 ans",
+            "id": "g1.2",
+            "name": "Evangeline Whitmore",
+          },
+          {
+            "description": [
+              {
+                "text": "Alto du duo. On fête ce soir son anniversaire.",
+                "type": "text",
+              },
+            ],
+            "details": "26 ans",
+            "id": "g1.3",
+            "name": "Seraphina Blackwood",
+          },
+          {
+            "description": [
+              {
+                "text": "Sa dame de compagnie.",
+                "type": "text",
+              },
+            ],
+            "details": "33 ans",
+            "id": "g1.4",
+            "name": "Florence Pembroke",
+          },
+        ],
+      },
+      {
+        "id": "g2",
+        "name": "Les invités",
+        "people": [
+          {
+            "description": [
+              {
+                "text": "Naturaliste et exploratrice.",
+                "type": "text",
+              },
+            ],
+            "details": "32 ans",
+            "id": "g2.1",
+            "name": "Dr Cordelia Pemberton",
+          },
+          {
+            "description": [
+              {
+                "text": "Photographe de ses expéditions.",
+                "type": "text",
+              },
+            ],
+            "details": "",
+            "id": "g2.2",
+            "name": "Theodore Bradshaw",
+          },
+          {
+            "description": [
+              {
+                "text": "Danseuse et chorégraphe.",
+                "type": "text",
+              },
+            ],
+            "details": "34 ans",
+            "id": "g2.3",
+            "name": "Ophelia Beaumont",
+          },
+          {
+            "description": [
+              {
+                "text": "Journaliste d’investigation.",
+                "type": "text",
+              },
+            ],
+            "details": "29 ans",
+            "id": "g2.4",
+            "name": "Isadora Thornfield",
+          },
+          {
+            "description": [
+              {
+                "text": "Aliéniste.",
+                "type": "text",
+              },
+            ],
+            "details": "",
+            "id": "g2.5",
+            "name": "Dr Vivienne Ashford",
+          },
+          {
+            "description": [
+              {
+                "text": "Chirurgien royal, médecin de la famille Whitmore.",
+                "type": "text",
+              },
+            ],
+            "details": "54 ans",
+            "id": "g2.6",
+            "name": "Dr Marcus Harrington",
+          },
+          {
+            "description": [
+              {
+                "text": "Mariés depuis cinquante ans.",
+                "type": "text",
+              },
+            ],
+            "details": "",
+            "id": "g2.7",
+            "name": "Lord Reginald et Lady Monica Fairfax",
+          },
+          {
+            "description": [
+              {
+                "text": "Industriel, baronnet récent.",
+                "type": "text",
+              },
+            ],
+            "details": "52 ans",
+            "id": "g2.8",
+            "name": "Sir Edmund Blackstone",
+          },
+          {
+            "description": [
+              {
+                "text": "Épouse d’un mari « en voyage ».",
+                "type": "text",
+              },
+            ],
+            "details": "35 ans",
+            "id": "g2.9",
+            "name": "Béatrice Prévost",
+          },
+          {
+            "description": [
+              {
+                "text": "Technicien en télégraphie, son compagnon.",
+                "type": "text",
+              },
+            ],
+            "details": "32 ans",
+            "id": "g2.10",
+            "name": "Thomas Davies",
+          },
+          {
+            "description": [
+              {
+                "text": "Épouse du pianiste Théodore Eristoff.",
+                "type": "text",
+              },
+            ],
+            "details": "",
+            "id": "g2.11",
+            "name": "Lady Elizabeth « Lily » Eristoff",
+          },
+          {
+            "description": [
+              {
+                "text": "Veuve du compositeur Giuseppe Valentini.",
+                "type": "text",
+              },
+            ],
+            "details": "",
+            "id": "g2.12",
+            "name": "La veuve Valentini",
+          },
+        ],
+      },
+    ],
+    "title": "Les personnages",
+  },
+  "front": {
+    "dedication": null,
+    "epigraph": null,
+  },
+  "meta": {
+    "author": "Antoine",
+    "runningTitle": "Titre provisoire",
+    "title": "Titre provisoire",
+    "version": {
+      "date": "2026-10-20T12:00:00+02:00",
+      "sha": "abc1234",
+      "subject": "Test",
+      "tags": [],
+    },
+  },
+  "parts": [
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c1.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "Premier jet de l’ouverture ici.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 10,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b2",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "Réfléchir a la manière dont Lady Whitmore s’adresse a Sera. le tutoiement serait une marque d’intimité forte. Sera, elle, doit utiliser le vouvoiement.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 20,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b3",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "letter": "B",
+                      "rest": [
+                        {
+                          "text": "elgravia",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "dropCap",
+                    },
+                    {
+                      "text": ", Londres, 27 Novembre 1890.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 22,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Alors que les neuf coups de la grande horloge du hall de la demeure des Whitmore résonnaient en cette froide soirée d’automne, Seraphina sentit monter en elle une angoisse qu’elle ne connaîsait que trop bien.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 23,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Ces dernières semaines, les lettres signées de la main de la signora Valentini ont connu un rythme inégalé depuis que cette italienne s’était mise en tête de retrouver l’auteur du vol des dernières œuvres de feu son époux, sans doute en raison de son séjour a Londres.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 24,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "En effet, la veuve semblait visiblement s’être mise en tête que Seraphina Blackwood, chanteuse reconnue dans tous les haut cercles londoniens et membre du Duo ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Les Perles de Londres",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "quote",
+                    },
+                    {
+                      "text": ", en est responsable, et compte bien lui faire regretter cette action.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 26,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b4",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "La simple pensée de cette vieille folle fit frissonner Seraphina.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 28,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Pourquoi diable fallut-il qu’elle soit présente a Londres un 27 novembre ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 29,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Pourquoi fallait il que cela tombe le jour de son anniversaire, alors que Lady Whitmore donnait une réception dont elle seule avait le secret en son honneur et en celui du duo qu’elle forme avec sa fille, Evangeline ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 30,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Car le malheur de Seraphina fut que la présence d’une dame de ce rang a Londres, influente au sein des plus hauts cercles artistiques européens, est impossible a ignorer, et elle se vit contrainte d’accepter que Lady Whitmore l’invite si elle ne voulait pas passer pour l’inconvenante de service.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 31,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Et au grand malheur de Seraphina, celle-ci avait accepté ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "avec un joie non dissimulé",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "quote",
+                    },
+                    {
+                      "text": " de se joindre a la réception.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 32,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle fut a nouveau prise d’un profond frisson.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 33,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b5",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Sera, tu as froid ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 34,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Je te vois frissonner depuis quelques minutes, lança alors Lady Margareth, l’hôtesse de cette soirée.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 35,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b6",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Je peux demander a un domestique de rajouter du charbon, reprit-elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 36,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b7",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Interrompue dans ses réflexions, Seraphina hésita quelques secondes avant de répondre.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 38,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b8",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Non, tout va bien.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 39,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Simplement…simplement le trac qui commence a monter…je crois.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 40,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b9",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Ne t’inquiète pas, ta prestation avec Eva sera parfaite, comme a votre habitude.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 41,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b10",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Alors qu’elle allait continuer, Lady Whitmore fut interrompue par le claquement sec et régulier des sabots d’un cheval sur les pavés des rues froides et sombres de Londres.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 43,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b11",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Ah, je pense que nos premiers invités approchent, s’exclama t’elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 44,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Je mettrais ma main a couper qu’il s’agit du Dr. Pemberton et de son collègue photographe, ils sont réputés pour être d’une ponctualité a toute épreuve, reprit elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 45,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b12",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Elle s’avança alors sur les premières marches de l’escalier.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 47,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b13",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Eva, rejoins-nous dans le hall, je crois que nos premiers invités arrivent, lança-t-elle enfin, avant de réajuster rapidement sa coiffure devant la grande glace qu’elle avait faite venir de Venise.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 48,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "id": "c1.b14",
+              "type": "sceneBreak",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b15",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Alors que la valse des invités s’enchaînait, Dr Pemberton et Theodore Bradshaw, Miss Beaumont, Miss Thornfield, Sir Edmund, Dr Asphord, Seraphina sentit que son corps s’échappait à elle, comme si elle n’était plus qu’une spectatrice d’elle même, comme si elle n’était plus que l’un de ces automates dont certains horlogers parisiens se sont fait spécialistes.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 52,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Plus le temps passait, plus les invités défilaient, plus Seraphina redoutait la prochaine annonce du majordome.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 53,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b16",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Tandis qu’elle quitta la salle a manger dans laquelle s’était réunis les premiers arrivés pour se rendre dans le hall et accueillir les Fairfax, qui venaient d’être annoncés, son regard se porta sur l’horloge du hall, cet implacable maître du temps, insensible aux futiles ressentis de l’âme humaine.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 55,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vingt et une heure vingt deux.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 56,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vingt deux minutes depuis vingt et une heure.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 57,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Cette épreuve qui semblait déjà avoir duré une bonne centaine d’éternités à Seraphina n’avait commencé qu’il y a vingt deux minutes.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 58,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vingt deux minutes de souffrance.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 59,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vingt deux minutes a s’imaginer les pires scénarios.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 60,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vingt deux minutes durant lesquelles chaque pas, chaque mot, chaque respiration lui demande un effort surhumain.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 61,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vingt deux minutes a se demander si elle survivra a la prochaine.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 62,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Et l’objet de sa souffrance n’était même pas encore présent en ces lieux.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 63,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b17",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Alors qu’elle termine des salutations cordiales, mais sans chaleur, pour accueillir le couple Fairfax, Seraphina contint un sanglot.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 65,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Pourquoi avait il fallu qu’elle dise oui en ce jour maudit ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 66,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Pourquoi n’avait elle pas prise plus de précautions avant de faiblement hocher la tête ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "S’assurer que cela n’en dit pas plus que souhaité sur les partitions",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                    {
+                      "text": " ? Elle refréna de justesse un nouveau sanglot.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 67,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Il fallait a tout prix qu’elle maintienne les apparences, qu’elle ne laisse pas transparaître sa détresse.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 68,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Pour elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 69,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Et pour Eva.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 70,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b18",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Elle fit un discret signe de la main, et Florence, sa dame de compagnie, devenue avec le temps la grande sœur qu’elle n’avait jamais eue, vint immédiatement avec un verre de citronnade, et lui tendit délicatement un petit mouchoir de coton blanc brodé de ses initiales, ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "M.F.",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "quote",
+                    },
+                    {
+                      "text": ".",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 72,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Mary Fletcher.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 73,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle eu une pensée nostalgique pour la jeune fille qu’elle était avant, une simple orpheline de Whitechapel comme il y en a temps d’autres.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 74,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Oh, la vie n’etait pas simple dans ces rues crasseuses, bien au contraire !",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 75,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Mais depuis quelques temps, Seraphina se surprenait a se demander ce qui se serait passé si elle n’avait pas franchie la porte du concours, ce jour là.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 76,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Si elle n’avait pas rencontrée Evangeline.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 77,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Si ensemble, elles n’avait pas formée de duo.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 78,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Si elle était restée une anonyme qui n’avait qu’a se soucier de trouver suffisamment de nourriture pour survivre.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 79,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle chassa rapidement cette pensée de son esprit et prit le verre, mais refusa poliment le mouchoir.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 80,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Tandis qu’elle prit prudemment une gorgée, le majordome annonça de sa voix claire et sans émotions :",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 81,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b19",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "La signora Valentini !",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 82,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b20",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Seraphina, prise de cours lors de cet instant de douceur avec Florence, manqua de s’étrangler et failli lâcher son verre de surprise.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 84,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b21",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Que se passe t’il, s’exclama-t-elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 85,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b22",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "La signora Valentini vient d’être annoncée, lui répondit Florence de sa voie douce.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 86,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Je pense que vous devriez vous joindre a Lady Whitmore pour l’accueillir, finit elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 87,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "id": "c1.b23",
+              "type": "sceneBreak",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b24",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Seraphina ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 91,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Seraphina ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 92,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Vous m’écoutez ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 93,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Que pensez vous de cela ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 94,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b25",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "C’était Evengeline, aux cotés de Theodore, qui lui demandait son avis.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 96,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Sur quoi, elle n’en avait pas la moindre idée.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 97,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b26",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Veuillez m’excuser, je…je crains de n’avoir décroché quelques instant de cette discussion, répondit-elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 99,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b27",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Tout ce dont elle se souvenait, c’était l’annonce de l’arrivée de cette satanée Valentini.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 101,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "Que le diable la fasse rejoindre son époux",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "thought",
+                    },
+                    {
+                      "text": ", s’exclamât-elle en son fort intérieur.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 102,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b28",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Nous vous demandions si vous aviez une idée de ce qui pourrait pousser ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "Titre ?",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": " Maître Erristof a être absent ce soir, fit Theodore.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 104,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b29",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Alors qu’elle tournais la tête pour essayer de distinguer les différente personnes présente dans la salle a manger, décidément bien trop étouffante en ce mois de novembre, elle vit d’abord Lady Eristoff, dont elle n’arrivais pas a se remémorer l’arrivé, puis elle l’aperçu !",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 106,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b30",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Je…je n’en ai pas la moindre idée, articula elle avec difficulté.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 107,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b31",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Sera, tu vas bien ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 108,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Tu est aussi blanche que la neige qui commence a tomber ce soir, et tu semble être en sueur.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 109,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "On croirait que tu a vu un démon, fit alors Evengeline.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 110,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b32",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Un démon.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 112,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Oui, Seraphina avait bel et bien vu un démon, mais a qui pouvait elle le dire ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 113,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Avec qui pourrait-elle partager son fardeau ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 114,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle ne pouvait pas infliger cela a Evangeline.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 115,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": true,
+              "id": "c1.b33",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Veut-tu qu’on aille au salon de musique ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 116,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Nous serions plus au calme, et on pourrai finaliser les détails de notre prestation, reprit Evangeline.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 117,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Ou si tu préfère, on peu rejoindre ma chambre pour te permettre d’être au calme quelques instants ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "vérifier que la proposition soit plausible",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ", conclut-elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 118,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c1.b34",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Non, l’innocence d’Evangeline ne méritait décidément pas d’être entachée par ses égarements.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 120,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c1",
+          "loc": {
+            "file": "parties/ouverture.tex",
+            "line": 7,
+          },
+          "number": 1,
+          "numeral": "I",
+          "title": [
+            {
+              "text": "Valse (provisoire)",
+              "type": "text",
+            },
+          ],
+        },
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c2.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "letter": "C",
+                      "rest": [
+                        {
+                          "text": "ela",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "dropCap",
+                    },
+                    {
+                      "text": " faisait maintenant quelques heures que Seraphina grellottait dans les rues froides et crasseuses de Whitechapel.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 129,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle tentat doulouresement de remuer ses doigts engourdis par l’atmoshpere glaciale de cette soirée, mais ceux ci refusérent de lui repondre.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 130,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Même constat du coté de ses pieds.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 131,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "C’est alors que son estomac emit un grondement bien trop familier ces derniers jours.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 132,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle tenta alors de se rememorer a quand remontait son dernier veriitable repas.",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "repetition de alors",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 133,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Si elle ne se trompait pas, c’etait il y a plus ou moins une semaine ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "ajuster la durée pour la coherence avec son état",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ", lorsque Beatrice lui annonca ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "trouver dans sa fiche une raison valable d’abscence",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ".",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 134,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Depuis qu’elles s’etait croisées par hasard après une représentation dans une petite salle de ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "trouver une petiite salle de Londres ou le duo aurrait put faire ses debut",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ", Beatrice l’invitait regulierement dans sa maison de ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "consulter la fiche de beatrice",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ".",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 135,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Les deux femmes devaient se montrer prudentes, car Edouard, le mari de Beatrice, ne devait pas avoir connaissance de sa presence, mais cela permaitais a Seraphina de manger a sa faim, et cela semblait offrir a Beatrice un peu de serenité, lui permettant l’espace de quelques heures d’oublier les persecutions que lui faisait subir Edouard ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "a reformuler plus elegament, peut être en plusieurs phrases",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ".",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 136,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Mais pour le moment, il allait falloir tenir sans elle, jusqu’a son retour a Londres dans quelques semaines.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 137,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Et les maigres restes qu’elle avait put glaner ici ou la depuis son absence ne suffiraient pas a rester en vie jusqu’a ce moment.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 138,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Sans parler du froid.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 139,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c2.b2",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Seraphina avait bien pensée a demander de l’aide a Evangeline, mais elle et sa famille passaient l’hiver dans leur manoir de campagne, a ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "verifier dans fiche",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ".",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 141,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Et de toute manière, qu’aurrait-elle bien put leurs dire ?",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 142,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Ils avaient beau etre au courent qu’elle ne venait pas de l’aristocratie et qu’elle avait des origines plus modestes qu’eux, ils n’imaginaient pas a quel point.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 143,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Bien qu’ils aient pour le moment l’air de ne pas s’en soucier, Seraphina redoutait leur réaction s’ils aprenaient qu’elle n’est qu’une simple orpheline de Whitechapel.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 144,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "dialogue": false,
+              "id": "c2.b3",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "text": "Elle releva peniiblement sa tête qu’elle maintenait jusqu’alors sur ses genoux pour tenter de conserver un peu de chaleur, et s’aperçut que la neige tombait.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 146,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Pas cette jolie neige blanche et douce qui recouvre delicatement les beaux quartiers de Londres, mais cette neige sale, noire, dont les flocons etait deja maculée de charbon avant même de toucher le sol.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 147,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "Comment garder espoir dans ces conditions",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "thought",
+                    },
+                    {
+                      "text": ", se demanda-t-elle.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 148,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "Comment garder espoir quand seul un miracle pourrrait me permettre de ne serait-ce que survivre jusqu’a demain ?",
+                          "type": "text",
+                        },
+                      ],
+                      "type": "thought",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 149,
+                  },
+                  "spaceAfter": true,
+                },
+                {
+                  "content": [
+                    {
+                      "text": "Elle decida alors de fredonner un air qu’elle avait écrit il y a quelques années, le soir ou elle fut chassé de l’orphelina ",
+                      "type": "text",
+                    },
+                    {
+                      "children": [
+                        {
+                          "text": "verifier si plausible",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "rework",
+                      "type": "note",
+                    },
+                    {
+                      "text": ", et qu’elle avait interpretée avec Evangeline quelques jours avant son départ, lors de leur dernier concert de la saison, pour esseyer de penser a autre chose, ne serait ce que l’espace de quelques instants.",
+                      "type": "text",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/ouverture.tex",
+                    "line": 150,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+            {
+              "id": "c2.b4",
+              "type": "sceneBreak",
+            },
+          ],
+          "id": "c2",
+          "loc": {
+            "file": "parties/ouverture.tex",
+            "line": 122,
+          },
+          "number": 2,
+          "numeral": "II",
+          "title": [
+            {
+              "text": "Seule",
+              "type": "text",
+            },
+          ],
+        },
+      ],
+      "epigraph": null,
+      "id": "p1",
+      "intro": [],
+      "label": "Ouverture",
+      "loc": {
+        "file": "parties/ouverture.tex",
+        "line": 5,
+      },
+      "narrator": "Seraphina",
+      "ordinal": 1,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c3.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/partie1.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c3",
+          "loc": {
+            "file": "parties/partie1.tex",
+            "line": 3,
+          },
+          "number": 3,
+          "numeral": "III",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p2",
+      "intro": [],
+      "label": "Première partie",
+      "loc": {
+        "file": "parties/partie1.tex",
+        "line": 1,
+      },
+      "narrator": "Narrateur à choisir",
+      "ordinal": 2,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c4.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/partie2.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c4",
+          "loc": {
+            "file": "parties/partie2.tex",
+            "line": 3,
+          },
+          "number": 4,
+          "numeral": "IV",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p3",
+      "intro": [],
+      "label": "Deuxième partie",
+      "loc": {
+        "file": "parties/partie2.tex",
+        "line": 1,
+      },
+      "narrator": "Narrateur à choisir",
+      "ordinal": 3,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c5.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/intermede.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c5",
+          "loc": {
+            "file": "parties/intermede.tex",
+            "line": 3,
+          },
+          "number": 5,
+          "numeral": "V",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p4",
+      "intro": [],
+      "label": "Intermède",
+      "loc": {
+        "file": "parties/intermede.tex",
+        "line": 1,
+      },
+      "narrator": "Reginald",
+      "ordinal": 4,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c6.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/partie3.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c6",
+          "loc": {
+            "file": "parties/partie3.tex",
+            "line": 3,
+          },
+          "number": 6,
+          "numeral": "VI",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p5",
+      "intro": [],
+      "label": "Troisième partie",
+      "loc": {
+        "file": "parties/partie3.tex",
+        "line": 1,
+      },
+      "narrator": "Narrateur à choisir",
+      "ordinal": 5,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c7.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/partie4.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c7",
+          "loc": {
+            "file": "parties/partie4.tex",
+            "line": 3,
+          },
+          "number": 7,
+          "numeral": "VII",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p6",
+      "intro": [],
+      "label": "Quatrième partie",
+      "loc": {
+        "file": "parties/partie4.tex",
+        "line": 1,
+      },
+      "narrator": "Narrateur à choisir",
+      "ordinal": 6,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c8.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/conclusion.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c8",
+          "loc": {
+            "file": "parties/conclusion.tex",
+            "line": 3,
+          },
+          "number": 8,
+          "numeral": "VIII",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p7",
+      "intro": [],
+      "label": "Conclusion",
+      "loc": {
+        "file": "parties/conclusion.tex",
+        "line": 1,
+      },
+      "narrator": "To Define",
+      "ordinal": 7,
+    },
+    {
+      "chapters": [
+        {
+          "blocks": [
+            {
+              "dialogue": false,
+              "id": "c9.b1",
+              "segments": [
+                {
+                  "content": [
+                    {
+                      "children": [
+                        {
+                          "text": "À écrire.",
+                          "type": "text",
+                        },
+                      ],
+                      "kind": "author",
+                      "type": "note",
+                    },
+                  ],
+                  "loc": {
+                    "file": "parties/coda.tex",
+                    "line": 5,
+                  },
+                  "spaceAfter": false,
+                },
+              ],
+              "type": "paragraph",
+            },
+          ],
+          "id": "c9",
+          "loc": {
+            "file": "parties/coda.tex",
+            "line": 3,
+          },
+          "number": 9,
+          "numeral": "IX",
+          "title": null,
+        },
+      ],
+      "epigraph": null,
+      "id": "p8",
+      "intro": [],
+      "label": "Coda",
+      "loc": {
+        "file": "parties/coda.tex",
+        "line": 1,
+      },
+      "narrator": "Vivienne",
+      "ordinal": 8,
+    },
+  ],
+  "schemaVersion": 1,
+}
+`;
