@@ -39,7 +39,13 @@ export const en: Record<keyof typeof fr, string> = {
   readingMode: 'Reading mode',
   modeScroll: 'Scroll',
   modePaged: 'Paged',
+  modeBook: 'Book pages',
   pageIndicator: '{page} / {count} · chapter {numeral}',
   previousPage: 'Previous page',
   nextPage: 'Next page',
+  bookPage: 'Page {page}',
+  bookPageIndicator: 'Page {page} / {count}',
+  bookSpreadIndicator: 'Pages {first}–{last} / {count}',
+  bookUnavailable: 'The book pages cannot be shown right now.',
+  bookUseScroll: 'Read in scroll mode',
 };

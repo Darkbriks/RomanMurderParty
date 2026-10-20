@@ -62,8 +62,3 @@ export function writePrefs(storage: Pick<Storage, 'setItem'> | null, prefs: Pref
 export function effectiveTheme(p: Prefs, prefersDark: boolean): Theme {
   return p.theme ?? (prefersDark ? 'dark' : 'paper');
 }
-
-/** The view a stored mode opens. Book pages (the PDF) are not built yet, so that mode reads as scrolling. */
-export function effectiveMode(mode: Mode): 'scroll' | 'paged' {
-  return mode === 'paged' ? 'paged' : 'scroll';
-}

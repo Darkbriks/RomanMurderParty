@@ -91,7 +91,7 @@
     </div>
 
     <!-- Last, so that hiding it never leaves the separator of the next row at the top. -->
-    <div class="row" class:narrow-only={modes === 'narrow'}>
+    <div class="row wrap" class:narrow-only={modes === 'narrow'}>
       <span class="label" id="settings-mode">{t(prefs.lang, 'readingMode')}</span>
       <ModeSwitch labelledby="settings-mode" />
     </div>
@@ -145,6 +145,11 @@
   }
   .label {
     color: var(--accent);
+  }
+  /* Three reading modes do not fit beside their label: they go below it. */
+  .wrap {
+    flex-wrap: wrap;
+    row-gap: 0.4em;
   }
   @media (min-width: 720px) {
     .narrow-only {

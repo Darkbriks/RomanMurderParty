@@ -38,7 +38,13 @@ export const fr = {
   readingMode: 'Mode de lecture',
   modeScroll: 'Défilement',
   modePaged: 'Liseuse',
+  modeBook: 'Pages du livre',
   pageIndicator: '{page} / {count} · chapitre {numeral}',
   previousPage: 'Page précédente',
   nextPage: 'Page suivante',
+  bookPage: 'Page {page}',
+  bookPageIndicator: 'Page {page} / {count}',
+  bookSpreadIndicator: 'Pages {first}–{last} / {count}',
+  bookUnavailable: 'Les pages du livre ne peuvent pas être affichées pour le moment.',
+  bookUseScroll: 'Lire en défilement',
 } as const;

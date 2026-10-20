@@ -306,15 +306,3 @@ test('on a phone, the mode selector is in the Aa menu', async ({ page }) => {
   await settle(page);
   await expect(indicator(page)).toHaveText(indicatorText(1, 1, '\\d+'));
 });
-
-test('a stored book-pages mode falls back to scrolling', async ({ page }) => {
-  const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(e.message));
-  await page.addInitScript(() => {
-    localStorage.setItem('rmp.prefs.v1', JSON.stringify({ fontStep: 1, theme: null, mode: 'book', notes: false, lang: 'fr', tocOpen: null }));
-  });
-  await gotoReady(page, 'read/1/');
-  await expect(page.getByRole('progressbar')).toBeAttached();
-  await expect(indicator(page)).toHaveCount(0);
-  expect(errors).toEqual([]);
-});

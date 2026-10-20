@@ -222,6 +222,19 @@ export function loadDownloads(): DownloadItem[] {
   }
 }
 
+export interface PageMap {
+  parts: number[];
+  chapters: number[];
+}
+/** The PDF page maps (1-based pages); null when pagemaps.json is missing, so a spec can skip instead of failing at import. */
+export function loadPageMaps(): { final: PageMap; brouillon: PageMap } | null {
+  try {
+    return JSON.parse(readFileSync(`${DATA}pagemaps.json`, 'utf8')) as { final: PageMap; brouillon: PageMap };
+  } catch {
+    return null;
+  }
+}
+
 /** The date the cover shows as « Mis à jour le … », or null when the latest version is the working tree. */
 export function updateDate(lang: 'fr' | 'en'): string | null {
   if (index.latest === 'working-tree') return null;

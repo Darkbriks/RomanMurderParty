@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5",
-    "@rmp/model": "*"
+    "@rmp/model": "*",
+    "pdfjs-dist": "^6.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.64",

@@ -1,18 +1,18 @@
 <script lang="ts">
   import { t, type MessageKey } from '#lib/i18n/index.ts';
-  import { effectiveMode, prefs, prefsState, type Mode } from '#lib/prefs/prefs.svelte.ts';
+  import { prefs, prefsState, type Mode } from '#lib/prefs/prefs.svelte.ts';
 
   // The reading-mode selector: segmented buttons, the chosen one pressed. The top bar shows it from
-  // 720 px and the Aa menu below that (both places render it; CSS shows one). Book pages (the PDF)
-  // join this list in their own task.
+  // 720 px and the Aa menu below that (both places render it; CSS shows one).
   let { labelledby }: { labelledby?: string } = $props();
 
   const MODES: { mode: Mode; label: MessageKey }[] = [
     { mode: 'scroll', label: 'modeScroll' },
     { mode: 'paged', label: 'modePaged' },
+    { mode: 'book', label: 'modeBook' },
   ];
   // The stored mode is only known once preferences have started: nothing is pressed before that.
-  const shown = $derived(prefsState.started ? effectiveMode(prefs.mode) : null);
+  const shown = $derived(prefsState.started ? prefs.mode : null);
 </script>
 
 <div class="modes" role="group" aria-label={labelledby ? undefined : t(prefs.lang, 'readingMode')} aria-labelledby={labelledby}>

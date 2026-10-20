@@ -4,7 +4,7 @@
   import { afterNavigate } from '$app/navigation';
   import { navigating } from '$app/state';
   import { chapterTitleOf, readPosition, resolveResume, writePosition, type SavedPosition } from '#lib/position/position.ts';
-  import { effectiveMode, prefs, prefsState } from '#lib/prefs/prefs.svelte.ts';
+  import { prefs, prefsState } from '#lib/prefs/prefs.svelte.ts';
   import Blocks from '#lib/render/Blocks.svelte';
   import ChapterHeading from '#lib/render/ChapterHeading.svelte';
   import FrontPage from '#lib/render/FrontPage.svelte';
@@ -93,7 +93,7 @@
   function scheduleSave() {
     // Nothing is recorded before the stored preferences apply: in another mode this view is only the
     // first render, and its top of the chapter must not replace the position saved by that mode.
-    if (!prefsState.started || effectiveMode(prefs.mode) !== 'scroll') return;
+    if (!prefsState.started || prefs.mode !== 'scroll') return;
     pending = snapshot();
     clearTimeout(saveTimer);
     saveTimer = setTimeout(flushPosition, 500);

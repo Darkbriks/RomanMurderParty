@@ -7,8 +7,8 @@
     <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
     <script>
       // Runs before first paint so the stored theme, font size and TOC state never flash the defaults,
-      // nor the prerendered scrolling chapter when the reader turns pages (global.css hides it until
-      // the app is ready, or for 3 s at most should it fail to start).
+      // nor the prerendered scrolling chapter when the reader turns pages or reads the book's pages
+      // (global.css hides it until the app is ready, or for 3 s at most should it fail to start).
       // Keep in sync with prefs.ts (validation, FONT_STEPS_PX) and startPrefs() in prefs.svelte.ts.
       (function () {
         var root = document.documentElement;
@@ -16,7 +16,7 @@
         var theme = null;
         var step = 1;
         var toc = null;
-        var paged = false;
+        var pending = null;
         try {
           var raw = localStorage.getItem('rmp.prefs.v1');
           if (raw) {
@@ -24,7 +24,7 @@
             if (p && (p.theme === 'paper' || p.theme === 'sepia' || p.theme === 'dark')) theme = p.theme;
             if (p && Number.isInteger(p.fontStep) && p.fontStep >= 0 && p.fontStep < steps.length) step = p.fontStep;
             if (p && typeof p.tocOpen === 'boolean') toc = p.tocOpen ? 'open' : 'closed';
-            paged = !!p && p.mode === 'paged';
+            if (p && (p.mode === 'paged' || p.mode === 'book')) pending = p.mode;
           }
         } catch (e) {}
         if (!theme) {
@@ -37,8 +37,8 @@
         root.setAttribute('data-theme', theme);
         root.style.setProperty('--font-size', steps[step] + 'px');
         if (toc) root.setAttribute('data-toc', toc);
-        if (paged) {
-          root.setAttribute('data-pending-mode', 'paged');
+        if (pending) {
+          root.setAttribute('data-pending-mode', pending);
           setTimeout(function () {
             root.removeAttribute('data-pending-mode');
           }, 3000);
