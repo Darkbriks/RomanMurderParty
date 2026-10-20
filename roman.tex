@@ -1,0 +1,48 @@
+% =============================================================================
+%  Roman Murder Party — fichier principal
+%  Compiler avec LuaLaTeX ou XeLaTeX.
+%  Local : latexmk          Overleaf : Menu > Compilateur > LuaLaTeX
+% =============================================================================
+\documentclass[11pt,twoside,openright]{memoir}
+
+% brouillon : affiche les [à reprendre] et les notes ; final : les masque
+\usepackage[brouillon]{murderparty}
+
+\newif\ifdemonstration
+\demonstrationfalse
+\ifdemonstration\usepackage{lipsum}\fi
+
+\titrecourant{Titre provisoire}
+
+% Pour compiler vite une seule partie pendant l'écriture, décommenter :
+% \includeonly{parties/ouverture}
+
+\begin{document}
+
+% ---------------------------------------------------------------- Liminaires
+    \frontmatter
+    \input{annexes/liminaires}
+
+% ---------------------------------------------------------------- Récit
+    \mainmatter
+
+    \ifdemonstration
+    \input{exemples/demonstration}
+    \fi
+
+    \include{parties/ouverture}       % Seraphina
+    \include{parties/partie1}       % partie d'enquête
+    \include{parties/partie2}       % partie d'enquête
+    \include{parties/intermede}     % Reginald
+    \include{parties/partie3}       % partie d'enquête
+    \include{parties/partie4}       % partie d'enquête
+    \include{parties/conclusion}
+    \include{parties/coda}          % la scène de l'hypnose, après la conclusion
+
+% ---------------------------------------------------------------- Fin
+    \backmatter
+    \input{annexes/personnages}
+    \cleardoublepage
+    \tableofcontents*
+
+\end{document}

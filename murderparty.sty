@@ -1,0 +1,324 @@
+% =============================================================================
+%  murderparty.sty — mise en page du roman
+%  Roman moderne, touches victoriennes. Format A5 imprimable, recto-verso.
+%  À utiliser avec la classe memoir et LuaLaTeX ou XeLaTeX.
+% =============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{murderparty}[2026/10/17 Mise en page du roman Murder Party]
+
+% ---------------------------------------------------------------- Options
+%  brouillon : affiche les marques [à reprendre] et les notes d'auteur
+%  final     : les masque (et les signale dans le journal de compilation)
+\newif\ifmp@brouillon \mp@brouillontrue
+\DeclareOption{brouillon}{\mp@brouillontrue}
+\DeclareOption{final}{\mp@brouillonfalse}
+\ProcessOptions\relax
+
+% ---------------------------------------------------------------- Paquets
+\RequirePackage{iftex}
+\ifTUTeX\else
+  \PackageError{murderparty}{Compiler avec LuaLaTeX ou XeLaTeX}{Le style utilise fontspec.}
+\fi
+\RequirePackage{fontspec}
+\RequirePackage[french]{babel}
+\RequirePackage[autostyle=true]{csquotes}
+\RequirePackage{microtype}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{multicol}
+\RequirePackage{etoolbox}
+\RequirePackage{pgfornament}
+\RequirePackage{lettrine}
+\RequirePackage[most]{tcolorbox}
+
+\frenchsetup{SmallCapsFigTabCaptions=false}
+
+% ---------------------------------------------------------------- Polices
+%  EB Garamond : présente dans TeX Live (paquet ebgaramond, donc sur Overleaf)
+%  et dans les dépôts Arch (texlive-fontsextra ou otf-eb-garamond).
+\IfFontExistsTF{EB Garamond}{%
+  \setmainfont{EB Garamond}[Numbers=OldStyle, Ligatures=TeX]
+  \newfontfamily\mp@lining{EB Garamond}[Numbers=Lining]
+}{%
+  \setmainfont{EBGaramond}[
+    Extension=.otf, UprightFont=*-Regular, ItalicFont=*-Italic,
+    BoldFont=*-SemiBold, BoldItalicFont=*-SemiBoldItalic,
+    Numbers=OldStyle, Ligatures=TeX]
+  \newfontfamily\mp@lining{EBGaramond}[
+    Extension=.otf, UprightFont=*-Regular, ItalicFont=*-Italic, Numbers=Lining]
+}
+\setmonofont{Latin Modern Mono}[Scale=0.95]
+
+% ---------------------------------------------------------------- Couleurs
+\definecolor{mpencre}{HTML}{1E1B18}   % texte
+\definecolor{mpsepia}{HTML}{6B4A2B}   % ornements, titres de parties
+\definecolor{mppapier}{HTML}{F7F1E3}  % fond des documents insérés
+\definecolor{mpfilet}{HTML}{8C7457}   % cadres
+\definecolor{mpbrouillon}{HTML}{A4262C}
+\AtBeginDocument{\color{mpencre}}
+
+% ---------------------------------------------------------------- Page (A5)
+\setstocksize{210mm}{148mm}
+\settrimmedsize{\stockheight}{\stockwidth}{*}
+\settrims{0pt}{0pt}
+\setlrmarginsandblock{17mm}{15mm}{*}
+\setulmarginsandblock{17mm}{21mm}{*}
+\setheadfoot{\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{1.4\onelineskip}{*}
+\checkandfixthelayout
+
+\setlength{\parindent}{1.4em}
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
+\linespread{1.03}
+
+% ---------------------------------------------------------------- En-têtes
+\newcommand{\mp@titrecourant}{}
+\newcommand{\titrecourant}[1]{\renewcommand{\mp@titrecourant}{#1}}
+\newcommand{\mp@partiecourante}{}
+\newcommand{\mp@spaced}[1]{{\addfontfeature{LetterSpace=10}\scshape\MakeLowercase{#1}}}
+
+\makepagestyle{roman}
+\makeevenhead{roman}{}{\small\mp@spaced{\mp@titrecourant}}{}
+\makeoddhead{roman}{}{\small\mp@spaced{\mp@partiecourante}}{}
+\makeevenfoot{roman}{}{\small\thepage}{}
+\makeoddfoot{roman}{}{\small\thepage}{}
+\makepagestyle{plain}
+\makeevenfoot{plain}{}{\small\thepage}{}
+\makeoddfoot{plain}{}{\small\thepage}{}
+\pagestyle{roman}
+
+% ---------------------------------------------------------------- Ornements
+\newcommand{\mp@orn}[2][1.6cm]{{\color{mpsepia}\pgfornament[width=#1]{#2}}}
+\newcommand{\ornementpartie}{\mp@orn[3.2cm]{69}}
+\newcommand{\ornementchapitre}{\mp@orn[1.8cm]{80}}
+\newcommand{\ornementscene}{\mp@orn[1.1cm]{11}}
+\newcommand{\ornementfin}{\mp@orn[2.6cm]{84}}
+
+% ---------------------------------------------------------------- Parties
+%  \partie{Ouverture}{Seraphina}
+%  \partie[sous-titre ou épigraphe]{Première partie}{Cordelia}
+%  Le second argument (le narrateur) devient le titre courant des pages impaires.
+\NewDocumentCommand{\partie}{o m m}{%
+  \cleardoublepage
+  \thispagestyle{empty}%
+  \renewcommand{\mp@partiecourante}{#3}%
+  \addcontentsline{toc}{part}{#2 \textendash{} #3}%
+  \null\vfill
+  \begin{center}
+    {\large\mp@spaced{#2}\par}
+    \vspace{1.2\baselineskip}
+    \ornementpartie\par
+    \vspace{1.4\baselineskip}
+    {\color{mpsepia}\fontsize{30}{34}\selectfont\itshape #3\par}
+    \IfValueT{#1}{\vspace{2\baselineskip}{\small\itshape #1\par}}
+  \end{center}
+  \vfill\vfill\null
+  \cleardoublepage
+}
+
+% ---------------------------------------------------------------- Chapitres
+%  Numérotation continue en chiffres romains ; titre facultatif.
+%  \chapitre{}            -> « I » seul
+%  \chapitre{Le verre}    -> « I » + titre
+\makechapterstyle{mpvictorien}{%
+  \setlength{\beforechapskip}{3\onelineskip}
+  \setlength{\afterchapskip}{2.2\onelineskip}
+  \setlength{\midchapskip}{0.6\onelineskip}
+  \renewcommand{\chapterheadstart}{\vspace*{\beforechapskip}}
+  \renewcommand{\printchaptername}{}
+  \renewcommand{\chapternamenum}{}
+  \renewcommand{\chapnumfont}{\normalfont\Large\scshape}
+  \renewcommand{\printchapternum}{\centering\chapnumfont\MakeLowercase{\Roman{chapter}}\par\vspace{0.5\onelineskip}\ornementchapitre\par}
+  \renewcommand{\afterchapternum}{\vspace{\midchapskip}}
+  \renewcommand{\chaptitlefont}{\normalfont\Large\itshape\centering}
+  \renewcommand{\printchaptertitle}[1]{\chaptitlefont ##1\par}
+  \renewcommand{\printchapternonum}{}
+}
+\chapterstyle{mpvictorien}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\NewDocumentCommand{\chapitre}{m}{\chapter{#1}}
+\openany   % les chapitres commencent sur la page suivante, recto ou verso
+
+% ---------------------------------------------------------------- Scènes
+\newcommand{\separation}{\fancybreak{\ornementscene}}
+
+%  \debut{L}{a pluie} : lettrine pour ouvrir un chapitre (facultatif).
+\setcounter{DefaultLines}{2}
+\renewcommand{\LettrineFontHook}{\color{mpsepia}}
+\renewcommand{\LettrineTextFont}{\scshape}
+\newcommand{\debut}[2]{\lettrine[lines=2,lhang=0.05,nindent=0.15em]{#1}{#2}}
+
+% ---------------------------------------------------------------- Dialogues
+%  \rep : ouvre une réplique (nouveau paragraphe, tiret cadratin, espace insécable).
+%    \rep Sera, tu as froid ? lança Lady Whitmore.
+%    \rep Non, tout va bien.
+\newcommand{\rep}{\par\textemdash\nobreakspace\ignorespaces}
+%  \pensee{Que le diable l'emporte !} : pensée formulée, non dite (en italique, sans tiret).
+\newcommand{\pensee}[1]{\textit{#1}}
+
+%  \fin : ornement de fin de partie ou de livre.
+\newcommand{\fin}{\par\vspace{2\baselineskip}\begin{center}\ornementfin\end{center}}
+
+% ---------------------------------------------------------------- Brouillon
+%  \areprendre{meilleure image} : marque laissée pendant le premier jet.
+%  \noteauteur{...}             : note pour soi, invisible en version finale.
+\newcounter{mpareprendre}
+\ifmp@brouillon
+  \newcommand{\areprendre}[1]{\stepcounter{mpareprendre}{\color{mpbrouillon}\small\textup{[à reprendre : #1]}}}
+  \newcommand{\noteauteur}[1]{{\color{mpbrouillon}\small\textup{[note : #1]}}}
+\else
+  \newcommand{\areprendre}[1]{\stepcounter{mpareprendre}\PackageWarning{murderparty}{Passage a reprendre : #1}}
+  \newcommand{\noteauteur}[1]{}
+\fi
+\AtEndDocument{\ifnum\value{mpareprendre}>0
+  \PackageWarningNoLine{murderparty}{\the\value{mpareprendre}\space passage(s) marques a reprendre}\fi}
+
+% =============================================================================
+%  Documents insérés (annexes dans le texte ou entre les parties)
+% =============================================================================
+\tcbset{
+  mpdoc/.style={enhanced, colback=mppapier, colframe=mpfilet,
+    boxrule=0.4pt, arc=0pt, outer arc=0pt,
+    left=4mm, right=4mm, top=3mm, bottom=3mm,
+    before skip=1.2\baselineskip, after skip=1.2\baselineskip,
+    fontupper=\small},
+}
+
+% ---------- Lettre manuscrite
+%  \begin{lettre}[Londres, le 27 novembre 1890]{Madame,}
+%     texte...
+%  \signature{V. Valentini}
+%  \end{lettre}
+\NewDocumentEnvironment{lettre}{o m}{%
+  \begin{tcolorbox}[mpdoc, fontupper=\small\itshape]
+  \IfValueT{#1}{\begin{flushright}#1\end{flushright}}%
+  \noindent #2\par\smallskip
+}{%
+  \end{tcolorbox}
+}
+\newcommand{\signature}[1]{\par\smallskip\begin{flushright}#1\end{flushright}}
+\newcommand{\postscriptum}[1]{\par\smallskip\noindent\textsc{p.-s.}~#1\par}
+
+% ---------- Télégramme (formulaire du Post Office)
+%  \begin{telegramme}{Bureau d'origine}{heure}{destinataire}
+%     TEXTE DU MESSAGE
+%  \end{telegramme}
+\NewDocumentEnvironment{telegramme}{m m m +b}{%
+  \begin{tcolorbox}[mpdoc, colback=white, boxrule=0.6pt,
+      title={\mp@spaced{Post Office Telegraphs}}, coltitle=mpencre,
+      colbacktitle=mppapier, halign title=center, fonttitle=\small,
+      titlerule=0.4pt]
+  {\footnotesize\noindent
+   \begin{tabular}{@{}l@{\quad}l@{}}
+   \textsc{Bureau d'origine} & #1\\
+   \textsc{Heure de dépôt} & {\mp@lining #2}\\
+   \textsc{Destinataire} & #3
+   \end{tabular}\par}
+  \medskip\hrule\medskip
+  {\ttfamily\raggedright\MakeUppercase{#4}\par}
+  \end{tcolorbox}
+}{}
+
+% ---------- Coupure de journal
+%  \begin{coupure}{The London Herald}{Titre de l'article}[date]
+%     texte...
+%  \end{coupure}
+\NewDocumentEnvironment{coupure}{m m o}{%
+  \begin{tcolorbox}[mpdoc, breakable, colback=white, boxrule=0pt, borderline={0.5pt}{0pt}{mpfilet,dashed}]
+  \begin{center}
+    {\mp@spaced{#1}\par}
+    \IfValueT{#3}{{\footnotesize\itshape #3\par}}
+    \vspace{2pt}\hrule\vspace{4pt}
+    {\large\scshape #2\par}
+  \end{center}
+  \footnotesize
+  \begin{multicols}{2}\setlength{\parindent}{1em}
+}{%
+  \end{multicols}
+  \end{tcolorbox}
+}
+
+% ---------- Page de journal intime ou d'expédition
+%  \begin{journal}{Entrée du 27 novembre 1890}
+%     texte...
+%  \end{journal}
+\NewDocumentEnvironment{journal}{m}{%
+  \begin{tcolorbox}[mpdoc, breakable, colback=mppapier, boxrule=0pt, leftrule=1.2pt]
+  {\noindent\mp@spaced{#1}\par}\smallskip
+  \itshape
+}{%
+  \end{tcolorbox}
+}
+
+% ---------- Note, carton, inscription (petit document centré)
+%  \begin{carton} ... \end{carton}
+\NewDocumentEnvironment{carton}{}{%
+  \begin{tcolorbox}[mpdoc, width=0.75\linewidth, center, halign=center]
+}{%
+  \end{tcolorbox}
+}
+
+% =============================================================================
+%  Annexes de mise en page
+% =============================================================================
+
+% ---------- Liste des personnages (dramatis personae)
+%  \begin{personnages}
+%    \personnage{Seraphina Blackwood}{26 ans, chanteuse alto}{Brève présentation.}
+%  \end{personnages}
+\NewDocumentEnvironment{personnages}{o}{%
+  \IfValueT{#1}{\begin{center}\mp@spaced{#1}\end{center}\medskip}%
+  \begin{list}{}{\setlength{\leftmargin}{0pt}\setlength{\itemsep}{0.55\baselineskip}%
+                 \setlength{\parsep}{0pt}\setlength{\topsep}{0pt}}
+}{%
+  \end{list}
+}
+\newcommand{\personnage}[3]{%
+  \item {\scshape #1}\ifstrempty{#2}{}{, {\itshape #2}}\par
+  \ifstrempty{#3}{}{{\small #3\par}}%
+}
+
+%  \groupe{La maison Whitmore} : intertitre dans la liste
+\newcommand{\groupe}[1]{\item[]\vspace{0.3\baselineskip}{\centering\small\mp@spaced{#1}\par}}
+
+% ---------- Page d'annexe, entre deux parties
+%  \pageannexe{Titre}{contenu}
+\NewDocumentCommand{\pageannexe}{m +m}{%
+  \clearpage\thispagestyle{plain}%
+  \begin{center}\mp@spaced{#1}\par\medskip\ornementscene\end{center}
+  \vspace{\baselineskip}
+  #2
+  \clearpage
+}
+
+% ---------- Plan ou image
+%  \plan[largeur]{fichier}{légende}            : dans le texte
+%  \planpleinepage[page=3]{fichier}{légende}   : sur une page à part
+\NewDocumentCommand{\plan}{O{\linewidth} m m}{%
+  \begin{center}
+    \includegraphics[width=#1]{#2}\par\smallskip
+    {\footnotesize\itshape #3\par}
+  \end{center}
+}
+\NewDocumentCommand{\planpleinepage}{O{} m m}{%
+  \clearpage\thispagestyle{empty}%
+  \null\vfill
+  \begin{center}
+    \includegraphics[#1,width=\linewidth,height=0.88\textheight,keepaspectratio]{#2}\par\medskip
+    {\footnotesize\itshape #3\par}
+  \end{center}
+  \vfill\null
+  \clearpage
+}
+
+% ---------------------------------------------------------------- Table
+\addto\captionsfrench{\renewcommand{\contentsname}{Table}}
+\renewcommand{\cftpartfont}{\normalfont\scshape}
+\renewcommand{\cftpartpagefont}{\normalfont}
+\renewcommand{\cftchapterfont}{\normalfont}
+\renewcommand{\cftchapterpagefont}{\normalfont}
+\setlength{\cftbeforepartskip}{1.2\baselineskip}
+
+\endinput
