@@ -2,7 +2,7 @@
   "name": "rmp-web",
   "private": true,
   "type": "module",
-  "workspaces": ["model", "converter"],
+  "workspaces": ["model", "converter", "site"],
   "scripts": {
     "test": "vitest run",
     "pdfs": "bash scripts/build-pdfs.sh",

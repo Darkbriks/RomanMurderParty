@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <script>
+      // Runs before first paint so the stored theme and font size never flash the defaults.
+      (function () {
+        var root = document.documentElement;
+        var steps = [16, 18, 20, 22, 25];
+        var theme = null;
+        var step = 1;
+        try {
+          var raw = localStorage.getItem('rmp.prefs.v1');
+          if (raw) {
+            var p = JSON.parse(raw);
+            if (p && (p.theme === 'paper' || p.theme === 'sepia' || p.theme === 'dark')) theme = p.theme;
+            if (p && Number.isInteger(p.fontStep) && p.fontStep >= 0 && p.fontStep < steps.length) step = p.fontStep;
+          }
+        } catch (e) {}
+        if (!theme) {
+          try {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'paper';
+          } catch (e) {
+            theme = 'paper';
+          }
+        }
+        root.setAttribute('data-theme', theme);
+        root.style.setProperty('--font-size', steps[step] + 'px');
+      })();
+    </script>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>

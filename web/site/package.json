@@ -1,0 +1,27 @@
+{
+  "name": "@rmp/site",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "imports": { "#lib/*": "./src/lib/*" },
+  "scripts": {
+    "prepare": "svelte-kit sync",
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "@fontsource/eb-garamond": "^5",
+    "@rmp/model": "*"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^4",
+    "@sveltejs/kit": "^3.1",
+    "@sveltejs/vite-plugin-svelte": "^7",
+    "svelte": "^5.57",
+    "svelte-check": "^4.7",
+    "typescript": "^6",
+    "vite": "^8"
+  }
+}
