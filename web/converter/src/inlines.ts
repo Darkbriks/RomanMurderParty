@@ -136,10 +136,16 @@ export function buildInlines(nodes: Node[]): Inline[] {
 
 /**
  * Flattens inlines to a string, for labels and names. A line break becomes a
- * space. A working note has no place in a plain string, so it is an error,
- * reported at `at` (the command that holds the field).
+ * space. A quote keeps the marks csquotes prints in French: guillemets with
+ * no-break spaces, and English double quotes for a quote inside a quote. A
+ * working note has no place in a plain string, so it is an error, reported at
+ * `at` (the command that holds the field).
  */
 export function plainText(inlines: Inline[], at: Loc | null = null): string {
+  return flatten(inlines, at, false);
+}
+
+function flatten(inlines: Inline[], at: Loc | null, inQuote: boolean): string {
   let out = '';
   for (const node of inlines) {
     switch (node.type) {
@@ -150,12 +156,17 @@ export function plainText(inlines: Inline[], at: Loc | null = null): string {
         out += ' ';
         break;
       case 'dropCap':
-        out += node.letter + plainText(node.rest, at);
+        out += node.letter + flatten(node.rest, at, inQuote);
         break;
       case 'note':
         throw new ConversionError(at, 'a working note cannot appear in a label or name');
+      case 'quote': {
+        const inner = flatten(node.children, at, true);
+        out += inQuote ? `“${inner}”` : `«${NBSP}${inner}${NBSP}»`;
+        break;
+      }
       default:
-        out += plainText(node.children, at);
+        out += flatten(node.children, at, inQuote);
     }
   }
   return out;

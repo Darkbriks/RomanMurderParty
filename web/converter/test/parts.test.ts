@@ -200,6 +200,14 @@ describe('inlines', () => {
       ]),
     ).toBe('ab Cd');
   });
+
+  it('plainText keeps the quotation marks of enquote', () => {
+    const [part] = build('\\partie{A}{Lady \\enquote{Lily} E}');
+    expect(part!.narrator).toBe(`Lady «${NBSP}Lily${NBSP}» E`);
+    // A quote inside a quote takes English double quotes, as csquotes does in French.
+    const inner: Inline = { type: 'quote', children: [t('b')] };
+    expect(plainText([{ type: 'quote', children: [t('a '), inner] }])).toBe(`«${NBSP}a “b”${NBSP}»`);
+  });
 });
 
 describe('chapters and parts', () => {
@@ -338,18 +346,28 @@ describe('ignored and forbidden input', () => {
   });
 });
 
-describe('repository part files', () => {
-  const root = fileURLToPath(new URL('../../../', import.meta.url));
+describe('part files', () => {
   const names = ['ouverture', 'partie1', 'partie2', 'intermede', 'partie3', 'partie4', 'conclusion', 'coda'];
-
-  it('converts the real part files', async () => {
+  const convert = async (root: string): Promise<Part[]> => {
     const files = await Promise.all(
       names.map(async (name) => {
         const file = `parties/${name}.tex`;
         return { file, nodes: nodesOf(file, await readFile(path.join(root, file), 'utf8')) };
       }),
     );
-    const result = buildParts(files);
+    return buildParts(files);
+  };
+  const expectClean = (result: Part[]): void => {
+    const json = JSON.stringify(result);
+    expect(json).not.toContain('Opera, piece, valse, comedie');
+    expect(json).not.toContain('flash back');
+    for (const part of result) expect(PartSchema.parse(part)).toEqual(part);
+  };
+
+  // test/fixtures/book is a frozen copy of the book sources (parties/ as of c4916ea): exact assertions go there,
+  // because the live repository changes whenever the author writes.
+  it('converts the frozen fixture exactly', async () => {
+    const result = await convert(fileURLToPath(new URL('./fixtures/book/', import.meta.url)));
     expect(result).toHaveLength(8);
     const chapters = result.flatMap((p) => p.chapters);
     expect(chapters).toHaveLength(9);
@@ -359,9 +377,14 @@ describe('repository part files', () => {
       'Seraphina', 'Narrateur à choisir', 'Narrateur à choisir', 'Reginald',
       'Narrateur à choisir', 'Narrateur à choisir', 'To Define', 'Vivienne',
     ]);
-    const json = JSON.stringify(result);
-    expect(json).not.toContain('Opera, piece, valse, comedie');
-    expect(json).not.toContain('flash back');
-    for (const part of result) expect(PartSchema.parse(part)).toEqual(part);
+    expectClean(result);
+  });
+
+  // Invariants only: the novel's content is free to change.
+  it('converts the live repository part files', async () => {
+    const result = await convert(fileURLToPath(new URL('../../../', import.meta.url)));
+    expect(result.length).toBeGreaterThanOrEqual(1);
+    expect(result.flatMap((p) => p.chapters).length).toBeGreaterThanOrEqual(1);
+    expectClean(result);
   });
 });
