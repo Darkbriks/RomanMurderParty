@@ -94,7 +94,36 @@
 \linespread{1.03}
 
 % ---------------------------------------------------------------- En-têtes
-\newcommand{\mp@titrecourant}{}
+% Titre, auteur, épigraphe et dédicace : source unique, définie dans roman.tex
+\newcommand{\mp@titre}{}
+\newcommand{\mp@auteur}{}
+\newcommand{\titre}[1]{\renewcommand{\mp@titre}{#1}}
+\newcommand{\auteur}[1]{\renewcommand{\mp@auteur}{#1}}
+\newcommand{\letitre}{\mp@titre}
+\newcommand{\lauteur}{\mp@auteur}
+\newcommand{\imprimerepigraphe}{}
+\newcommand{\imprimerdedicace}{}
+\newcommand{\epigraphe}[2][]{%
+  \renewcommand{\imprimerepigraphe}{%
+    \thispagestyle{empty}
+    \null\vfill
+    \begin{flushright}\begin{minipage}{0.7\linewidth}\itshape
+      #2%
+      \def\mp@src{#1}\ifx\mp@src\@empty\else
+        \par\smallskip\raggedleft\upshape --- #1%
+      \fi
+    \end{minipage}\end{flushright}
+    \vfill\null
+    \cleardoublepage}}
+\newcommand{\dedicace}[1]{%
+  \renewcommand{\imprimerdedicace}{%
+    \thispagestyle{empty}
+    \null\vfill
+    \begin{center}\itshape #1\end{center}
+    \vfill\null
+    \cleardoublepage}}
+% Par défaut, le titre courant est le titre du livre
+\newcommand{\mp@titrecourant}{\mp@titre}
 \newcommand{\titrecourant}[1]{\renewcommand{\mp@titrecourant}{#1}}
 \newcommand{\mp@partiecourante}{}
 \newcommand{\mp@spaced}[1]{{\addfontfeature{LetterSpace=10}\scshape\MakeLowercase{#1}}}

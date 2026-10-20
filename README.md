@@ -33,6 +33,9 @@ Pour ne compiler qu'une partie pendant l'écriture : décommenter `\includeonly{
 | `\fin` | Ornement de fin |
 | `\rep Texte` | Réplique de dialogue : nouveau paragraphe, tiret cadratin et espace insécable ; un `\rep` à chaque changement de locuteur |
 | `\pensee{...}` | Pensée formulée mais non dite, en italique et sans tiret |
+| `\titre{...}`, `\auteur{...}` | Titre et auteur du livre, à régler dans `roman.tex` (le titre courant en découle par défaut) |
+| `\epigraphe[source]{texte}` | Épigraphe facultative, à régler dans `roman.tex` ; imprimée sur sa propre page |
+| `\dedicace{texte}` | Dédicace facultative, à régler dans `roman.tex` ; imprimée sur sa propre page |
 | `\areprendre{...}` | Passage à retravailler : visible en mode `brouillon`, signalé dans le journal en mode `final` |
 | `\noteauteur{...}` | Note pour soi, masquée en mode `final` |
 
