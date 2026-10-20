@@ -117,7 +117,11 @@
   // navigation, whose own scroll handling looks for an element with that id (blocks carry
   // data-block-id, so it finds none and resets to the top) and would otherwise undo ours.
   afterNavigate(() => {
-    scrollToBlock(decodeURIComponent(location.hash.slice(1)));
+    try {
+      scrollToBlock(decodeURIComponent(location.hash.slice(1)));
+    } catch {
+      // A malformed percent-encoding names no block.
+    }
   });
 
   // Created outside a navigation once preferences have started, the view replaces another mode

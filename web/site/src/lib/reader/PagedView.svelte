@@ -211,7 +211,12 @@
     }
     pendingOpen = null;
     const query = new URLSearchParams(location.search).get('page');
-    const hash = decodeURIComponent(location.hash.slice(1));
+    let hash = '';
+    try {
+      hash = decodeURIComponent(location.hash.slice(1));
+    } catch {
+      // A malformed percent-encoding names no block: open the chapter normally.
+    }
     let target = (kind === 'restore' ? blockElement(savedBlockId()) : null) ?? (query === 'last' ? null : blockElement(hash));
     // The chapter's first block stands for its opening (scrolling saves it at the very top): open
     // the first page, with the part page that precedes the block on a single column.

@@ -272,6 +272,15 @@ test('mode survives reload', async ({ page }) => {
   await expect(page.getByRole('progressbar')).toBeAttached();
 });
 
+test('a malformed hash still opens the chapter', async ({ page }) => {
+  await openPaged(page, 1);
+  await page.goto('about:blank');
+  await gotoReady(page, 'read/1/#%E0%A4%A');
+  await expect(indicator(page)).toBeVisible();
+  await settle(page);
+  expect((await pageAndCount(page))[0]).toBe(1);
+});
+
 test('switching modes keeps the reading position', async ({ page }) => {
   const first = await openLaterPage(page);
   await page.getByRole('button', { name: 'Défilement' }).click();
