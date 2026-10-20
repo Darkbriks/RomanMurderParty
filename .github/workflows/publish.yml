@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     branches: [main]
-    tags: ['*']
+    tags: ['**']
   pull_request:
   workflow_dispatch:
 
@@ -95,11 +95,25 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # "Re-run jobs" reuses the original commit: never let an old run replace a newer site.
+      - id: head
+        run: |
+          main=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [ "$main" = "$GITHUB_SHA" ]; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=false" >> "$GITHUB_OUTPUT"
+            echo "Deploy skipped: this run built $GITHUB_SHA but main is now at $main." >> "$GITHUB_STEP_SUMMARY"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
       - id: deployment
+        if: steps.head.outputs.current == 'true'
         uses: actions/deploy-pages@v5
