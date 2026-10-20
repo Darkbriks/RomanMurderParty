@@ -90,6 +90,26 @@ describe('chapterlessParts', () => {
     expect(ids(chapterlessParts(b, 2).after)).toEqual(['p5', 'p6']);
   });
 
+  it('gives trailing parts only to the very last chapter when the last part has several chapters', () => {
+    const multi = book([part(1, [chapter(1)]), part(2, [chapter(2), chapter(3)]), part(3, [])]);
+    expect(chapterlessParts(multi, 1)).toEqual({ before: [], after: [] });
+    expect(chapterlessParts(multi, 2)).toEqual({ before: [], after: [] });
+    expect(ids(chapterlessParts(multi, 3).after)).toEqual(['p3']);
+    expect(chapterlessParts(multi, 3).before).toEqual([]);
+  });
+
+  it('shows a chapterless part between two parts with chapters once, before the next part', () => {
+    const between = book([part(1, [chapter(1), chapter(2)]), part(2, []), part(3, [chapter(3), chapter(4)])]);
+    expect(chapterlessParts(between, 1)).toEqual({ before: [], after: [] });
+    expect(chapterlessParts(between, 2)).toEqual({ before: [], after: [] });
+    expect(ids(chapterlessParts(between, 3).before)).toEqual(['p2']);
+    expect(chapterlessParts(between, 4)).toEqual({ before: [], after: [] });
+  });
+
+  it('is empty for a chapter that does not exist', () => {
+    expect(chapterlessParts(b, 99)).toEqual({ before: [], after: [] });
+  });
+
   it('is empty for a book where every part has chapters', () => {
     const full = book([part(1, [chapter(1)]), part(2, [chapter(2)])]);
     expect(chapterlessParts(full, 2)).toEqual({ before: [], after: [] });

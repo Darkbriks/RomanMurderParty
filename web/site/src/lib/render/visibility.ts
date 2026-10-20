@@ -36,25 +36,22 @@ export function chapterByNumber(book: Book, n: number): { part: Part; chapter: C
 }
 
 /**
- * Parts without any chapter have no page of their own, so chapter `n` shows them: `before` are
- * the chapterless parts right before its part (when it opens that part), `after` are the trailing
- * chapterless parts of the book (when it is the last chapter).
+ * Parts without any chapter have no page of their own, so a chapter page shows them: `before` are
+ * the chapterless parts right before the part that chapter `n` opens, `after` are the chapterless
+ * parts at the end of the book, shown only after the book's last chapter.
  */
 export function chapterlessParts(book: Book, n: number): { before: Part[]; after: Part[] } {
   const before: Part[] = [];
-  const after: Part[] = [];
   let pending: Part[] = [];
-  let found = false;
+  let lastChapter: number | null = null;
   for (const part of book.parts) {
     if (part.chapters.length === 0) {
       pending.push(part);
       continue;
     }
-    if (found) return { before, after: [] };
     if (part.chapters[0]!.number === n) before.push(...pending);
-    found = part.chapters.some((c) => c.number === n);
     pending = [];
+    lastChapter = part.chapters[part.chapters.length - 1]!.number;
   }
-  if (found) after.push(...pending);
-  return { before, after };
+  return { before, after: lastChapter === n ? pending : [] };
 }
