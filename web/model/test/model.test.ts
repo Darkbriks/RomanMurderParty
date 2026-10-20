@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vitest';
+import type { Block, Inline } from '../src/index.js';
 import { BLOCK_TYPES, BlockSchema, BookSchema, PageMapSchema } from '../src/index.js';
 
 const loc = { file: 'parties/partie1.tex', line: 3 };
@@ -47,5 +48,16 @@ describe('model', () => {
 
   it('rejects a page map with a zero page', () => {
     expect(PageMapSchema.safeParse({ parts: [0], chapters: [] }).success).toBe(false);
+  });
+
+  it('every block and inline type resolves through Extract', () => {
+    type NoNever<T> = [T] extends [never] ? false : true;
+    type AllBlocks = { [K in Block['type']]: NoNever<Extract<Block, { type: K }>> }[Block['type']];
+    type AllInlines = { [K in Inline['type']]: NoNever<Extract<Inline, { type: K }>> }[Inline['type']];
+    expectTypeOf<AllBlocks>().toEqualTypeOf<true>();
+    expectTypeOf<AllInlines>().toEqualTypeOf<true>();
+    expectTypeOf<Extract<Block, { type: 'end' }>>().not.toBeNever();
+    expectTypeOf<Extract<Block, { type: 'signature' }>>().not.toBeNever();
+    expectTypeOf<Extract<Inline, { type: 'bold' }>>().not.toBeNever();
   });
 });

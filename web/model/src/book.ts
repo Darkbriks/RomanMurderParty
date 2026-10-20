@@ -5,7 +5,11 @@ export type SourceLocation = z.infer<typeof SourceLocationSchema>;
 
 export type Inline =
   | { type: 'text'; text: string }
-  | { type: 'emphasis' | 'smallCaps' | 'bold' | 'quote' | 'thought'; children: Inline[] }
+  | { type: 'emphasis'; children: Inline[] }
+  | { type: 'smallCaps'; children: Inline[] }
+  | { type: 'bold'; children: Inline[] }
+  | { type: 'quote'; children: Inline[] }
+  | { type: 'thought'; children: Inline[] }
   | { type: 'note'; kind: 'rework' | 'author'; children: Inline[] }
   | { type: 'dropCap'; letter: string; rest: Inline[] }
   | { type: 'lineBreak' };
@@ -56,9 +60,11 @@ export const SegmentSchema: z.ZodType<Segment> = z.object({
 
 export type Block =
   | { type: 'paragraph'; id: string; dialogue: boolean; segments: Segment[] }
-  | { type: 'sceneBreak' | 'end'; id: string }
+  | { type: 'sceneBreak'; id: string }
+  | { type: 'end'; id: string }
   | { type: 'letter'; id: string; place: Inline[] | null; salutation: Inline[]; body: Block[] }
-  | { type: 'signature' | 'postscript'; id: string; content: Inline[] }
+  | { type: 'signature'; id: string; content: Inline[] }
+  | { type: 'postscript'; id: string; content: Inline[] }
   | { type: 'telegram'; id: string; office: Inline[]; time: Inline[]; recipient: Inline[]; body: Block[] }
   | { type: 'clipping'; id: string; newspaper: Inline[]; headline: Inline[]; date: Inline[] | null; body: Block[] }
   | { type: 'diary'; id: string; heading: Inline[]; body: Block[] }
