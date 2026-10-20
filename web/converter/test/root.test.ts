@@ -104,6 +104,15 @@ describe('layout files', () => {
     expect(c.groups).toMatchObject([{ id: 'g1', name: null, people: [{ id: 'g1.1', name: 'A' }] }]);
   });
 
+  it('the optional argument of personnages is the title', () => {
+    const src = (opt: string) =>
+      `Les personnages\n\\begin{personnages}${opt}\\personnage{A}{}{B.}\\end{personnages}`;
+    const title = (opt: string) => readBackFile('b.tex', layout('b.tex', src(opt)))!.title;
+    expect(title('[Dramatis personae]')).toBe('Dramatis personae');
+    expect(title('')).toBe('Les personnages');
+    expect(title('[]')).toBe('Les personnages');
+  });
+
   it('a back file without personnages gives null', () => {
     expect(readBackFile('b.tex', layout('b.tex', '\\clearpage'))).toBeNull();
   });

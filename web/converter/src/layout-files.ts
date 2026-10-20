@@ -114,7 +114,7 @@ export function readBackFile(_file: string, nodes: Node[]): Book['characters'] |
   if (found === null) return null;
   const characters: Book['characters'] = found;
   // The heading is printed by the layout of the back file.
-  return { ...characters, title: seen.has(HEADING) ? HEADING : null };
+  return { ...characters, title: characters.title ?? (seen.has(HEADING) ? HEADING : null) };
 }
 
 function readCharacters(env: EnvNode): Book['characters'] {
@@ -144,5 +144,7 @@ function readCharacters(env: EnvNode): Book['characters'] {
       throw new ConversionError(node.loc, `unexpected \\${node.name} in personnages`);
     }
   }
-  return { title: null, groups };
+  // The optional argument is the heading the PDF prints above the list.
+  const given = env.args[0] ? plainText(buildInlines(env.args[0]), env.loc).trim() : '';
+  return { title: given === '' ? null : given, groups };
 }
