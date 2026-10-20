@@ -11,6 +11,12 @@ describe('i18n', () => {
     expect(t('fr', 'updatedOn', { date: 'x' })).toBe('Mis à jour le x');
     expect(t('en', 'updatedOn', { date: 'x' })).toBe('Updated on x');
   });
+  it('note labels follow the colon spacing of the language', () => {
+    expect(t('fr', 'noteRework')).toBe('à reprendre\u00a0:');
+    expect(t('fr', 'noteAuthor')).toBe('note\u00a0:');
+    expect(t('en', 'noteRework')).toBe('to rework:');
+    expect(t('en', 'noteAuthor')).toBe('note:');
+  });
   it('formatDate fr', () => {
     expect(formatDate('fr', '2026-10-20T13:48:58+02:00')).toBe('20 octobre 2026');
     expect(formatDate('en', '2026-10-20T13:48:58+02:00')).toBe('20 October 2026');
