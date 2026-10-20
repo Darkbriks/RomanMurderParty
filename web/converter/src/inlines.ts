@@ -81,7 +81,7 @@ function convert(nodes: Node[], out: Inline[] = []): Inline[] {
   for (const node of nodes) {
     switch (node.kind) {
       case 'text':
-        pushText(out, ligatures(node.value));
+        pushText(out, ligatures(node.value, node.loc));
         break;
       case 'space':
         pushText(out, ' ');

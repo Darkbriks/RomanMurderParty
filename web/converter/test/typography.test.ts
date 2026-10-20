@@ -1,5 +1,6 @@
 import type { Inline } from '@rmp/model';
 import { describe, expect, it } from 'vitest';
+import { ConversionError } from '../src/errors.js';
 import { frenchSpacing, ligatures, NBSP, NNBSP } from '../src/typography.js';
 
 const t = (text: string): Inline => ({ type: 'text', text });
@@ -20,6 +21,18 @@ describe('ligatures', () => {
   it('converts dashes, quotes and apostrophes', () => {
     expect(ligatures("a---b--c l'air")).toBe('a—b–c l’air');
     expect(ligatures("``x'' `y'")).toBe('“x” ‘y’');
+  });
+  it('maps the straight double quote to a closing quote, as fontspec does', () => {
+    expect(ligatures('Repetion de "comme"')).toBe('Repetion de ”comme”');
+  });
+  it('maps ,, to a low quote and !` ?` to inverted marks', () => {
+    expect(ligatures(',,x')).toBe('„x');
+    expect(ligatures('!`Hola ?`Que')).toBe('¡Hola ¿Que');
+  });
+  it('refuses << and >> with a located error', () => {
+    const at = { file: 'p.tex', line: 3, column: 5 };
+    expect(() => ligatures('<<x>>', at)).toThrow('p.tex:3:5: use \\enquote{...} or type « » directly instead of << >>');
+    expect(() => ligatures('a >> b', at)).toThrow(ConversionError);
   });
 });
 

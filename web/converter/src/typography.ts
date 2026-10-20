@@ -1,17 +1,28 @@
 import type { Inline } from '@rmp/model';
+import { ConversionError, type Loc } from './errors.js';
 
 /** Narrow no-break space: babel-french puts it before `;`, `!` and `?`. */
 export const NNBSP = ' ';
 /** No-break space: before `:` and inside guillemets. */
 export const NBSP = ' ';
 
-/** Reproduces the TeX ligatures of fontspec `Ligatures=TeX`; longer patterns first. */
-export function ligatures(text: string): string {
+/**
+ * Reproduces the TeX ligatures of fontspec `Ligatures=TeX`; longer patterns first. `<<` and `>>`
+ * are refused: babel-french spaces ligature guillemets differently from typed ones.
+ */
+export function ligatures(text: string, at: Loc | null = null): string {
+  if (text.includes('<<') || text.includes('>>')) {
+    throw new ConversionError(at, 'use \\enquote{...} or type « » directly instead of << >>');
+  }
   return text
     .replaceAll('---', '—')
     .replaceAll('--', '–')
+    .replaceAll('!`', '¡')
+    .replaceAll('?`', '¿')
     .replaceAll('``', '“')
     .replaceAll("''", '”')
+    .replaceAll(',,', '„')
+    .replaceAll('"', '”')
     .replaceAll('`', '‘')
     .replaceAll("'", '’');
 }
