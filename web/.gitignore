@@ -1,0 +1,8 @@
+node_modules
+site/.svelte-kit
+site/build
+site/static/data
+site/static/downloads
+site/static/figures
+site/test-results
+site/playwright-report
