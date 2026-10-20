@@ -41,7 +41,7 @@
 </svelte:head>
 
 <a class="skip-link" href="#main">{t(prefs.lang, 'skipToText')}</a>
-<TopBar title={data.book.meta.title} narrator={data.part.narrator} bind:hidden={barHidden} {tocExpanded} onToggleToc={toggleToc} />
+<TopBar title={data.book.meta.title} narrator={data.part.narrator} downloads={data.downloads} bind:hidden={barHidden} {tocExpanded} onToggleToc={toggleToc} />
 <Toc book={data.book} current={data.n} overlay={tocOverlay} onNavigate={afterTocNavigation} onClose={closeToc} />
 <ScrollView book={data.book} part={data.part} chapter={data.chapter} isFirstOfPart={data.isFirstOfPart} bind:barHidden />
 

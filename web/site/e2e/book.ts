@@ -206,3 +206,28 @@ export async function reloadReady(page: Page): Promise<void> {
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-ready', '');
 }
+
+export interface DownloadItem {
+  variant: 'final' | 'brouillon';
+  url: string;
+  bytes: number;
+  filename: string;
+}
+export const downloads = JSON.parse(readFileSync(`${DATA}downloads.json`, 'utf8')) as { items: DownloadItem[] };
+
+/** The date the cover shows as « Mis à jour le … », or null when the latest version is the working tree. */
+export function updateDate(lang: 'fr' | 'en'): string | null {
+  if (index.latest === 'working-tree') return null;
+  return new Intl.DateTimeFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Paris',
+  }).format(new Date(book.meta.version.date));
+}
+
+/** What the cover's resume line reads for a chapter visited in the French interface. */
+export function resumeLabel(info: ChapterInfo): string {
+  const { part, chapter } = info;
+  return `${part.label}, chapitre ${chapter.numeral}${chapter.title ? `, « ${plain(chapter.title)} »` : ''}`;
+}

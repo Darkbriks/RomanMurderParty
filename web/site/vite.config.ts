@@ -8,7 +8,7 @@ export default defineConfig({
     sveltekit({
       adapter: adapter({ pages: 'build', assets: 'build', strict: true }),
       paths: { base: (process.env.BASE_PATH ?? '') as '' | `/${string}`, relative: false },
-      prerender: { entries: ['*'] },
+      prerender: { entries: ['*', '/characters/'] },
     }),
   ],
 });

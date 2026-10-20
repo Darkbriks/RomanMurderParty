@@ -154,7 +154,7 @@ test('toc state is remembered', async ({ page }) => {
 test('toc lists every part and highlights the current chapter', async ({ page }) => {
   await gotoReady(page, 'read/1/');
   for (const part of book.parts) await expect(toc(page)).toContainText(`${part.label} — ${part.narrator}`);
-  await expect(toc(page).locator('a')).toHaveCount(chapters.length);
+  await expect(toc(page).locator('a')).toHaveCount(chapters.length + 1); // the chapters and the characters page
   await expect(toc(page).locator('[aria-current="page"]')).toHaveCount(1);
   await expect(toc(page).locator('[aria-current="page"]')).toContainText(headingText(one.chapter));
 });

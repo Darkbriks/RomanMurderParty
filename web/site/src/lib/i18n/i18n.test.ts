@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { en } from './en';
 import { fr } from './fr';
-import { formatDate, t } from './index';
+import { formatBytes, formatDate, t } from './index';
 
 describe('i18n', () => {
   it('fr and en have the same keys', () => {
@@ -20,5 +20,11 @@ describe('i18n', () => {
   it('formatDate fr', () => {
     expect(formatDate('fr', '2026-10-20T13:48:58+02:00')).toBe('20 octobre 2026');
     expect(formatDate('en', '2026-10-20T13:48:58+02:00')).toBe('20 October 2026');
+  });
+  it('formatBytes follows the language', () => {
+    expect(formatBytes('fr', 1_234_567)).toBe('1,2 Mo');
+    expect(formatBytes('en', 1_234_567)).toBe('1.2 MB');
+    expect(formatBytes('fr', 120_025)).toBe('120 Ko');
+    expect(formatBytes('en', 120_025)).toBe('120 KB');
   });
 });

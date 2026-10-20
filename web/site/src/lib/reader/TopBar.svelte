@@ -2,21 +2,25 @@
   import { resolve } from '$app/paths';
   import { t } from '#lib/i18n/index.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
+  import type { Downloads } from '@rmp/model';
+  import DownloadMenu from './DownloadMenu.svelte';
   import SettingsMenu from './SettingsMenu.svelte';
 
   // ☰, the book title (to the cover), the current narrator as in the PDF's odd running heads, and
-  // the tools (Aa; the download menu joins in Task 13). The bar slides away while the reader
+  // the tools (the PDF menu and Aa). The bar slides away while the reader
   // scrolls down; it stays while one of its menus is open or holds the keyboard focus.
   let {
     title,
     narrator,
+    downloads,
     hidden = $bindable(false),
     tocExpanded,
     onToggleToc,
-  }: { title: string; narrator: string; hidden?: boolean; tocExpanded: boolean; onToggleToc: () => void } = $props();
+  }: { title: string; narrator: string; downloads: Downloads; hidden?: boolean; tocExpanded: boolean; onToggleToc: () => void } = $props();
 
   let settingsOpen = $state(false);
-  const retracted = $derived(hidden && !settingsOpen);
+  let downloadsOpen = $state(false);
+  const retracted = $derived(hidden && !settingsOpen && !downloadsOpen);
 </script>
 
 <header class="topbar" class:retracted onfocusin={() => (hidden = false)}>
@@ -37,6 +41,7 @@
   </div>
   <span class="narrator spaced" lang="fr">{narrator}</span>
   <div class="tools">
+    <DownloadMenu {downloads} bind:open={downloadsOpen} />
     <SettingsMenu bind:open={settingsOpen} />
   </div>
 </header>

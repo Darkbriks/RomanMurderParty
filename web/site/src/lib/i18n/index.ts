@@ -22,3 +22,12 @@ export function formatDate(lang: Lang, iso: string): string {
     timeZone: 'Europe/Paris',
   }).format(d);
 }
+
+/** A file size in the units of the language: « 1,2 Mo » in French, « 1.2 MB » in English. */
+export function formatBytes(lang: Lang, bytes: number): string {
+  const [kilo, mega] = lang === 'fr' ? ['Ko', 'Mo'] : ['KB', 'MB'];
+  const number = (n: number, digits: number) =>
+    new Intl.NumberFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(n);
+  if (bytes >= 1_000_000) return `${number(bytes / 1_000_000, 1)} ${mega}`;
+  return `${number(Math.max(1, Math.round(bytes / 1000)), 0)} ${kilo}`;
+}

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Book, Chapter, Part } from '@rmp/model';
   import { t } from '#lib/i18n/index.ts';
+  import { chapterTitleOf, writePosition } from '#lib/position/position.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
   import Blocks from '#lib/render/Blocks.svelte';
   import ChapterHeading from '#lib/render/ChapterHeading.svelte';
@@ -49,6 +50,47 @@
     return () => cancelAnimationFrame(frame);
   });
 
+  // The reading position: the first block in view, saved 500 ms after the reader stops moving and
+  // when the page is left. The cover resumes from it (see lib/position).
+  let saveTimer: ReturnType<typeof setTimeout> | undefined;
+
+  function savePosition() {
+    clearTimeout(saveTimer);
+    const blocks = document.querySelectorAll<HTMLElement>('[data-chapter-body] > [data-block-id]');
+    const top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar-height')) || 48;
+    const first = [...blocks].find((el) => el.getBoundingClientRect().bottom > top + 1);
+    try {
+      writePosition(localStorage, {
+        chapter: chapter.number,
+        blockId: first?.dataset.blockId ?? null,
+        chapterTitle: chapterTitleOf(chapter),
+        sha: book.meta.version.sha,
+        savedAt: new Date().toISOString(),
+      });
+    } catch {
+      // storage blocked: the reader simply cannot resume
+    }
+  }
+
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(savePosition, 500);
+  }
+
+  $effect(() => {
+    // Opening a chapter counts as reading it. A #block-id in the URL (the cover's resume button)
+    // first scrolls to that block.
+    void chapter.id;
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = id ? document.querySelector<HTMLElement>(`[data-chapter-body] [data-block-id="${CSS.escape(id)}"]`) : null;
+    if (target) {
+      const bar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar-height')) || 48;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - bar - 16 });
+    }
+    scheduleSave();
+    return () => clearTimeout(saveTimer);
+  });
+
   function onTap(event: MouseEvent) {
     // A tap on the text brings the bar back, unless it follows a link or selects text.
     if ((event.target as Element).closest('a, button')) return;
@@ -62,7 +104,7 @@
   <span class="which" lang="fr"><span class="numeral">{c.numeral}</span>{#if c.title}.{' '}{plainText(c.title)}{/if}</span>
 {/snippet}
 
-<svelte:window onscroll={onScroll} onresize={onScroll} />
+<svelte:window onscroll={() => { onScroll(); scheduleSave(); }} onresize={onScroll} onpagehide={savePosition} />
 
 <div class="progress" class:raised={barHidden} role="progressbar" aria-label={t(prefs.lang, 'readingProgress')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
   <span style:transform="scaleX({progress})"></span>

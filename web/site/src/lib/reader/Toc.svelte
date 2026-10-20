@@ -3,6 +3,7 @@
   import { t } from '#lib/i18n/index.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
   import Inlines from '#lib/render/Inlines.svelte';
+  import { resolve } from '$app/paths';
   import { chapterHref } from './links.ts';
 
   // The side panel: each part as « label — narrator », its chapters as numeral and title. Whether it
@@ -71,6 +72,9 @@
         {/if}
       </li>
     {/each}
+    <li>
+      <a class="characters" href="{resolve('/characters')}/" onclick={onNavigate}>{t(prefs.lang, 'characters')}</a>
+    </li>
   </ol>
 </nav>
 
@@ -150,6 +154,16 @@
     display: block;
     color: var(--accent);
     letter-spacing: 0.04em;
+  }
+  .characters {
+    display: block;
+    color: var(--accent);
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    letter-spacing: 0.04em;
+  }
+  .characters:hover {
+    text-decoration: underline;
   }
   .chapters a {
     display: block;
