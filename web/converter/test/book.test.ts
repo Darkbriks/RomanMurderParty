@@ -7,6 +7,7 @@ import { afterAll, describe, expect, it } from 'vitest';
 import { convertBook } from '../src/book.js';
 import { ConversionError } from '../src/errors.js';
 import { FsSource } from '../src/source.js';
+import { commentFragments, normalize } from './helpers/comments.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixture = path.join(here, 'fixtures', 'book');
@@ -39,11 +40,10 @@ describe('convertBook on the live repository', () => {
   });
 
   it('no comment text in the repository model', async () => {
-    const json = JSON.stringify(await convertBook(new FsSource(repoRoot), version));
-    for (const s of ['Opera, piece, valse, comedie', 'flash back',
-      "En effet, la veuve semblait visiblement s'être mise en tête que Mary Fletcher"]) {
-      expect(json).not.toContain(s);
-    }
+    const book = await convertBook(new FsSource(repoRoot), version);
+    const labels = [book.meta.title, ...book.parts.map((p) => `${p.label} — ${p.narrator}`)].join('\n');
+    const model = normalize(JSON.stringify(book));
+    for (const fragment of commentFragments(repoRoot, labels)) expect(model).not.toContain(fragment);
   });
 });
 

@@ -379,12 +379,4 @@ describe('part files', () => {
     ]);
     expectClean(result);
   });
-
-  // Invariants only: the novel's content is free to change.
-  it('converts the live repository part files', async () => {
-    const result = await convert(fileURLToPath(new URL('../../../', import.meta.url)));
-    expect(result.length).toBeGreaterThanOrEqual(1);
-    expect(result.flatMap((p) => p.chapters).length).toBeGreaterThanOrEqual(1);
-    expectClean(result);
-  });
 });
