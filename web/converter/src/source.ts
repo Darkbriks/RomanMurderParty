@@ -1,7 +1,7 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { ConversionError } from './errors.ts';
+import { ConversionError } from './errors.js';
 
 /** Reads source files by repo-relative POSIX path. */
 export interface SourceReader {

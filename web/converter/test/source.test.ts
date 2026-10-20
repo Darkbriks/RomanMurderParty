@@ -2,9 +2,9 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ConversionError } from '../src/errors.ts';
-import { FsSource, GitSource, texPath } from '../src/source.ts';
-import { makeRepo } from './helpers/git-repo.ts';
+import { ConversionError } from '../src/errors.js';
+import { FsSource, GitSource, texPath } from '../src/source.js';
+import { makeRepo } from './helpers/git-repo.js';
 
 describe('FsSource', () => {
   it('reads a file relative to the root', async () => {
