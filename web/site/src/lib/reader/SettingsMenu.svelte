@@ -3,10 +3,12 @@
   import { effectiveTheme, FONT_STEPS_PX, prefs, prefsState, type Prefs, type Theme } from '#lib/prefs/prefs.svelte.ts';
   import { THEMES } from '#lib/styles/themes.ts';
   import { MediaQuery } from 'svelte/reactivity';
+  import ModeSwitch from './ModeSwitch.svelte';
 
-  // The Aa menu: font size, theme, working notes, language. (The reading mode joins in Task 14.)
-  // Changing a field of `prefs` is enough: startPrefs() persists it and updates <html>.
-  let { open = $bindable(false) }: { open?: boolean } = $props();
+  // The Aa menu: font size, theme, working notes, language and reading mode. The reader's top bar
+  // shows the reading mode itself from 720 px, so there `modes` is 'narrow': the row only shows
+  // below that width. Changing a field of `prefs` is enough: startPrefs() persists it and updates <html>.
+  let { open = $bindable(false), modes = 'always' }: { open?: boolean; modes?: 'always' | 'narrow' } = $props();
 
   const THEME_LABELS: Record<Theme, MessageKey> = { paper: 'themePaper', sepia: 'themeSepia', dark: 'themeDark' };
   const LANGUAGES: { lang: Prefs['lang']; name: string }[] = [
@@ -87,6 +89,12 @@
         {/each}
       </div>
     </div>
+
+    <!-- Last, so that hiding it never leaves the separator of the next row at the top. -->
+    <div class="row" class:narrow-only={modes === 'narrow'}>
+      <span class="label" id="settings-mode">{t(prefs.lang, 'readingMode')}</span>
+      <ModeSwitch labelledby="settings-mode" />
+    </div>
   </div>
 </div>
 
@@ -137,6 +145,11 @@
   }
   .label {
     color: var(--accent);
+  }
+  @media (min-width: 720px) {
+    .narrow-only {
+      display: none;
+    }
   }
   .segmented {
     display: flex;

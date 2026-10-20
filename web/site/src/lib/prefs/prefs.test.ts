@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_PREFS, effectiveTheme, FONT_STEPS_PX, readPrefs, STORAGE_KEY, writePrefs } from './prefs';
+import { DEFAULT_PREFS, effectiveMode, effectiveTheme, FONT_STEPS_PX, readPrefs, STORAGE_KEY, writePrefs } from './prefs';
 
 const memory = () => {
   const m = new Map<string, string>();
@@ -43,5 +43,10 @@ describe('prefs', () => {
     expect(effectiveTheme(DEFAULT_PREFS, true)).toBe('dark');
     expect(effectiveTheme(DEFAULT_PREFS, false)).toBe('paper');
     expect(effectiveTheme({ ...DEFAULT_PREFS, theme: 'sepia' }, true)).toBe('sepia');
+  });
+  it('effectiveMode reads book pages as scrolling until that mode exists', () => {
+    expect(effectiveMode('scroll')).toBe('scroll');
+    expect(effectiveMode('paged')).toBe('paged');
+    expect(effectiveMode('book')).toBe('scroll');
   });
 });

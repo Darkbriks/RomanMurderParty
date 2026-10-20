@@ -4,11 +4,12 @@
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
   import type { Downloads } from '@rmp/model';
   import DownloadMenu from './DownloadMenu.svelte';
+  import ModeSwitch from './ModeSwitch.svelte';
   import SettingsMenu from './SettingsMenu.svelte';
 
   // ☰, the book title (to the cover), the current narrator as in the PDF's odd running heads, and
-  // the tools (the PDF menu and Aa). The bar slides away while the reader
-  // scrolls down; it stays while one of its menus is open or holds the keyboard focus.
+  // the tools (the reading mode from 720 px, the PDF menu and Aa). The bar slides away while the
+  // reader scrolls down; it stays while one of its menus is open or holds the keyboard focus.
   let {
     title,
     narrator,
@@ -41,8 +42,9 @@
   </div>
   <span class="narrator spaced" lang="fr">{narrator}</span>
   <div class="tools">
+    <div class="modes"><ModeSwitch /></div>
     <DownloadMenu {downloads} bind:open={downloadsOpen} />
-    <SettingsMenu bind:open={settingsOpen} />
+    <SettingsMenu bind:open={settingsOpen} modes="narrow" />
   </div>
 </header>
 
@@ -112,8 +114,14 @@
     align-items: center;
     gap: 0.25em;
   }
+  .modes {
+    margin-right: 0.25em;
+    font-size: 0.9em;
+  }
+  /* Below 720 px the reading mode moves into the Aa menu. */
   @media (max-width: 719.98px) {
-    .title {
+    .title,
+    .modes {
       display: none;
     }
   }

@@ -35,4 +35,10 @@ export const fr = {
   downloadDraft: 'Version brouillon, avec notes',
   localVersion: 'Version locale',
   readingProgress: 'Progression dans le chapitre',
+  readingMode: 'Mode de lecture',
+  modeScroll: 'Défilement',
+  modePaged: 'Liseuse',
+  pageIndicator: '{page} / {count} · chapitre {numeral}',
+  previousPage: 'Page précédente',
+  nextPage: 'Page suivante',
 } as const;

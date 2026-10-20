@@ -30,6 +30,12 @@ button {
   color: inherit;
 }
 
+/* Stored paged mode (app.html): the prerendered scrolling chapter stays hidden until the app has
+   applied the preferences and switched views. */
+:root[data-pending-mode]:not([data-ready]) main.reader {
+  visibility: hidden;
+}
+
 /* Only for screen readers. */
 .visually-hidden {
   position: absolute;

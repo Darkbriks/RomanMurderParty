@@ -1,6 +1,7 @@
 <script lang="ts">
   import { t } from '#lib/i18n/index.ts';
-  import { prefs, prefsState } from '#lib/prefs/prefs.svelte.ts';
+  import { effectiveMode, prefs, prefsState } from '#lib/prefs/prefs.svelte.ts';
+  import PagedView from '#lib/reader/PagedView.svelte';
   import ScrollView from '#lib/reader/ScrollView.svelte';
   import Toc from '#lib/reader/Toc.svelte';
   import TopBar from '#lib/reader/TopBar.svelte';
@@ -16,6 +17,13 @@
   const tocExpanded = $derived(prefs.tocOpen ?? (prefsState.started && wide.current));
   const tocOverlay = $derived(prefsState.started && !wide.current && tocExpanded);
   let barHidden = $state(false);
+  // The reading mode is a preference, not part of the URL: the prerendered page (and the first
+  // client render) scroll, then stored preferences may switch the view.
+  const view = $derived(effectiveMode(prefs.mode));
+  $effect(() => {
+    // Pages do not scroll, so the bar that scrolling had hidden comes back.
+    if (view === 'paged') barHidden = false;
+  });
 
   const pageTitle = $derived(
     `${data.chapter.title ? `${data.chapter.numeral}. ${plainText(data.chapter.title)}` : t(prefs.lang, 'chapter', { numeral: data.chapter.numeral })} — ${data.book.meta.title}`,
@@ -43,7 +51,11 @@
 <a class="skip-link" href="#main">{t(prefs.lang, 'skipToText')}</a>
 <TopBar title={data.book.meta.title} narrator={data.part.narrator} downloads={data.downloads} bind:hidden={barHidden} {tocExpanded} onToggleToc={toggleToc} />
 <Toc book={data.book} current={data.n} overlay={tocOverlay} onNavigate={afterTocNavigation} onClose={closeToc} />
-<ScrollView book={data.book} part={data.part} chapter={data.chapter} isFirstOfPart={data.isFirstOfPart} bind:barHidden />
+{#if view === 'paged'}
+  <PagedView book={data.book} part={data.part} chapter={data.chapter} isFirstOfPart={data.isFirstOfPart} overlay={tocOverlay} />
+{:else}
+  <ScrollView book={data.book} part={data.part} chapter={data.chapter} isFirstOfPart={data.isFirstOfPart} bind:barHidden />
+{/if}
 
 <style>
   .skip-link {

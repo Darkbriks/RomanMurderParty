@@ -2,14 +2,16 @@
   import type { Book, Chapter, Part } from '@rmp/model';
   import { t } from '#lib/i18n/index.ts';
   import { afterNavigate } from '$app/navigation';
-  import { chapterTitleOf, writePosition, type SavedPosition } from '#lib/position/position.ts';
-  import { prefs } from '#lib/prefs/prefs.svelte.ts';
+  import { navigating } from '$app/state';
+  import { chapterTitleOf, readPosition, resolveResume, writePosition, type SavedPosition } from '#lib/position/position.ts';
+  import { effectiveMode, prefs, prefsState } from '#lib/prefs/prefs.svelte.ts';
   import Blocks from '#lib/render/Blocks.svelte';
   import ChapterHeading from '#lib/render/ChapterHeading.svelte';
   import FrontPage from '#lib/render/FrontPage.svelte';
   import PartTitle from '#lib/render/PartTitle.svelte';
   import { plainText } from '#lib/render/text.ts';
   import { chapterByNumber, chapterlessParts } from '#lib/render/visibility.ts';
+  import { onMount, untrack } from 'svelte';
   import { chapterHref } from './links.ts';
 
   // Scroll mode: one chapter per page, a reading-progress bar, links to the neighbouring chapters.
@@ -89,6 +91,9 @@
   }
 
   function scheduleSave() {
+    // Nothing is recorded before the stored preferences apply: in another mode this view is only the
+    // first render, and its top of the chapter must not replace the position saved by that mode.
+    if (!prefsState.started || effectiveMode(prefs.mode) !== 'scroll') return;
     pending = snapshot();
     clearTimeout(saveTimer);
     saveTimer = setTimeout(flushPosition, 500);
@@ -102,14 +107,32 @@
     return flushPosition;
   });
 
+  function scrollToBlock(id: string | null) {
+    const target = id ? document.querySelector<HTMLElement>(`[data-chapter-body] [data-block-id="${CSS.escape(id)}"]`) : null;
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - barHeight() - 16 });
+  }
+
   // A #block-id in the URL (the cover's resume button) scrolls to that block. This runs after the
   // navigation, whose own scroll handling looks for an element with that id (blocks carry
   // data-block-id, so it finds none and resets to the top) and would otherwise undo ours.
   afterNavigate(() => {
-    const id = decodeURIComponent(location.hash.slice(1));
-    const target = id ? document.querySelector<HTMLElement>(`[data-chapter-body] [data-block-id="${CSS.escape(id)}"]`) : null;
-    if (!target) return;
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - barHeight() - 16 });
+    scrollToBlock(decodeURIComponent(location.hash.slice(1)));
+  });
+
+  // Created outside a navigation once preferences have started, the view replaces another mode
+  // (the reader chose scrolling): it opens at the position that mode saved in this chapter.
+  const restoreSaved = untrack(() => prefsState.started && !navigating.type);
+  onMount(() => {
+    if (!restoreSaved) return;
+    let storage: Storage | null = null;
+    try {
+      storage = localStorage;
+    } catch {
+      return;
+    }
+    const resume = resolveResume(book, readPosition(storage));
+    if (resume?.chapter === chapter.number) scrollToBlock(resume.blockId);
   });
 
   function onVisibility() {

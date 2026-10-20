@@ -36,4 +36,10 @@ export const en: Record<keyof typeof fr, string> = {
   downloadDraft: 'Draft version, with notes',
   localVersion: 'Local version',
   readingProgress: 'Progress in the chapter',
+  readingMode: 'Reading mode',
+  modeScroll: 'Scroll',
+  modePaged: 'Paged',
+  pageIndicator: '{page} / {count} · chapter {numeral}',
+  previousPage: 'Previous page',
+  nextPage: 'Next page',
 };
