@@ -1,6 +1,6 @@
-import type { Block, Segment } from '@rmp/model';
+import type { Block, Inline, Segment } from '@rmp/model';
 import { ConversionError, type Loc } from './errors.js';
-import { buildInlines } from './inlines.js';
+import { buildInlines, plainText } from './inlines.js';
 import type { Node } from './parser.js';
 import { IGNORED_LAYOUT } from './vocabulary.js';
 
@@ -31,10 +31,78 @@ const COMMANDS = new Map<string, (node: CommandNode, b: BlockBuilder) => void>([
   ['rep', (_, b) => b.startParagraph(true)],
   ['separation', (_, b) => b.emit((id) => ({ type: 'sceneBreak', id }))],
   ['fin', (_, b) => b.emit((id) => ({ type: 'end', id }))],
+  ['signature', (n, b) => {
+    requireLetter(n, b);
+    b.emit((id) => ({ type: 'signature', id, content: inlinesOf(n, 0) }));
+  }],
+  ['postscriptum', (n, b) => {
+    requireLetter(n, b);
+    b.emit((id) => ({ type: 'postscript', id, content: inlinesOf(n, 0) }));
+  }],
+  ['plan', (n, b) => b.emit((id) => makeImage(n, id, false, parseWidth(n.args[0] ?? null)))],
+  ['planpleinepage', (n, b) => b.emit((id) => makeImage(n, id, true, null))],
+  ['pageannexe', (n, b) =>
+    b.emit((id) => ({ type: 'annexPage', id, title: inlinesOf(n, 0), body: nested(n.args[1] ?? [], id, false) }))],
 ]);
 
+// \chapitre and \partie are not handled here: inside a document they fall through
+// to buildInlines, which rejects them (parts.ts consumes them at the top level).
+function requireLetter(node: CommandNode, b: BlockBuilder): void {
+  if (!b.ctx.allowLetterParts) throw new ConversionError(node.loc, `\\${node.name} outside lettre`);
+}
+
+const inlinesOf = (node: CommandNode | EnvNode, i: number): Inline[] => buildInlines(node.args[i] ?? []);
+
+/** Blocks of a document body or annex page, ids prefixed by the parent's. */
+const nested = (nodes: Node[], parentId: string, allowLetterParts: boolean): Block[] =>
+  buildBlocks(nodes, { idPrefix: `${parentId}.`, allowLetterParts });
+
+/** `0.6\linewidth` or `0.6\textwidth` gives 0.6; anything else gives null. */
+function parseWidth(arg: Node[] | null): number | null {
+  if (!arg) return null;
+  const nodes = arg.filter((n) => n.kind !== 'space');
+  const [num, unit, ...rest] = nodes;
+  if (num?.kind !== 'text' || unit?.kind !== 'command' || rest.length > 0) return null;
+  if (unit.name !== 'linewidth' && unit.name !== 'textwidth') return null;
+  if (!/^(\d+\.?\d*|\.\d+)$/.test(num.value)) return null;
+  const value = Number(num.value);
+  return value > 0 ? value : null;
+}
+
+const IMAGE_EXTENSION = /\.(png|jpe?g|svg)$/i;
+
+function makeImage(node: CommandNode, id: string, fullPage: boolean, widthFraction: number | null): Block {
+  const src = plainText(inlinesOf(node, 1), node.loc).trim();
+  if (!IMAGE_EXTENSION.test(src)) {
+    throw new ConversionError(node.loc, `image ${src}: use a .png, .jpg or .svg file (the site cannot show other formats)`);
+  }
+  return { type: 'image', id, src, caption: inlinesOf(node, 2), fullPage, widthFraction };
+}
+
 /** Block-level environments. */
-const ENVIRONMENTS = new Map<string, (node: EnvNode, b: BlockBuilder) => void>();
+const ENVIRONMENTS = new Map<string, (node: EnvNode, b: BlockBuilder) => void>([
+  ['lettre', (n, b) => b.emit((id) => ({
+    type: 'letter', id,
+    place: n.args[0] ? inlinesOf(n, 0) : null,
+    salutation: inlinesOf(n, 1),
+    body: nested(n.body, id, true),
+  }))],
+  ['telegramme', (n, b) => b.emit((id) => ({
+    type: 'telegram', id,
+    office: inlinesOf(n, 0), time: inlinesOf(n, 1), recipient: inlinesOf(n, 2),
+    body: nested(n.body, id, false),
+  }))],
+  ['coupure', (n, b) => b.emit((id) => ({
+    type: 'clipping', id,
+    newspaper: inlinesOf(n, 0), headline: inlinesOf(n, 1),
+    date: n.args[2] ? inlinesOf(n, 2) : null,
+    body: nested(n.body, id, false),
+  }))],
+  ['journal', (n, b) => b.emit((id) => ({
+    type: 'diary', id, heading: inlinesOf(n, 0), body: nested(n.body, id, false),
+  }))],
+  ['carton', (n, b) => b.emit((id) => ({ type: 'card', id, body: nested(n.body, id, false) }))],
+]);
 
 /**
  * Builds blocks from a sequence of nodes. Paragraphs end at a blank line,

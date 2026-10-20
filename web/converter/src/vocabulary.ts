@@ -30,6 +30,18 @@ const structure: Record<string, ArgSpec[]> = {
 
 const blocks: Record<string, ArgSpec[]> = {
   par: [], rep: [], separation: [], fin: [],
+  signature: ['m'], postscriptum: ['m'],
+  plan: ['o', 'm', 'm'], planpleinepage: ['o', 'm', 'm'],
+  pageannexe: ['m', 'm'],
+};
+
+/** Inserted documents. The body of each is the environment body. */
+const documents: Record<string, ArgSpec[]> = {
+  lettre: ['o', 'm'],
+  telegramme: ['m', 'm', 'm'],
+  coupure: ['m', 'm', 'o'],
+  journal: ['m'],
+  carton: [],
 };
 
 const inlines: Record<string, ArgSpec[]> = {
@@ -49,5 +61,5 @@ export const PART_GRAMMAR: Grammar = {
     ...layout,
     ...Object.fromEntries([...LENGTHS].map((name): [string, ArgSpec[]] => [name, []])),
   },
-  environments: {},
+  environments: documents,
 };
