@@ -32,11 +32,21 @@ function checkAgainstBook(variant: string, map: PageMap, book: Book): void {
   }
 }
 
+/** Resolves `rel` under `base`, refusing anything that ends up outside it. */
+export function resolveInside(base: string, rel: string): string {
+  const root = path.resolve(base);
+  const full = path.resolve(root, rel);
+  if (full !== root && !full.startsWith(root + path.sep)) throw new Error(`path escapes ${base}: ${rel}`);
+  return full;
+}
+
 /** Reads a file of the repository as it is in HEAD, or in the working tree. */
-async function copyRepoFile(repo: string, src: string, dest: string, workingTree: boolean): Promise<void> {
+export async function copyRepoFile(repo: string, src: string, out: string, workingTree: boolean): Promise<void> {
+  const from = resolveInside(repo, src);
+  const dest = resolveInside(out, src);
   await mkdir(path.dirname(dest), { recursive: true });
   if (workingTree) {
-    await copyFile(path.join(repo, src), dest);
+    await copyFile(from, dest);
     return;
   }
   const { stdout } = await run('git', ['cat-file', 'blob', `HEAD:${src}`], {
@@ -97,7 +107,7 @@ export async function buildData(opts: BuildDataOptions): Promise<{ versions: num
     collect(part.intro);
     for (const chapter of part.chapters) collect(chapter.blocks);
   }
-  for (const src of sources) await copyRepoFile(repo, src, path.join(out, src), workingTree);
+  for (const src of sources) await copyRepoFile(repo, src, out, workingTree);
 
   return {
     versions: index.versions.length,

@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { Block, Inline, Segment } from '@rmp/model';
 import { ConversionError, type Loc } from './errors.js';
 import { buildInlines, plainText } from './inlines.js';
@@ -75,6 +76,9 @@ function makeImage(node: CommandNode, id: string, fullPage: boolean, widthFracti
   const src = plainText(inlinesOf(node, 1), node.loc).trim();
   if (!IMAGE_EXTENSION.test(src)) {
     throw new ConversionError(node.loc, `image ${src}: use a .png, .jpg or .svg file (the site cannot show other formats)`);
+  }
+  if (src.startsWith('/') || /^[A-Za-z]:/.test(src) || path.posix.normalize(src.replaceAll('\\', '/')).split('/')[0] === '..') {
+    throw new ConversionError(node.loc, `image ${src}: use a path inside the repository`);
   }
   return { type: 'image', id, src, caption: inlinesOf(node, 2), fullPage, widthFraction };
 }

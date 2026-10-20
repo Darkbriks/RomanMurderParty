@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { BookSchema, DownloadsSchema, PageMapsSchema } from '@rmp/model';
 import { afterAll, describe, expect, it } from 'vitest';
-import { buildData } from '../../scripts/build-data.js';
+import { buildData, copyRepoFile, resolveInside } from '../../scripts/build-data.js';
 import { convertBook, FsSource } from '../src/index.js';
 import { bookFiles } from './helpers/book-files.js';
 import { makeRepo } from './helpers/git-repo.js';
@@ -80,5 +80,18 @@ describe('build-data', () => {
     expect(maps.final.chapters).toHaveLength(chapters);
     expect(readFileSync(path.join(out, 'figures', 'plan.png'), 'utf8')).toBe('PNGDATA');
     BookSchema.parse(JSON.parse(readFileSync(path.join(out, 'data', 'versions', `${r.latest}.json`), 'utf8')));
+  });
+});
+
+describe('image path containment', () => {
+  it('refuses sources or destinations outside the repository and the output', async () => {
+    const repo = tmp();
+    const out = tmp();
+    writeFileSync(path.join(repo, 'ok.png'), 'x');
+    await copyRepoFile(repo, 'ok.png', out, true);
+    expect(readFileSync(path.join(out, 'ok.png'), 'utf8')).toBe('x');
+    await expect(copyRepoFile(repo, '../escape.png', out, true)).rejects.toThrow(/path escapes/);
+    await expect(copyRepoFile(repo, '/etc/passwd', out, true)).rejects.toThrow(/path escapes/);
+    expect(() => resolveInside(out, 'a/../../b')).toThrow(/path escapes/);
   });
 });

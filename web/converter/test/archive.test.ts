@@ -15,7 +15,18 @@ const tmp = (): string => {
   dirs.push(d);
   return d;
 };
-const git = (dir: string, ...args: string[]) => execFileSync('git', args, { cwd: dir, encoding: 'utf8' }).trim();
+const identity = {
+  GIT_AUTHOR_NAME: 'Test',
+  GIT_AUTHOR_EMAIL: 'test@example.com',
+  GIT_COMMITTER_NAME: 'Test',
+  GIT_COMMITTER_EMAIL: 'test@example.com',
+};
+const git = (dir: string, ...args: string[]) =>
+  execFileSync('git', ['-c', 'commit.gpgsign=false', '-c', 'tag.gpgsign=false', ...args], {
+    cwd: dir,
+    encoding: 'utf8',
+    env: { ...process.env, ...identity },
+  }).trim();
 const gitEnv = { GIT_AUTHOR_NAME: 'T', GIT_AUTHOR_EMAIL: 't@e.x', GIT_COMMITTER_NAME: 'T', GIT_COMMITTER_EMAIL: 't@e.x' };
 
 const threeCommits = (first: Record<string, string> = {}) => [
@@ -36,7 +47,7 @@ describe('listVersions', () => {
   it('ignores tags outside the first-parent history', async () => {
     const { dir, shas } = await makeRepo(threeCommits());
     git(dir, 'checkout', '-q', '-b', 'side', shas[0]!);
-    git(dir, ...['-c', 'user.name=T', '-c', 'user.email=t@e.x', 'commit', '-q', '--allow-empty', '-m', 'side']);
+    git(dir, 'commit', '-q', '--allow-empty', '-m', 'side');
     git(dir, 'tag', 'side-tag');
     git(dir, 'checkout', '-q', 'main');
     git(dir, 'merge', '-q', '--no-ff', 'side', '-m', 'merge');

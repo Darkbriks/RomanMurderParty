@@ -1,5 +1,6 @@
 import type { Block, Inline } from '@rmp/model';
 import { describe, expect, it } from 'vitest';
+import { ConversionError } from '../src/errors.js';
 import { buildParts } from '../src/parts.js';
 import { tokenize } from '../src/lexer.js';
 import { parse } from '../src/parser.js';
@@ -73,6 +74,14 @@ describe('documents', () => {
     expect(one('\\plan{a.jpg}{x}', 'image').widthFraction).toBeNull();
     expect(one('\\plan[5cm]{a.JPEG}{x}', 'image').widthFraction).toBeNull();
     expect(one('\\plan[\\linewidth]{a.png}{x}', 'image').widthFraction).toBeNull();
+  });
+
+  it('rejects image paths outside the repository', () => {
+    for (const src of ['../x.png', '/abs/x.png', 'a/../../x.png']) {
+      expect(() => blocks(`\\plan{${src}}{x}`)).toThrow(/image .*: use a path inside the repository/);
+    }
+    expect(() => blocks('\\planpleinepage{../x.png}{x}')).toThrow(ConversionError);
+    expect(one('\\plan{a/../b.png}{x}', 'image').src).toBe('a/../b.png');
   });
 
   it('planpleinepage is full page', () => {
