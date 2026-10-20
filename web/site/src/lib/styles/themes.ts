@@ -17,12 +17,18 @@ export const THEMES: Record<Theme, ThemeTokens> = {
   dark: { bg: '#1B1815', bgPanel: '#26221E', ink: '#E8DFCB', accent: '#D1A870', frame: '#8C7457', note: '#E57D82', docPaper: '#2D2822' },
 };
 
-/** CSS custom properties for a theme, as used by global.css. */
+const COLOR_SCHEME: Record<Theme, 'light' | 'dark'> = { paper: 'light', sepia: 'light', dark: 'dark' };
+
+function themeVars(name: Theme): string {
+  const t = THEMES[name];
+  return `  --bg: ${t.bg};\n  --bg-panel: ${t.bgPanel};\n  --ink: ${t.ink};\n  --accent: ${t.accent};\n  --frame: ${t.frame};\n  --note: ${t.note};\n  --doc-paper: ${t.docPaper};\n  color-scheme: ${COLOR_SCHEME[name]};`;
+}
+
+/**
+ * CSS custom properties for every theme, as used by global.css. Plain `:root` gets the paper theme,
+ * so the page has colours before the pre-paint script runs, or without JavaScript.
+ */
 export function themeCss(): string {
-  return (Object.keys(THEMES) as Theme[])
-    .map((name) => {
-      const t = THEMES[name];
-      return `:root[data-theme='${name}'] {\n  --bg: ${t.bg};\n  --bg-panel: ${t.bgPanel};\n  --ink: ${t.ink};\n  --accent: ${t.accent};\n  --frame: ${t.frame};\n  --note: ${t.note};\n  --doc-paper: ${t.docPaper};\n}`;
-    })
-    .join('\n');
+  const themes = (Object.keys(THEMES) as Theme[]).map((name) => `:root[data-theme='${name}'] {\n${themeVars(name)}\n}`);
+  return [`:root {\n${themeVars('paper')}\n}`, ...themes].join('\n');
 }

@@ -4,19 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
     <script>
-      // Runs before first paint so the stored theme and font size never flash the defaults.
+      // Runs before first paint so the stored theme, font size and TOC state never flash the defaults.
+      // Keep in sync with prefs.ts (validation, FONT_STEPS_PX) and startPrefs() in prefs.svelte.ts.
       (function () {
         var root = document.documentElement;
         var steps = [16, 18, 20, 22, 25];
         var theme = null;
         var step = 1;
+        var toc = null;
         try {
           var raw = localStorage.getItem('rmp.prefs.v1');
           if (raw) {
             var p = JSON.parse(raw);
             if (p && (p.theme === 'paper' || p.theme === 'sepia' || p.theme === 'dark')) theme = p.theme;
             if (p && Number.isInteger(p.fontStep) && p.fontStep >= 0 && p.fontStep < steps.length) step = p.fontStep;
+            if (p && typeof p.tocOpen === 'boolean') toc = p.tocOpen ? 'open' : 'closed';
           }
         } catch (e) {}
         if (!theme) {
@@ -28,6 +32,7 @@
         }
         root.setAttribute('data-theme', theme);
         root.style.setProperty('--font-size', steps[step] + 'px');
+        if (toc) root.setAttribute('data-toc', toc);
       })();
     </script>
     %sveltekit.head%
