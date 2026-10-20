@@ -2,5 +2,7 @@
   "name": "@rmp/converter",
   "private": true,
   "version": "0.0.0",
-  "type": "module"
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@rmp/model": "workspace:*" }
 }
