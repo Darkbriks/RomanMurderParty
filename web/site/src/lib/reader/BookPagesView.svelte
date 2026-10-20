@@ -144,14 +144,19 @@
     else pendingChapter = n;
   }
 
-  // A navigation (the table of contents, back and forward) opens the route's chapter; our own URL
-  // updates are shallow and leave the page alone. A URL update still waiting is dropped, so that it
-  // cannot undo the navigation.
+  // Our own URL updates are shallow gotos and leave the page alone. Any other navigation opens the
+  // chapter its URL names: a link (the table of contents), or back and forward, which may return to
+  // a history entry our page turns rewrote. Such an entry comes back as a shallow popstate: the
+  // route's data is the chapter the view opened at, the URL (`to`) the chapter it had turned to.
+  // A URL update still waiting is dropped, so that it cannot undo the navigation.
+  const ownUpdate = (navigation: { type: string; shallow: boolean }) => navigation.type === 'goto' && navigation.shallow;
   beforeNavigate((navigation) => {
-    if (!navigation.shallow) clearTimeout(urlTimer);
+    if (!ownUpdate(navigation)) clearTimeout(urlTimer);
   });
   afterNavigate((navigation) => {
-    if (!navigation.shallow) openChapter(chapter.number);
+    if (ownUpdate(navigation)) return;
+    const n = Number(navigation.to?.params?.n);
+    openChapter(Number.isInteger(n) && n > 0 ? n : chapter.number);
   });
 
   // ---- The chapter on screen: URL and reading position ----

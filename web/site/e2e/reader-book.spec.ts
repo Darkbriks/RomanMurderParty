@@ -206,6 +206,37 @@ test('toc jumps to a chapter page in book mode', async ({ page }) => {
   await expect(view(page)).toHaveAttribute('data-variant', 'final');
 });
 
+test('back and forward after a toc jump show the chapter in the URL', async ({ page }) => {
+  test.skip(lastChapter < 3, 'the book has fewer than three chapters');
+  const n = lastChapter;
+  await openBook(page, 1);
+  const count = await pageCount(page);
+  // Turn into chapter 2: page turns rewrite the URL of the current history entry.
+  for (let i = 0; i < count; i++) {
+    const last = Number(/(\d+) \/ \d+$/.exec((await indicator(page).textContent()) ?? '')![1]);
+    if (last >= chapterPage(2)) break;
+    await page.keyboard.press('ArrowRight');
+    await expect(indicator(page)).not.toHaveText(new RegExp(`(^Page |–)${last} /`));
+  }
+  await expect(page).toHaveURL(/\/read\/2\/$/);
+  await page.locator(`#toc a[href$="/read/${n}/"]`).click();
+  await expect(page).toHaveURL(new RegExp(`/read/${n}/$`));
+  await expect(indicator(page)).toHaveText(indicatorText(spreadOf(chapterPage(n), count), count));
+
+  // Back to the rewritten entry: the pages, the URL and the table of contents agree on chapter 2.
+  await page.goBack();
+  await expect(page).toHaveURL(/\/read\/2\/$/);
+  await expect(indicator(page)).toHaveText(indicatorText(spreadOf(chapterPage(2), count), count));
+  await expect(pdfPage(page, chapterPage(2))).toBeVisible();
+  await expect(page.locator('#toc a[aria-current="page"]')).toHaveAttribute('href', /\/read\/2\/$/);
+  await settle(page);
+
+  await page.goForward();
+  await expect(page).toHaveURL(new RegExp(`/read/${n}/$`));
+  await expect(indicator(page)).toHaveText(indicatorText(spreadOf(chapterPage(n), count), count));
+  await expect(page.locator('#toc a[aria-current="page"]')).toHaveAttribute('href', new RegExp(`/read/${n}/$`));
+});
+
 test('keys, edge clicks, buttons and swipes turn pages', async ({ page }) => {
   await page.setViewportSize(PORTRAIT);
   const one = chapterPage(1);
