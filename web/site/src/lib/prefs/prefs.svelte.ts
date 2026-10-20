@@ -43,6 +43,8 @@ export function startPrefs(): void {
       root.lang = prefs.lang;
       if (prefs.tocOpen === null) root.removeAttribute('data-toc');
       else root.setAttribute('data-toc', prefs.tocOpen ? 'open' : 'closed');
+      // Hydrated, with the stored preferences applied: the e2e tests wait for this before acting.
+      root.setAttribute('data-ready', '');
     });
   });
 }
