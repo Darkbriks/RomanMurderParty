@@ -55,6 +55,8 @@ Mode : `\usepackage[brouillon]{murderparty}` ou `\usepackage[final]{murderparty}
 | `\planpleinepage[page=3]{fichier}{légende}` | Plan sur une page entière |
 | `\pageannexe{Titre}{contenu}` | Page d'annexe entre deux parties |
 
+Les images de `\plan` et `\planpleinepage` doivent être des fichiers `.png`, `.jpg` ou `.svg`, avec l'extension écrite explicitement : le convertisseur du site refuse les figures PDF.
+
 ## Site de lecture
 
 Le roman est aussi publié sous forme de site de lecture : <https://darkbriks.github.io/RomanMurderParty/>.
