@@ -72,4 +72,5 @@ export const en: Record<keyof typeof fr, string> = {
   bibleEveryone: 'Everyone',
   bibleOthers: 'Others',
   bibleChooseRelation: 'Pick a cell to read the relation.',
+  biblePlans: 'Plans (PDF)',
 };

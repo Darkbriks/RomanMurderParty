@@ -1,9 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
-import { characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
+import { anchorFor, characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
 import { relationsOf } from '../src/lib/bible/character.ts';
 import { searchDocs } from '../src/lib/bible/search.ts';
 import { chronologyGrid } from '../src/lib/bible/chronology.ts';
-import { asChronology, asRelations } from '../src/lib/bible/shapes.ts';
+import { asChronology, asHouse, asRelations } from '../src/lib/bible/shapes.ts';
 import { bible, handledKeys, secrets } from './bible.ts';
 import { gotoReady, reloadReady } from './book.ts';
 
@@ -182,4 +182,21 @@ test('relations are a matrix whose cells tell their relation', async ({ page }) 
   const first = relations![0]!;
   await main(page).locator(`button[data-from="${first.from}"][data-to="${first.to}"]`).click();
   await expect(main(page).locator('[data-relation-detail]')).toContainText(first.label ?? '');
+});
+
+const houseFile = bible?.files.find((f) => f.kind === 'yaml' && asHouse(f.data));
+
+test('the house shows its rooms level by level, without the plan generator data', async ({ page }) => {
+  test.skip(houseFile?.kind !== 'yaml', 'no house');
+  const file = houseFile as Extract<typeof houseFile, { kind: 'yaml' }>;
+  const room = asHouse(file.data)![0]!.rooms[0]!;
+  await consent(page);
+  await gotoReady(page, `bible/?vue=${file.slug}`);
+  const shown = target(page, anchorFor(file.slug, room.path, room.raw));
+  await expect(shown).toContainText(room.num);
+  await expect(shown).toContainText(String(room.raw.nom));
+  if (file.pdfs.length > 0) await expect(main(page).getByRole('link', { name: 'Plans (PDF)' })).toHaveAttribute('href', new RegExp(`${file.pdfs[0]!.url}$`));
+  for (const key of ['rect', 'portes', 'tikz_extra', 'etiquette']) {
+    await expect(main(page).getByText(humanizeKey(key), { exact: true })).toHaveCount(0);
+  }
 });

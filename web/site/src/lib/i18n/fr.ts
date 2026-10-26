@@ -71,4 +71,5 @@ export const fr = {
   bibleEveryone: 'Tous',
   bibleOthers: 'Autres',
   bibleChooseRelation: 'Choisir une case pour lire la relation.',
+  biblePlans: 'Plans (PDF)',
 } as const;
