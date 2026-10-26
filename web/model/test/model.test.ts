@@ -46,6 +46,11 @@ describe('model', () => {
     expect(new Set(BLOCK_TYPES)).toEqual(literals);
   });
 
+  it('accepts a dateline block', () => {
+    expect(() => BlockSchema.parse({ type: 'dateline', id: 'c1.b1', place: [], date: [{ type: 'text', text: '1890' }] })).not.toThrow();
+    expect(BLOCK_TYPES).toContain('dateline');
+  });
+
   it('rejects a page map with a zero page', () => {
     expect(PageMapSchema.safeParse({ parts: [0], chapters: [] }).success).toBe(false);
   });

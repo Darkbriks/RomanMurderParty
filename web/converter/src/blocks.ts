@@ -42,6 +42,7 @@ const COMMANDS = new Map<string, (node: CommandNode, b: BlockBuilder) => void>([
   }],
   ['plan', (n, b) => b.emit((id) => makeImage(n, id, false, parseWidth(n.args[0] ?? null)))],
   ['planpleinepage', (n, b) => b.emit((id) => makeImage(n, id, true, null))],
+  ['lieudate', (n, b) => b.emit((id) => ({ type: 'dateline', id, place: inlinesOf(n, 0), date: inlinesOf(n, 1) }))],
   ['pageannexe', (n, b) =>
     b.emit((id) => ({ type: 'annexPage', id, title: inlinesOf(n, 0), body: nested(n.args[1] ?? [], id, false) }))],
 ]);

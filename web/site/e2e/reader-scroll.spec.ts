@@ -5,6 +5,7 @@ import {
   chapterByNumber,
   chapters,
   commentFragments,
+  firstDateline,
   firstDialogue,
   firstNote,
   firstPlaceholder,
@@ -35,6 +36,7 @@ const one = chapterByNumber(1);
 const second = Math.min(2, lastChapter);
 const rework = firstNote('rework');
 const dialogue = firstDialogue();
+const dateline = firstDateline();
 const placeholder = firstPlaceholder();
 const inner = chapters.find((c) => !c.isFirstOfPart) ?? null;
 
@@ -49,6 +51,15 @@ test('chapter 1 renders', async ({ page }) => {
   await expect(bookLanguage(page)).toHaveAttribute('lang', 'fr');
   const ids = await chapterBody(page).locator(':scope > *').evaluateAll((els) => els.map((el) => el.getAttribute('data-block-id')));
   expect(ids).toEqual(visibleBlockIds(one.chapter));
+});
+
+test('dateline shows place and date', async ({ page }) => {
+  test.skip(!dateline, 'no chapter has a \\lieudate');
+  const { n, block } = dateline!;
+  await gotoReady(page, `read/${n}/`);
+  const shown = page.locator(`[data-block-id="${block.id}"]`);
+  await expect(shown).toContainText(normalize(plain(block.place)));
+  await expect(shown).toContainText(normalize(plain(block.date)));
 });
 
 test('dialogue paragraphs open with an em dash and a no-break space', async ({ page }) => {

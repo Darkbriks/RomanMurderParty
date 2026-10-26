@@ -19,10 +19,13 @@ function hasVisibleContent(nodes: Inline[]): boolean {
 
 /**
  * Whether a block is rendered. A paragraph that holds nothing but working notes disappears when
- * notes are hidden, as in the final PDF, so a placeholder chapter shows no empty paragraph.
+ * notes are hidden, as in the final PDF, so a placeholder chapter shows no empty paragraph; so does
+ * a dateline whose place and date are only notes.
  */
 export function isBlockVisible(block: Block, notes: boolean): boolean {
-  if (notes || block.type !== 'paragraph') return true;
+  if (notes) return true;
+  if (block.type === 'dateline') return hasVisibleContent(block.place) || hasVisibleContent(block.date);
+  if (block.type !== 'paragraph') return true;
   return block.segments.some((s) => hasVisibleContent(s.content));
 }
 
