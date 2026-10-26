@@ -47,4 +47,10 @@ export const fr = {
   bookUnavailable: 'Les pages du livre ne peuvent pas être affichées pour le moment.',
   bookUseScroll: 'Lire en défilement',
   bibleLink: 'Bible de l’auteur (révèle la solution)',
+  bibleTitle: 'Bible de l’auteur',
+  bibleWarning: 'Cette section révèle la solution du roman : le coupable, la cible et la victime, ainsi que les secrets de chaque personnage.',
+  bibleAccept: 'J’accepte d’être spoilé',
+  bibleOpen: 'Ouvrir la bible',
+  bibleClose: 'Refermer la bible',
+  bibleUnavailable: 'Cette version du site n’a pas de bible.',
 } as const;

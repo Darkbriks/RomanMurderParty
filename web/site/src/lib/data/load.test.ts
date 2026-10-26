@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadBook, loadSiteInfo } from './load';
+import { loadBible, loadBook, loadSiteInfo } from './load';
 
 describe('load', () => {
   it('loadBook requests the versioned URL under base', async () => {
@@ -34,5 +34,25 @@ describe('loadSiteInfo', () => {
   it('rejects invalid data', async () => {
     const stub = (async () => new Response('{"bible":"oui"}', { status: 200 })) as unknown as typeof fetch;
     await expect(loadSiteInfo(stub, '')).rejects.toThrow();
+  });
+});
+
+describe('loadBible', () => {
+  it('requests bible.json under base', async () => {
+    const urls: string[] = [];
+    const stub = (async (url: string) => {
+      urls.push(url);
+      return new Response('{"schemaVersion":1,"files":[]}', { status: 200 });
+    }) as unknown as typeof fetch;
+    expect(await loadBible(stub, '/RomanMurderParty')).toEqual({ schemaVersion: 1, files: [] });
+    expect(urls).toEqual(['/RomanMurderParty/data/bible.json']);
+  });
+  it('gives null when there is no bible', async () => {
+    const stub = (async () => new Response('', { status: 404 })) as unknown as typeof fetch;
+    expect(await loadBible(stub, '')).toBeNull();
+  });
+  it('rejects other HTTP errors', async () => {
+    const stub = (async () => new Response('', { status: 500 })) as unknown as typeof fetch;
+    await expect(loadBible(stub, '')).rejects.toThrow(/500/);
   });
 });

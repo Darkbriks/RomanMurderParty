@@ -1,9 +1,11 @@
 import {
+  BibleSchema,
   BookSchema,
   DownloadsSchema,
   PageMapsSchema,
   SiteInfoSchema,
   VersionIndexSchema,
+  type Bible,
   type Book,
   type Downloads,
   type PageMaps,
@@ -34,3 +36,12 @@ export const loadDownloads = (fetch: Fetch, base: string): Promise<Downloads> =>
 
 export const loadSiteInfo = (fetch: Fetch, base: string): Promise<SiteInfo> =>
   getJson(fetch, `${base}/data/site.json`, SiteInfoSchema);
+
+/** The bible, or null when the site was built without one. */
+export async function loadBible(fetch: Fetch, base: string): Promise<Bible | null> {
+  const url = `${base}/data/bible.json`;
+  const res = await fetch(url);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Cannot load ${url}: HTTP ${res.status}`);
+  return BibleSchema.parse(await res.json());
+}

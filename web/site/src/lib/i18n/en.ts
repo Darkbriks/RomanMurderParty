@@ -48,4 +48,10 @@ export const en: Record<keyof typeof fr, string> = {
   bookUnavailable: 'The book pages cannot be shown right now.',
   bookUseScroll: 'Read in scroll mode',
   bibleLink: "Author's bible (reveals the solution)",
+  bibleTitle: "Author's bible",
+  bibleWarning: "This section reveals the solution of the novel: the culprit, the target and the victim, and every character's secrets.",
+  bibleAccept: 'I accept the spoilers',
+  bibleOpen: 'Open the bible',
+  bibleClose: 'Close the bible',
+  bibleUnavailable: 'This version of the site has no bible.',
 };
