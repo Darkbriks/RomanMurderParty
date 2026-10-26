@@ -1,6 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 import { characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
+import { relationsOf } from '../src/lib/bible/character.ts';
 import { searchDocs } from '../src/lib/bible/search.ts';
+import { asRelations } from '../src/lib/bible/shapes.ts';
 import { bible, hasDedicatedView, secrets } from './bible.ts';
 import { gotoReady, reloadReady } from './book.ts';
 
@@ -121,4 +123,23 @@ test('every search result has its target in its view', async ({ page }) => {
     const missing = await page.evaluate((list) => list.filter((id) => !document.getElementById(id)), ids);
     expect(missing, file.slug).toEqual([]);
   }
+});
+
+test('a character page shows their identity and their relations both ways', async ({ page }) => {
+  const file = bible!.files.find((f) => f.slug === 'relations');
+  const rels = file?.kind === 'yaml' ? asRelations(file.data) : null;
+  const c = rels ? index.list.find((x) => relationsOf(rels, x.id).from.length > 0 && relationsOf(rels, x.id).to.length > 0) : undefined;
+  test.skip(!c, 'no character has relations both ways');
+  const { from, to } = relationsOf(rels!, c!.id);
+  await consent(page);
+  await gotoReady(page, `bible/?perso=${c!.id}`);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(c!.name);
+  await expect(main(page).locator('[data-relations="from"] li')).toHaveCount(from.length);
+  await expect(main(page).locator('[data-relations="to"] li')).toHaveCount(to.length);
+});
+
+test('an unknown character says so', async ({ page }) => {
+  await consent(page);
+  await gotoReady(page, 'bible/?perso=ZZZZ');
+  await expect(main(page)).toContainText('Cette page de la bible n’existe pas.');
 });

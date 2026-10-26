@@ -62,4 +62,11 @@ export const fr = {
   bibleUnknownView: 'Cette page de la bible n’existe pas.',
   bibleSearch: 'Chercher dans la bible',
   bibleNoResults: 'Aucun résultat.',
+  bibleRelationsFrom: 'Son regard sur les autres',
+  bibleRelationsTo: 'Le regard des autres',
+  bibleEvening: 'La soirée',
+  bibleGap: 'trou',
+  bibleSceneNotes: 'Notes de scène',
+  bibleAmbivalent: 'ambivalent',
+  bibleEveryone: 'Tous',
 } as const;

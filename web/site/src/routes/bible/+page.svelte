@@ -6,6 +6,7 @@
   import BibleGate from '#lib/bible/BibleGate.svelte';
   import BibleHome from '#lib/bible/BibleHome.svelte';
   import { characterIndex, fileBySlug } from '#lib/bible/catalog.ts';
+  import CharacterView from '#lib/bible/CharacterView.svelte';
   import FileView from '#lib/bible/FileView.svelte';
   import { clearConsent, readConsent, writeConsent } from '#lib/bible/consent.ts';
   import { loadBible } from '#lib/data/load.ts';
@@ -92,7 +93,7 @@
         {@const file = fileBySlug(bible, vue)}
         {#if file}<FileView {file} {bible} {index} />{:else}<p class="status">{t(prefs.lang, 'bibleUnknownView')}</p>{/if}
       {:else if perso}
-        <p class="status">{perso}</p>
+        <CharacterView id={perso} {bible} {index} />
       {:else}
         <BibleHome {bible} {index} />
       {/if}

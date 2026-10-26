@@ -63,4 +63,11 @@ export const en: Record<keyof typeof fr, string> = {
   bibleUnknownView: 'This bible page does not exist.',
   bibleSearch: 'Search the bible',
   bibleNoResults: 'No results.',
+  bibleRelationsFrom: 'How they see others',
+  bibleRelationsTo: 'How others see them',
+  bibleEvening: 'The evening',
+  bibleGap: 'gap',
+  bibleSceneNotes: 'Scene notes',
+  bibleAmbivalent: 'ambivalent',
+  bibleEveryone: 'Everyone',
 };
