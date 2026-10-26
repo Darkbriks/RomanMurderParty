@@ -56,8 +56,8 @@
 {#if !character}
   <p class="status">{t(prefs.lang, 'bibleUnknownView')}</p>
 {:else}
-  <h1>{character.name}</h1>
-  <ValueView value={character.entry} path={[]} slug="personnages" {index} hide={['nom']} />
+  <h1>{character.name} <small class="id">{character.id}</small></h1>
+  <ValueView value={character.entry} path={[]} slug="personnages" {index} hide={['nom', 'id']} />
 
   {#if relations}
     {@const { from, to } = relationsOf(relations, id)}
@@ -115,6 +115,12 @@
     font-size: 1.6em;
     font-style: italic;
     font-weight: normal;
+  }
+  .id {
+    color: var(--accent);
+    font-size: 0.55em;
+    font-style: normal;
+    letter-spacing: 0.08em;
   }
   h2 {
     margin: 2rem 0 0.6rem;

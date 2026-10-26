@@ -8,7 +8,8 @@
 
   // Any value of a YAML file, whatever its shape: this is what lets a new file render without code.
   // Lists of objects become entries (with an anchor, for search results and links), objects become
-  // definition lists, ids become links to their character.
+  // definition lists, ids become links to their character. Short values are listed inline, sentences
+  // as bullets.
   let {
     value,
     path,
@@ -54,8 +55,12 @@
 {:else if typeof value === 'boolean'}
   {t(prefs.lang, value ? 'bibleYes' : 'bibleNo')}
 {:else if Array.isArray(value)}
-  {#if value.every(isScalar)}
+  {#if value.every(isScalar) && value.every((v) => typeof v !== 'string' || v.length <= 40)}
     {#each value.filter(shown) as v, i (i)}{#if i > 0}{', '}{/if}<Self value={v} path={[...path, i]} {slug} {index} {hide} />{/each}
+  {:else if value.every(isScalar)}
+    <ul class="items">
+      {#each value.filter(shown) as v, i (i)}<li><Self value={v} path={[...path, i]} {slug} {index} {hide} /></li>{/each}
+    </ul>
   {:else}
     <div class="entries">
       {#each value as item, i (i)}
@@ -99,6 +104,10 @@
     dt {
       padding-top: 0.4em;
     }
+  }
+  .items {
+    margin: 0;
+    padding-left: 1.1em;
   }
   .entries {
     display: flex;

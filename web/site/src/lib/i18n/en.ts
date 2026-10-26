@@ -70,4 +70,5 @@ export const en: Record<keyof typeof fr, string> = {
   bibleSceneNotes: 'Scene notes',
   bibleAmbivalent: 'ambivalent',
   bibleEveryone: 'Everyone',
+  bibleOthers: 'Others',
 };

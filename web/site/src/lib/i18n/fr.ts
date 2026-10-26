@@ -69,4 +69,5 @@ export const fr = {
   bibleSceneNotes: 'Notes de scène',
   bibleAmbivalent: 'ambivalent',
   bibleEveryone: 'Tous',
+  bibleOthers: 'Autres',
 } as const;

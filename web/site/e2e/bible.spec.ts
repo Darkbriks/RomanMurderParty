@@ -2,8 +2,9 @@ import { expect, test, type Page } from '@playwright/test';
 import { characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
 import { relationsOf } from '../src/lib/bible/character.ts';
 import { searchDocs } from '../src/lib/bible/search.ts';
-import { asRelations } from '../src/lib/bible/shapes.ts';
-import { bible, hasDedicatedView, secrets } from './bible.ts';
+import { chronologyGrid } from '../src/lib/bible/chronology.ts';
+import { asChronology, asRelations } from '../src/lib/bible/shapes.ts';
+import { bible, handledKeys, secrets } from './bible.ts';
 import { gotoReady, reloadReady } from './book.ts';
 
 // Expectations come from the built bible (e2e/bible.ts), never from today's wording of the data.
@@ -69,8 +70,8 @@ test('every file has a view, and no value prints as [object Object]', async ({ p
     await gotoReady(page, `bible/?vue=${file.slug}`);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(file.title);
     await expect(main(page)).not.toContainText('[object Object]');
-    if (file.kind === 'yaml' && isRecord(file.data) && !hasDedicatedView(file)) {
-      for (const key of Object.keys(file.data)) {
+    if (file.kind === 'yaml' && isRecord(file.data)) {
+      for (const key of Object.keys(file.data).filter((k) => !handledKeys(file).includes(k))) {
         await expect(main(page).getByRole('heading', { level: 2, name: humanizeKey(key), exact: true }).first()).toBeVisible();
       }
     }
@@ -143,3 +144,28 @@ test('an unknown character says so', async ({ page }) => {
   await gotoReady(page, 'bible/?perso=ZZZZ');
   await expect(main(page)).toContainText('Cette page de la bible n’existe pas.');
 });
+
+const chronologyFile = bible?.files.find((f) => f.kind === 'yaml' && asChronology(f.data));
+const chronology = chronologyFile?.kind === 'yaml' ? asChronology(chronologyFile.data) : null;
+
+test('the chronology is a grid of characters by phase', async ({ page }) => {
+  test.skip(!chronology, 'no chronology');
+  const grid = chronologyGrid(chronology!);
+  await consent(page);
+  await gotoReady(page, `bible/?vue=${chronologyFile!.slug}`);
+  await expect(main(page).locator('tr[data-row]')).toHaveCount(grid.sections.reduce((n, s) => n + s.rows.length, 0));
+  const first = chronology!.events[0]!;
+  await expect(main(page).locator(`tr[data-row="${first.who[0]}"] [data-phase="${first.phases[0]}"]`)).toContainText(first.what);
+});
+
+for (const view of ['chronology', 'relations'] as const) {
+  test(`on a phone, the ${view} view never scrolls the page sideways`, async ({ page }) => {
+    const file = bible!.files.find((f) => f.kind === 'yaml' && (view === 'chronology' ? asChronology(f.data) : asRelations(f.data)));
+    test.skip(!file, `no ${view}`);
+    await page.setViewportSize({ width: 375, height: 800 });
+    await consent(page);
+    await gotoReady(page, `bible/?vue=${file!.slug}`);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(file!.title);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+}
