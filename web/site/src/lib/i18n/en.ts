@@ -19,6 +19,7 @@ export const en: Record<keyof typeof fr, string> = {
   themeSepia: 'Sepia',
   themeDark: 'Dark',
   notes: 'Working notes',
+  notesHint: 'May reveal plot points.',
   language: 'Language',
   chapter: 'Chapter {numeral}',
   chapterNav: 'Neighbouring chapters',

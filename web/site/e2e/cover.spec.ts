@@ -146,3 +146,14 @@ test('language switch', async ({ page }) => {
   const date = updateDate('en');
   await expect(page.locator('main')).toContainText(date ? `Updated on ${date}` : 'Local version');
 });
+
+test('working notes warn about spoilers', async ({ page }) => {
+  await gotoReady(page, '');
+  await settingsButton(page).click();
+  await expect(page.getByRole('switch', { name: 'Notes de travail' })).toHaveAccessibleDescription(
+    'Peuvent révéler des éléments de l’intrigue.',
+  );
+  await page.keyboard.press('Escape');
+  await pdfButton(page).click();
+  await expect(page.locator('#download-panel')).toContainText('Peuvent révéler des éléments de l’intrigue.');
+});

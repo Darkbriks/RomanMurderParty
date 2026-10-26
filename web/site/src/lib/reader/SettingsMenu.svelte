@@ -74,11 +74,20 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row wrap">
       <span class="label" id="settings-notes">{t(prefs.lang, 'notes')}</span>
-      <button class="switch" role="switch" aria-checked={prefs.notes} aria-labelledby="settings-notes" onclick={() => (prefs.notes = !prefs.notes)}>
+      <button
+        class="switch"
+        role="switch"
+        aria-checked={prefs.notes}
+        aria-labelledby="settings-notes"
+        aria-describedby="settings-notes-hint"
+        onclick={() => (prefs.notes = !prefs.notes)}
+      >
         <span class="knob" aria-hidden="true"></span>
       </button>
+      <!-- Always shown rather than on hover: phones have no hover. -->
+      <p class="hint" id="settings-notes-hint">{t(prefs.lang, 'notesHint')}</p>
     </div>
 
     <div class="row">
@@ -145,6 +154,13 @@
   }
   .label {
     color: var(--accent);
+  }
+  .hint {
+    flex-basis: 100%;
+    margin: 0;
+    color: var(--accent);
+    font-size: 0.85em;
+    line-height: 1.3;
   }
   /* Three reading modes do not fit beside their label: they go below it. */
   .wrap {

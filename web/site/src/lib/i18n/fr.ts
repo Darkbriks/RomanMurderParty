@@ -18,6 +18,7 @@ export const fr = {
   themeSepia: 'Sépia',
   themeDark: 'Sombre',
   notes: 'Notes de travail',
+  notesHint: 'Peuvent révéler des éléments de l’intrigue.',
   language: 'Langue',
   chapter: 'Chapitre {numeral}',
   chapterNav: 'Chapitres voisins',
