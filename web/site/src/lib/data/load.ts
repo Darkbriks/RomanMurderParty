@@ -2,10 +2,12 @@ import {
   BookSchema,
   DownloadsSchema,
   PageMapsSchema,
+  SiteInfoSchema,
   VersionIndexSchema,
   type Book,
   type Downloads,
   type PageMaps,
+  type SiteInfo,
   type VersionIndex,
 } from '@rmp/model';
 import type { ZodType } from 'zod';
@@ -29,3 +31,6 @@ export const loadPageMaps = (fetch: Fetch, base: string): Promise<PageMaps> =>
 
 export const loadDownloads = (fetch: Fetch, base: string): Promise<Downloads> =>
   getJson(fetch, `${base}/data/downloads.json`, DownloadsSchema);
+
+export const loadSiteInfo = (fetch: Fetch, base: string): Promise<SiteInfo> =>
+  getJson(fetch, `${base}/data/site.json`, SiteInfoSchema);

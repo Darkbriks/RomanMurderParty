@@ -57,6 +57,10 @@
   <h1 lang="fr">{data.book.meta.title}</h1>
   <Ornament name="scene" />
   {#if data.book.meta.author}<p class="author" lang="fr">{data.book.meta.author}</p>{/if}
+  {#if data.site.presentation}
+    <!-- presentation.md, rendered at build time from the author's own repository. -->
+    <div class="presentation" lang="fr">{@html data.site.presentation}</div>
+  {/if}
   <div class="buttons">
     {#if resume && resumeTarget}
       <a class="button main resume" href={resumeHref}>
@@ -69,6 +73,9 @@
     <DownloadMenu downloads={data.downloads} variant="cover" />
   </div>
   <p class="updated">{updated}</p>
+  {#if data.site.bible}
+    <a class="bible-link" href="{resolve('/bible')}/">{t(prefs.lang, 'bibleLink')}</a>
+  {/if}
 </main>
 
 <style>
@@ -136,6 +143,20 @@
   }
   .updated {
     margin: 1.5rem 0 0;
+    color: var(--accent);
+    font-size: 0.8em;
+  }
+  .presentation {
+    max-width: 30em;
+    margin: 0.5rem 0 0;
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+  .presentation :global(p) {
+    margin: 0 0 0.6em;
+  }
+  .bible-link {
+    margin-top: 0.25rem;
     color: var(--accent);
     font-size: 0.8em;
   }

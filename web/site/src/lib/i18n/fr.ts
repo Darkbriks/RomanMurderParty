@@ -46,4 +46,5 @@ export const fr = {
   bookSpreadIndicator: 'Pages {first}–{last} / {count}',
   bookUnavailable: 'Les pages du livre ne peuvent pas être affichées pour le moment.',
   bookUseScroll: 'Lire en défilement',
+  bibleLink: 'Bible de l’auteur (révèle la solution)',
 } as const;

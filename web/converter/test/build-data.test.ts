@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { BibleSchema, BookSchema, DownloadsSchema, PageMapsSchema } from '@rmp/model';
+import { BibleSchema, BookSchema, DownloadsSchema, PageMapsSchema, SiteInfoSchema } from '@rmp/model';
 import { afterAll, describe, expect, it } from 'vitest';
 import { buildData, copyRepoFile, listRepoFiles, readRepoFile, resolveInside } from '../../scripts/build-data.js';
 import { convertBook, FsSource } from '../src/index.js';
@@ -116,6 +116,30 @@ describe('build-data: the bible', () => {
     };
     expect(await slugs(true)).toContain('nouveau');
     expect(await slugs(false)).not.toContain('nouveau');
+  });
+});
+
+describe('build-data: site.json', () => {
+  const siteInfo = (out: string) => SiteInfoSchema.parse(JSON.parse(readFileSync(path.join(out, 'data', 'site.json'), 'utf8')));
+
+  it('renders presentation.md and says whether there is a bible', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([
+      { files: { ...bookFiles(), ...bibleFiles(), 'presentation.md': '<!-- TODO -->\nUn *roman*.' }, message: 'one' },
+    ]);
+    const out = tmp();
+    await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree: false });
+    const info = siteInfo(out);
+    expect(info.bible).toBe(true);
+    expect(info.presentation).toContain('Un <em>roman</em>.');
+  });
+
+  it('has no presentation without presentation.md, and no bible without bible/', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([{ files: bookFiles(), message: 'one' }]);
+    const out = tmp();
+    await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree: false });
+    expect(siteInfo(out)).toEqual({ schemaVersion: 1, presentation: null, bible: false });
   });
 });
 

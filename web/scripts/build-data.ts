@@ -3,12 +3,13 @@ import { copyFile, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
-import { buildArchive, buildBible, parsePageMap, selectBibleFiles } from '@rmp/converter';
+import { buildArchive, buildBible, markdownToHtml, parsePageMap, selectBibleFiles } from '@rmp/converter';
 import {
   BibleSchema,
   BookSchema,
   DownloadsSchema,
   PageMapsSchema,
+  SiteInfoSchema,
   type Book,
   type DownloadItem,
   type PageMap,
@@ -165,6 +166,19 @@ export async function buildData(
   }
   for (const src of sources) await copyRepoFile(repo, src, out, workingTree);
   const bible = await writeBible(repo, out, workingTree);
+  const presentation = await readRepoFile(repo, 'presentation.md', workingTree);
+  await writeFile(
+    path.join(dataDir, 'site.json'),
+    JSON.stringify(
+      SiteInfoSchema.parse({
+        schemaVersion: 1,
+        presentation: presentation ? markdownToHtml(presentation.toString('utf8')) : null,
+        bible,
+      }),
+      null,
+      2,
+    ),
+  );
 
   return {
     versions: index.versions.length,

@@ -47,4 +47,5 @@ export const en: Record<keyof typeof fr, string> = {
   bookSpreadIndicator: 'Pages {first}–{last} / {count}',
   bookUnavailable: 'The book pages cannot be shown right now.',
   bookUseScroll: 'Read in scroll mode',
+  bibleLink: "Author's bible (reveals the solution)",
 };
