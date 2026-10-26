@@ -45,6 +45,13 @@ A novel written in French, adapted from a murder party. It is typeset with LaTeX
 - Testing rule: tests must not pin live novel text, which changes as the author writes. Exact assertions use the frozen fixture `web/converter/test/fixtures/book/`. The e2e specs derive their expectations from the built data in `web/site/static/data` and the `.tex` sources.
 - `\ldots` swallows the following space in both the PDF and the site, so write `\ldots{} suite` if a space is wanted.
 
+## Story bible and agent handoff
+
+- Read `docs/agents/passation.md` first: the agent's role (never write the author's prose; during the first draft give structure and coherence feedback only), the canon hierarchy, the current state and next steps. `docs/agents/journal.md` logs why each decision was taken. Update both at the end of any session that changes something.
+- `bible/` holds everything needed to write the novel that is not part of it: `bible.md` (decisions in prose), `notes-de-scene.md` (characters' inner states, never in the chronology), `donnees/*.yaml` (characters, relations, chronology, sub-plots, invitations, antidote vote, verified historical facts), `lieu/` (house plans: `maison.yaml` is the source, `gen.py` generates the TikZ), `sources/`. It is in French and contains spoilers.
+- `bible/` is not reached by `roman.tex`, so the converter and the site ignore it. Run `python3 bible/verifier.py` (needs PyYAML) after editing the data: it checks the YAML and the three-letter character IDs.
+- The murder party's character sheets live in the private repository `Darkbriks/murder-party` (`data/md/`). Use character names only, never the players' names.
+
 ## Mismatches between the README and the repository
 
 - `README.md` lists `figures/` and `exemples/demonstration.tex`, but neither exists. Setting `\demonstrationtrue` in `roman.tex` would therefore break the build.
