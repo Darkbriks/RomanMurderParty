@@ -1,0 +1,17 @@
+# Maison de la fixture.
+# rect : [x1, y1, x2, y2]
+niveaux:
+  - cle: S
+    titre: Sous-sol
+    hauteur: 11 ft
+    pieces:
+      - num: S1
+        nom: Cour anglaise
+        cat: ext
+        rect: [0, -8, 36, 0]
+        desc: Fossé entre le trottoir et la façade.
+      - num: S2
+        nom: Office du majordome
+        cat: srv
+        rect: [0, 0, 10, 14]
+        desc: Le verre y est préparé.

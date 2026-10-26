@@ -1,0 +1,25 @@
+# Relations de la fixture.
+# valence  -2 à +2
+
+relations:
+  - de: SER
+    vers: WHI
+    valence: -2
+    ambivalent: true
+    libelle: Menace maternelle
+    source: fiche
+  - de: SER
+    vers: EVA
+    valence: 2
+    libelle: Meilleure amie
+    source: fiche
+  - de: WHI
+    vers: SER
+    valence: 1
+    libelle: Protégée
+    source: deduit
+  - de: SER
+    vers: XYZ
+    valence: 0
+    libelle: Inconnu
+    source: plan
