@@ -42,11 +42,13 @@ Les fiches mêlent prénoms des joueurs et noms des personnages : dans le roman,
 
 Avant de modifier les données : `python3 bible/verifier.py`.
 
-## État actuel (25 octobre 2026)
+## État actuel (26 octobre 2026)
 
 **Fixé** : cible Marcus, coupable Vivienne Ashford (amnésique par hypnose jusqu'à l'heure X), victime Béatrice Prévost par échange de verres ; antidote unique, sort voté par les convives (verdict reporté, décidé en écrivant) ; Béatrice meurt des suites de la soirée ; le domestique est hypnotisé ; buffet debout ; Seraphina ouvre le roman ; Reginald fait l'intermède ; Cordelia, Isadora, Lady Whitmore, Béatrice et Thomas (en duo) ont une partie d'enquête ; Ophelia en réserve.
 
 **Écrit** : `parties/ouverture.tex`, chapitres « Valse (provisoire) » (arrivées, jusqu'à la signora Valentini) et « Seule » (flash-back de Whitechapel : un protecteur masqué, Marcus, sauve Mary Fletcher). Ce texte fixe déjà des points de lore repris dans la chronologie (`source: ouverture`).
+
+**Site** : la bible est consultable dans la section `/bible/` du site, derrière un avertissement anti-spoil (lien discret en bas de l'accueil). L'accueil présente le projet à partir de `presentation.md`, dont le texte est **provisoire** (TODO d'Antoine). Le lieu et la date d'un chapitre passent par `\lieudate{lieu}{date}` (« Valse » et « Seule » sont convertis).
 
 **Points de cohérence signalés le 25 octobre, non tranchés** :
 - « Seule » place le flash-back 4–5 ans avant la soirée ; les fiches datent le duo d'il y a 2 ans, l'embauche de Florence de 2 ans, les partitions volées d'un an. À accorder.

@@ -1,10 +1,11 @@
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { BookSchema, DownloadsSchema, PageMapsSchema } from '@rmp/model';
+import { BibleSchema, BookSchema, DownloadsSchema, PageMapsSchema, SiteInfoSchema } from '@rmp/model';
 import { afterAll, describe, expect, it } from 'vitest';
-import { buildData, copyRepoFile, resolveInside } from '../../scripts/build-data.js';
+import { buildData, copyRepoFile, listRepoFiles, readRepoFile, resolveInside } from '../../scripts/build-data.js';
 import { convertBook, FsSource } from '../src/index.js';
+import { bibleFiles } from './helpers/bible-files.js';
 import { bookFiles } from './helpers/book-files.js';
 import { makeRepo } from './helpers/git-repo.js';
 
@@ -80,6 +81,79 @@ describe('build-data', () => {
     expect(maps.final.chapters).toHaveLength(chapters);
     expect(readFileSync(path.join(out, 'figures', 'plan.png'), 'utf8')).toBe('PNGDATA');
     BookSchema.parse(JSON.parse(readFileSync(path.join(out, 'data', 'versions', `${r.latest}.json`), 'utf8')));
+  });
+});
+
+describe('build-data: the bible', () => {
+  it('writes bible.json and copies the PDFs of the bible', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([{ files: { ...bookFiles(), ...bibleFiles() }, message: 'one' }]);
+    const out = tmp();
+    const r = await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree: false });
+    expect(r.bible).toBe(true);
+    const bible = BibleSchema.parse(JSON.parse(readFileSync(path.join(out, 'data', 'bible.json'), 'utf8')));
+    expect(bible.files.map((f) => f.path)).toContain('bible/donnees/personnages.yaml');
+    expect(readFileSync(path.join(out, 'downloads', 'bible', 'lieu', 'plans.pdf'), 'utf8')).toBe('%PDF-test');
+  });
+
+  it('writes no bible.json without a bible', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([{ files: bookFiles(), message: 'one' }]);
+    const out = tmp();
+    const r = await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree: false });
+    expect(r.bible).toBe(false);
+    expect(existsSync(path.join(out, 'data', 'bible.json'))).toBe(false);
+  });
+
+  it('reads the working tree only when asked', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([{ files: { ...bookFiles(), ...bibleFiles() }, message: 'one' }]);
+    writeFileSync(path.join(dir, 'bible', 'donnees', 'nouveau.yaml'), 'cle: valeur\n');
+    const slugs = async (workingTree: boolean) => {
+      const out = tmp();
+      await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree });
+      return BibleSchema.parse(JSON.parse(readFileSync(path.join(out, 'data', 'bible.json'), 'utf8'))).files.map((f) => f.slug);
+    };
+    expect(await slugs(true)).toContain('nouveau');
+    expect(await slugs(false)).not.toContain('nouveau');
+  });
+});
+
+describe('build-data: site.json', () => {
+  const siteInfo = (out: string) => SiteInfoSchema.parse(JSON.parse(readFileSync(path.join(out, 'data', 'site.json'), 'utf8')));
+
+  it('renders presentation.md and says whether there is a bible', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([
+      { files: { ...bookFiles(), ...bibleFiles(), 'presentation.md': '<!-- TODO -->\nUn *roman*.' }, message: 'one' },
+    ]);
+    const out = tmp();
+    await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree: false });
+    const info = siteInfo(out);
+    expect(info.bible).toBe(true);
+    expect(info.presentation).toContain('Un <em>roman</em>.');
+  });
+
+  it('has no presentation without presentation.md, and no bible without bible/', async () => {
+    const { parts, chapters } = await counts();
+    const { dir } = await makeRepo([{ files: bookFiles(), message: 'one' }]);
+    const out = tmp();
+    await buildData({ repo: dir, pdfDir: pdfDir(parts, chapters), out, workingTree: false });
+    expect(siteInfo(out)).toEqual({ schemaVersion: 1, presentation: null, bible: false });
+  });
+});
+
+describe('repository files', () => {
+  it('lists and reads files from HEAD or the working tree', async () => {
+    const { dir } = await makeRepo([{ files: { 'bible/a.yaml': 'a: 1', 'bible/x/é.md': '# É' }, message: 'one' }]);
+    writeFileSync(path.join(dir, 'bible', 'b.yaml'), 'b: 2');
+    expect(await listRepoFiles(dir, 'bible', false)).toEqual(['bible/a.yaml', 'bible/x/é.md']);
+    expect(await listRepoFiles(dir, 'bible', true)).toEqual(['bible/a.yaml', 'bible/b.yaml', 'bible/x/é.md']);
+    expect(await listRepoFiles(dir, 'absent', false)).toEqual([]);
+    expect(await listRepoFiles(dir, 'absent', true)).toEqual([]);
+    expect((await readRepoFile(dir, 'bible/x/é.md', false))?.toString('utf8')).toBe('# É');
+    expect(await readRepoFile(dir, 'bible/b.yaml', false)).toBeNull();
+    expect(await readRepoFile(dir, 'nope.md', true)).toBeNull();
   });
 });
 

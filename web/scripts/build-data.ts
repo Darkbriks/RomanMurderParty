@@ -1,13 +1,15 @@
 import { execFile } from 'node:child_process';
-import { copyFile, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
-import { buildArchive, parsePageMap } from '@rmp/converter';
+import { buildArchive, buildBible, markdownToHtml, parsePageMap, selectBibleFiles } from '@rmp/converter';
 import {
+  BibleSchema,
   BookSchema,
   DownloadsSchema,
   PageMapsSchema,
+  SiteInfoSchema,
   type Book,
   type DownloadItem,
   type PageMap,
@@ -40,24 +42,79 @@ export function resolveInside(base: string, rel: string): string {
   return full;
 }
 
-/** Reads a file of the repository as it is in HEAD, or in the working tree. */
-export async function copyRepoFile(repo: string, src: string, out: string, workingTree: boolean): Promise<void> {
+/** A file of the repository as it is in HEAD, or in the working tree; null when it is missing. */
+export async function readRepoFile(repo: string, src: string, workingTree: boolean): Promise<Buffer | null> {
   const from = resolveInside(repo, src);
-  const dest = resolveInside(out, src);
-  await mkdir(path.dirname(dest), { recursive: true });
   if (workingTree) {
-    await copyFile(from, dest);
-    return;
+    try {
+      return await readFile(from);
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code === 'ENOENT' || (e as NodeJS.ErrnoException).code === 'EISDIR') return null;
+      throw e;
+    }
   }
-  const { stdout } = await run('git', ['cat-file', 'blob', `HEAD:${src}`], {
-    cwd: repo,
-    encoding: 'buffer',
-    maxBuffer: 256 * 1024 * 1024,
-  });
-  await writeFile(dest, stdout);
+  try {
+    const { stdout } = await run('git', ['cat-file', 'blob', `HEAD:${src}`], {
+      cwd: repo,
+      encoding: 'buffer',
+      maxBuffer: 256 * 1024 * 1024,
+    });
+    return stdout;
+  } catch {
+    return null;
+  }
 }
 
-export async function buildData(opts: BuildDataOptions): Promise<{ versions: number; available: number; latest: string }> {
+/** Copies a file of the repository (HEAD or working tree) to the same path under `out`. */
+export async function copyRepoFile(repo: string, src: string, out: string, workingTree: boolean): Promise<void> {
+  const dest = resolveInside(out, src);
+  const content = await readRepoFile(repo, src, workingTree);
+  if (content === null) throw new Error(`file not found: ${src}`);
+  await mkdir(path.dirname(dest), { recursive: true });
+  await writeFile(dest, content);
+}
+
+/** The files under `dir` (repo-relative POSIX paths, sorted), in HEAD or in the working tree. */
+export async function listRepoFiles(repo: string, dir: string, workingTree: boolean): Promise<string[]> {
+  const root = resolveInside(repo, dir);
+  if (!workingTree) {
+    const { stdout } = await run('git', ['ls-tree', '-r', '-z', '--name-only', 'HEAD', '--', `${dir}/`], { cwd: repo });
+    return stdout.split('\0').filter(Boolean).sort();
+  }
+  const walk = async (rel: string): Promise<string[]> => {
+    let entries;
+    try {
+      entries = await readdir(path.join(root, rel), { withFileTypes: true });
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code === 'ENOENT') return [];
+      throw e;
+    }
+    const nested = await Promise.all(
+      entries
+        .filter((e) => !e.name.startsWith('.'))
+        .map((e) => (e.isDirectory() ? walk(path.posix.join(rel, e.name)) : Promise.resolve([path.posix.join(rel, e.name)]))),
+    );
+    return nested.flat();
+  };
+  return (await walk('')).map((rel) => `${dir}/${rel}`).sort();
+}
+
+/** Writes `data/bible.json` and the bible's PDFs; false when the repository has no bible. */
+async function writeBible(repo: string, out: string, workingTree: boolean): Promise<boolean> {
+  const { sources, pdfs } = selectBibleFiles(await listRepoFiles(repo, 'bible', workingTree));
+  if (sources.length === 0) return false;
+  const texts = await Promise.all(
+    sources.map(async (p) => ({ path: p, text: (await readRepoFile(repo, p, workingTree))!.toString('utf8') })),
+  );
+  const bible = BibleSchema.parse(buildBible(texts, pdfs));
+  await writeFile(path.join(out, 'data', 'bible.json'), JSON.stringify(bible));
+  for (const pdf of pdfs) await copyRepoFile(repo, pdf, path.join(out, 'downloads'), workingTree);
+  return true;
+}
+
+export async function buildData(
+  opts: BuildDataOptions,
+): Promise<{ versions: number; available: number; latest: string; bible: boolean }> {
   const { repo, pdfDir, out, workingTree } = opts;
   const dataDir = path.join(out, 'data');
   const downloadsDir = path.join(out, 'downloads');
@@ -108,11 +165,26 @@ export async function buildData(opts: BuildDataOptions): Promise<{ versions: num
     for (const chapter of part.chapters) collect(chapter.blocks);
   }
   for (const src of sources) await copyRepoFile(repo, src, out, workingTree);
+  const bible = await writeBible(repo, out, workingTree);
+  const presentation = await readRepoFile(repo, 'presentation.md', workingTree);
+  await writeFile(
+    path.join(dataDir, 'site.json'),
+    JSON.stringify(
+      SiteInfoSchema.parse({
+        schemaVersion: 1,
+        presentation: presentation ? markdownToHtml(presentation.toString('utf8')) : null,
+        bible,
+      }),
+      null,
+      2,
+    ),
+  );
 
   return {
     versions: index.versions.length,
     available: index.versions.filter((v) => v.available).length,
     latest: index.latest,
+    bible,
   };
 }
 
@@ -135,7 +207,7 @@ function parseArgs(argv: string[]): BuildDataOptions {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const r = await buildData(parseArgs(process.argv.slice(2)));
-    console.log(`${r.versions} versions, ${r.available} available, latest ${r.latest}`);
+    console.log(`${r.versions} versions, ${r.available} available, latest ${r.latest}${r.bible ? ', bible' : ''}`);
   } catch (e) {
     console.error(e instanceof Error ? e.message : String(e));
     process.exit(1);

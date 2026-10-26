@@ -191,6 +191,18 @@
 \renewcommand{\thechapter}{\Roman{chapter}}
 \NewDocumentCommand{\chapitre}{m}{\chapter{#1}%
   \write\mp@pagemap{chapter \arabic{chapter}\space\thesheetsequence}}
+%  \lieudate{Belgravia, Londres}{27 novembre 1890} : lieu et date sous le titre du chapitre,
+%  juste après \chapitre. Le lieu en petites capitales espacées, un filet, la date en italique.
+%  Un argument vide est omis (et le filet avec lui).
+\NewDocumentCommand{\lieudate}{m m}{%
+  \par\vspace*{-0.8\onelineskip}%
+  \begingroup\centering
+  \ifblank{#1}{}{{\color{mpsepia}\mp@spaced{#1}}\par}%
+  \ifboolexpr{test {\ifblank{#1}} or test {\ifblank{#2}}}{}{%
+    \vspace{0.3\onelineskip}{\color{mpsepia}\rule{1.2cm}{0.4pt}}\par\vspace{0.3\onelineskip}}%
+  \ifblank{#2}{}{{\itshape #2}\par}%
+  \endgroup
+  \nopagebreak\vspace{1.2\onelineskip}\nopagebreak}
 \openany   % les chapitres commencent sur la page suivante, recto ou verso
 
 % ---------------------------------------------------------------- Scènes

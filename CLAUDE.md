@@ -29,7 +29,8 @@ A novel written in French, adapted from a murder party. It is typeset with LaTeX
 - Dialogue: put `\rep` at the start of each new speaker's line. It inserts a new paragraph, an em dash and a non-breaking space, so do not type the dash yourself. If the same speaker's reply goes on over several sentences, put each sentence on its own line, with no further `\rep`.
 - A character's unspoken thoughts go in `\pensee{...}` (italics, no dash).
 - Quotation marks are `\enquote{...}` (csquotes adds French « » with the correct spacing). Ellipses are `\ldots`.
-- Scene breaks are `\separation`. A chapter can open with a drop cap, written `\debut{B}{elgravia}`. `\fin` is the closing ornament.
+- Scene breaks are `\separation`. A chapter can open with a drop cap, written `\debut{A}{lors}`. `\fin` is the closing ornament.
+- A chapter gives its place and date with `\lieudate{place}{date}`, right after `\chapitre` (place in spaced small caps, a rule, the date in italics); the drop cap then goes on the first word of the text.
 - Inserted documents (letters, telegrams, newspaper clippings, diaries, cards) use the environments `lettre`, `telegramme`, `coupure`, `journal` and `carton`. Maps and images use `\plan` and `\planpleinepage`. Their syntax is listed in `README.md` and in the comments of `murderparty.sty`.
 - The author's working notes come in three forms: `\areprendre{...}` (a passage to rework), `\noteauteur{...}`, and `%` comments in the part files (scene outlines for chapters still to write, and earlier versions of sentences that were set aside). Many `\areprendre` notes point to the murder party's character sheets ("fiche"), which are not in this repository.
 
@@ -44,12 +45,14 @@ A novel written in French, adapted from a murder party. It is typeset with LaTeX
 - Site specifics: SvelteKit 3 reads its config from `web/site/vite.config.ts` (no `svelte.config.js`); imports use `#lib/*`, not `$lib`; use `$app/env`.
 - Testing rule: tests must not pin live novel text, which changes as the author writes. Exact assertions use the frozen fixture `web/converter/test/fixtures/book/`. The e2e specs derive their expectations from the built data in `web/site/static/data` and the `.tex` sources.
 - `\ldots` swallows the following space in both the PDF and the site, so write `\ldots{} suite` if a space is wanted.
+- `/bible/` renders `bible/` (the YAML of `donnees/` and `lieu/`, `bible.md`, `notes-de-scene.md`) behind a spoiler warning; consent is kept in `localStorage` (`rmp.bible.v1`). The route is a client-only shell (`ssr = false`) and fetches `data/bible.json` after consent, so no bible content is ever prerendered. It shows the latest commit only (the working tree with `npm run data`), with no versions. A new YAML file renders through the generic view without code changes; the dedicated views (chronology grid, relations matrix, house, character pages) recognise a file by its shape (`web/site/src/lib/bible/shapes.ts`) and fall back to the generic view when it changes. Every search anchor must exist in its view (e2e `bible.spec.ts`).
+- The cover's presentation comes from `presentation.md` at the repository root (rendered at build time, `data/site.json`).
 
 ## Story bible and agent handoff
 
 - Read `docs/agents/passation.md` first: the agent's role (never write the author's prose; during the first draft give structure and coherence feedback only), the canon hierarchy, the current state and next steps. `docs/agents/journal.md` logs why each decision was taken. Update both at the end of any session that changes something.
 - `bible/` holds everything needed to write the novel that is not part of it: `bible.md` (decisions in prose), `notes-de-scene.md` (characters' inner states, never in the chronology), `donnees/*.yaml` (characters, relations, chronology, sub-plots, invitations, antidote vote, verified historical facts), `lieu/` (house plans: `maison.yaml` is the source, `gen.py` generates the TikZ), `sources/`. It is in French and contains spoilers.
-- `bible/` is not reached by `roman.tex`, so the converter and the site ignore it. Run `python3 bible/verifier.py` (needs PyYAML) after editing the data: it checks the YAML and the three-letter character IDs.
+- `bible/` is not reached by `roman.tex`, so the book's converter ignores it; `web/scripts/build-data.ts` turns it into `data/bible.json` for the site's `/bible/` section (an invalid YAML file fails the build with its file and line). Run `python3 bible/verifier.py` (needs PyYAML) after editing the data: it checks the YAML and the three-letter character IDs.
 - The murder party's character sheets live in the private repository `Darkbriks/murder-party` (`data/md/`). Use character names only, never the players' names.
 
 ## Mismatches between the README and the repository

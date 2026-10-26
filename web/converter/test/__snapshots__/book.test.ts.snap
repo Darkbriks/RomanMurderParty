@@ -2052,8 +2052,24 @@ exports[`convertBook on the frozen fixture > repository snapshot 1`] = `
         {
           "blocks": [
             {
-              "dialogue": false,
+              "date": [
+                {
+                  "text": "27 novembre 1890",
+                  "type": "text",
+                },
+              ],
               "id": "c3.b1",
+              "place": [
+                {
+                  "text": "Londres",
+                  "type": "text",
+                },
+              ],
+              "type": "dateline",
+            },
+            {
+              "dialogue": false,
+              "id": "c3.b2",
               "segments": [
                 {
                   "content": [
@@ -2070,7 +2086,7 @@ exports[`convertBook on the frozen fixture > repository snapshot 1`] = `
                   ],
                   "loc": {
                     "file": "parties/partie1.tex",
-                    "line": 5,
+                    "line": 6,
                   },
                   "spaceAfter": false,
                 },

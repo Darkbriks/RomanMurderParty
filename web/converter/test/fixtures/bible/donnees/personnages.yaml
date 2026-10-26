@@ -1,0 +1,34 @@
+# Personnages de la fixture (figée pour les tests).
+# Les identifiants à trois lettres servent dans tous les fichiers.
+
+personnages:
+  - id: SER
+    nom: Seraphina Blackwood
+    usuel: Seraphina, « Sera »
+    age: 26
+    secret: Fixture secret de Seraphina.
+  - id: WHI
+    nom: Lady Margaret Whitmore
+    usuel: Lady Whitmore
+    secret: Fixture secret de Lady Whitmore.
+  - id: EVA
+    nom: Evangeline Whitmore
+    usuel: Evangeline, « Eva »
+    secret: Fixture secret d'Evangeline.
+  - id: MON
+    nom: Lady Monica Fairfax
+    usuel: Lady Fairfax, Monica
+    secret: Fixture secret de Monica.
+  - id: REG
+    nom: Lord Reginald Fairfax
+    usuel: Lord Fairfax, Reginald
+    secret: Fixture secret de Reginald.
+  - id: BLA
+    nom: Sir Edmund Blackstone
+    usuel: Sir Edmund
+    secret: Fixture secret de Blackstone.
+
+absents_et_figurants:
+  - id: DOM
+    nom: Le domestique hypnotisé
+    statut: figurant

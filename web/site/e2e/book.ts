@@ -84,6 +84,10 @@ function* inlinesOf(block: Block): Generator<Inline[]> {
     case 'annexPage':
       yield block.title;
       break;
+    case 'dateline':
+      yield block.place;
+      yield block.date;
+      break;
   }
 }
 
@@ -123,7 +127,15 @@ const hasVisibleText = (nodes: Inline[]): boolean =>
 
 /** Ids of the top-level blocks a chapter body shows when notes are hidden. */
 export const visibleBlockIds = (c: Chapter): string[] =>
-  c.blocks.filter((b) => b.type !== 'paragraph' || b.segments.some((s) => hasVisibleText(s.content))).map((b) => b.id);
+  c.blocks
+    .filter((b) =>
+      b.type === 'paragraph'
+        ? b.segments.some((s) => hasVisibleText(s.content))
+        : b.type === 'dateline'
+          ? hasVisibleText(b.place) || hasVisibleText(b.date)
+          : true,
+    )
+    .map((b) => b.id);
 
 /** The first dialogue paragraph that still prints text when notes are hidden. */
 export function firstDialogue(): { n: number; block: Extract<Block, { type: 'paragraph' }> } | null {
@@ -133,6 +145,14 @@ export function firstDialogue(): { n: number; block: Extract<Block, { type: 'par
         return { n: chapter.number, block };
       }
     }
+  }
+  return null;
+}
+
+/** The first \lieudate of the book, with its chapter. */
+export function firstDateline(): { n: number; block: Extract<Block, { type: 'dateline' }> } | null {
+  for (const { chapter } of chapters) {
+    for (const block of chapter.blocks) if (block.type === 'dateline') return { n: chapter.number, block };
   }
   return null;
 }

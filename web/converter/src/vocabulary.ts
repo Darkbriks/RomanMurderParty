@@ -33,6 +33,7 @@ const blocks: Record<string, ArgSpec[]> = {
   signature: ['m'], postscriptum: ['m'],
   plan: ['o', 'm', 'm'], planpleinepage: ['o', 'm', 'm'],
   pageannexe: ['m', 'm'],
+  lieudate: ['m', 'm'],
 };
 
 /** Inserted documents. The body of each is the environment body. */

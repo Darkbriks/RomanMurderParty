@@ -1,0 +1,6 @@
+verifie_le: 2026-10-10
+liste: [a, b]
+objets:
+  - titre: X
+    detail:
+      sous: 1

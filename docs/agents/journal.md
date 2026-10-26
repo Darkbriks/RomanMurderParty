@@ -72,3 +72,15 @@ Ouvert : l'heure X ; la motivation exacte de Vivienne à se faire oublier (crain
 - **Prévost s'appelle Édouard** (fixé par le chapitre « Seule »).
 - Le flash-back « 4–5 ans avant » contredit les fiches (duo et Florence : 2 ans ; partitions : 1 an) : signalé, non tranché.
 - La bible est publique et révèle la solution : à Antoine de décider si elle reste ici ou passe dans le dépôt privé.
+
+## 2026-10-26 — La bible sur le site, lieu et date de chapitre
+
+- **La bible reste dans le dépôt public et devient consultable sur le site**, derrière un avertissement (case « J'accepte d'être spoilé », accord retenu dans le navigateur).
+  *Pourquoi* : Antoine veut la consulter facilement en écrivant ; la barrière évite le spoil accidentel, pas le lecteur qui fouille, qui accepte alors d'être spoilé.
+- **Seul le dernier commit compte pour la bible** : pas de versions, contrairement au roman.
+- **Un nouveau fichier YAML s'affiche sans toucher au code** : rendu générique, et vues dédiées (chronologie, relations, maison, page personnage) reconnues à la forme des données, avec repli sur le générique.
+- **`\lieudate{lieu}{date}` en tête de chapitre** : lieu en petites capitales, filet, date en italique ; la lettrine passe au premier mot du texte.
+  *Pourquoi* : mieux qu'un lieu et une date tapés dans la première phrase. La décision « sans en-têtes de lieu ou d'heure par scène » reste valable pour les scènes.
+- **Présentation de l'accueil** dans `presentation.md`, texte provisoire à remplacer par Antoine.
+- **Avertissement sur les notes de travail** dans le menu Aa et le PDF brouillon : elles peuvent révéler l'intrigue.
+

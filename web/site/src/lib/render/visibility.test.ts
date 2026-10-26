@@ -51,6 +51,17 @@ describe('isBlockVisible', () => {
     expect(isBlockVisible(para([{ type: 'dropCap', letter: 'B', rest: [] }]), false)).toBe(true);
   });
 
+  it('hides a dateline that holds only notes when notes are off', () => {
+    const d: Block = { type: 'dateline', id: 'c1.b1', place: [note('lieu ?')], date: [text(' '), note('date ?')] };
+    expect(isBlockVisible(d, false)).toBe(false);
+    expect(isBlockVisible(d, true)).toBe(true);
+  });
+
+  it('always shows a dateline with text', () => {
+    const d: Block = { type: 'dateline', id: 'c1.b1', place: [], date: [text('1890'), note('à vérifier')] };
+    expect(isBlockVisible(d, false)).toBe(true);
+  });
+
   it('always shows other blocks', () => {
     expect(isBlockVisible({ type: 'sceneBreak', id: 'c1.b2' }, false)).toBe(true);
   });

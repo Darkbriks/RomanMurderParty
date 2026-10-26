@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { siteInfo } from './bible.ts';
 import { book, chapterByNumber, chapters, loadDownloads, visibleBlockIds, gotoReady, headingText, lastChapter, plain, resumeLabel, updateDate } from './book.ts';
 
 // Expectations come from the built data (e2e/book.ts), never from today's wording of the novel.
@@ -145,4 +146,25 @@ test('language switch', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(book.meta.title);
   const date = updateDate('en');
   await expect(page.locator('main')).toContainText(date ? `Updated on ${date}` : 'Local version');
+});
+
+test('working notes warn about spoilers', async ({ page }) => {
+  await gotoReady(page, '');
+  await settingsButton(page).click();
+  await expect(page.getByRole('switch', { name: 'Notes de travail' })).toHaveAccessibleDescription(
+    'Peuvent révéler des éléments de l’intrigue.',
+  );
+  await page.keyboard.press('Escape');
+  await pdfButton(page).click();
+  await expect(page.locator('#download-panel')).toContainText('Peuvent révéler des éléments de l’intrigue.');
+});
+
+test('cover presents the project and links to the bible discreetly', async ({ page }) => {
+  await gotoReady(page, '');
+  const presentation = page.locator('.presentation');
+  if (siteInfo.presentation) await expect(presentation).toBeVisible();
+  else await expect(presentation).toHaveCount(0);
+  const link = page.getByRole('link', { name: 'Bible de l’auteur (révèle la solution)' });
+  if (siteInfo.bible) await expect(link).toHaveAttribute('href', /\/bible\/$/);
+  else await expect(link).toHaveCount(0);
 });

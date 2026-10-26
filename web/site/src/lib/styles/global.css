@@ -77,3 +77,21 @@ button {
   font-size: 0.92em;
   text-align: left;
 }
+
+/* ---- Bible: the valence of a relation, from hostility to affection (Valence.svelte, matrix) ---- */
+
+.valence-p2 {
+  background: color-mix(in srgb, var(--valence-pos) 45%, var(--bg));
+}
+.valence-p1 {
+  background: color-mix(in srgb, var(--valence-pos) 22%, var(--bg));
+}
+.valence-0 {
+  background: var(--bg-panel);
+}
+.valence-m1 {
+  background: color-mix(in srgb, var(--valence-neg) 22%, var(--bg));
+}
+.valence-m2 {
+  background: color-mix(in srgb, var(--valence-neg) 45%, var(--bg));
+}

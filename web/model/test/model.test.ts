@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import type { Block, Inline } from '../src/index.js';
-import { BLOCK_TYPES, BlockSchema, BookSchema, PageMapSchema } from '../src/index.js';
+import { BibleSchema, BLOCK_TYPES, BlockSchema, BookSchema, PageMapSchema, slugify } from '../src/index.js';
 
 const loc = { file: 'parties/partie1.tex', line: 3 };
 const version = { sha: 'abc1234', date: '2026-10-20T10:00:00Z', subject: 'x', tags: [] };
@@ -46,6 +46,11 @@ describe('model', () => {
     expect(new Set(BLOCK_TYPES)).toEqual(literals);
   });
 
+  it('accepts a dateline block', () => {
+    expect(() => BlockSchema.parse({ type: 'dateline', id: 'c1.b1', place: [], date: [{ type: 'text', text: '1890' }] })).not.toThrow();
+    expect(BLOCK_TYPES).toContain('dateline');
+  });
+
   it('rejects a page map with a zero page', () => {
     expect(PageMapSchema.safeParse({ parts: [0], chapters: [] }).success).toBe(false);
   });
@@ -59,5 +64,23 @@ describe('model', () => {
     expectTypeOf<Extract<Block, { type: 'end' }>>().not.toBeNever();
     expectTypeOf<Extract<Block, { type: 'signature' }>>().not.toBeNever();
     expectTypeOf<Extract<Inline, { type: 'bold' }>>().not.toBeNever();
+  });
+});
+
+describe('bible', () => {
+  it('slugify drops accents, case and punctuation', () => {
+    expect(slugify('Notes de scène — Été')).toBe('notes-de-scene-ete');
+    expect(slugify('  S3 ')).toBe('s3');
+  });
+
+  it('accepts YAML and Markdown files', () => {
+    const bible = {
+      schemaVersion: 1,
+      files: [
+        { kind: 'yaml', path: 'bible/a.yaml', slug: 'a', title: 'A', legend: null, data: { x: [1, true, null, { y: 'z' }] }, pdfs: [] },
+        { kind: 'markdown', path: 'bible/b.md', slug: 'b', title: 'B', sections: [{ id: 'b', level: 0, heading: '', html: '<p>x</p>', text: 'x' }] },
+      ],
+    };
+    expect(() => BibleSchema.parse(bible)).not.toThrow();
   });
 });

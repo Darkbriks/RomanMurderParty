@@ -1,0 +1,35 @@
+# Chronologie de la fixture.
+# statut  decide · piste · propose
+
+phases:
+  - id: P0
+    titre: Après-midi
+    resume: Préparatifs
+  - id: P1
+    titre: Les arrivées
+    resume: De 21 h à l'arrivée du dernier invité
+groupes:
+  - groupe: La maison
+    personnages: [WHI, SER]
+tous:
+  - phase: P1
+    quoi: Tout le monde arrive.
+evenements:
+  - qui: WHI
+    phase: P0
+    statut: decide
+    quoi: Derniers préparatifs.
+  - qui: [MON, REG]
+    phase: P1
+    statut: decide
+    quoi: Arrivée calculée.
+    heure: '21:22'
+  - qui: SER
+    phase: [P0, P1]
+    statut: propose
+    quoi: Répète toute la journée.
+  - qui: XYZ
+    phase: P1
+    statut: piste
+    quoi: Un inconnu passe.
+meteo: Neige.

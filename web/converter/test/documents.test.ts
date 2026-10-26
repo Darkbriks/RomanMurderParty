@@ -115,4 +115,23 @@ describe('documents', () => {
     const card = a.body[1] as Extract<Block, { type: 'card' }>;
     expect(card.body[0]!.id).toBe('c1.b1.2.1');
   });
+
+  it('lieudate gives a dateline with place and date', () => {
+    expect(one('\\lieudate{Belgravia, Londres}{27 novembre 1890}', 'dateline')).toEqual({
+      type: 'dateline', id: 'c1.b1', place: t('Belgravia, Londres'), date: t('27 novembre 1890'),
+    });
+  });
+
+  it('lieudate keeps a working note in its date', () => {
+    const d = one('\\lieudate{Whitechapel, Londres}{1885 \\areprendre{Definir la date}}', 'dateline');
+    expect(d.date.map((n) => n.type)).toEqual(['text', 'note']);
+  });
+
+  it('lieudate needs both arguments', () => {
+    expect(() => blocks('\\lieudate{Londres}\n\nTexte.')).toThrow(ConversionError);
+  });
+
+  it('lieudate ends the paragraph before it', () => {
+    expect(blocks('Avant.\n\\lieudate{L}{D}\nAprès.').map((b) => b.type)).toEqual(['paragraph', 'dateline', 'paragraph']);
+  });
 });

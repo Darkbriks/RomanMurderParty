@@ -73,7 +73,8 @@ export type Block =
       type: 'image'; id: string; src: string; caption: Inline[]; fullPage: boolean;
       widthFraction: number | null;
     }
-  | { type: 'annexPage'; id: string; title: Inline[]; body: Block[] };
+  | { type: 'annexPage'; id: string; title: Inline[]; body: Block[] }
+  | { type: 'dateline'; id: string; place: Inline[]; date: Inline[] };
 
 const inl = z.array(InlineSchema);
 const inlOrNull = inl.nullable();
@@ -101,11 +102,12 @@ export const BlockSchema = z.discriminatedUnion('type', [
     widthFraction: z.number().positive().nullable(),
   }),
   z.object({ type: z.literal('annexPage'), id, title: inl, ...bodyField }),
+  z.object({ type: z.literal('dateline'), id, place: inl, date: inl }),
 ]) as unknown as z.ZodType<Block> & { options: readonly { shape: { type: { value: Block['type'] } } }[] };
 
 export const BLOCK_TYPES = [
   'paragraph', 'sceneBreak', 'end', 'letter', 'signature', 'postscript', 'telegram', 'clipping',
-  'diary', 'card', 'image', 'annexPage',
+  'diary', 'card', 'image', 'annexPage', 'dateline',
 ] as const satisfies readonly Block['type'][];
 
 export const ChapterSchema = z.object({

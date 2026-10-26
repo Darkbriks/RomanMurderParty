@@ -45,7 +45,10 @@
     {#each downloads.items as item (item.url)}
       <li>
         <a href="{resolve('/')}{item.url}" download={item.filename}>
-          <span>{t(prefs.lang, item.variant === 'final' ? 'downloadFinal' : 'downloadDraft')}</span>
+          <span>
+            {t(prefs.lang, item.variant === 'final' ? 'downloadFinal' : 'downloadDraft')}
+            {#if item.variant === 'brouillon'}<small class="hint">{t(prefs.lang, 'notesHint')}</small>{/if}
+          </span>
           <span class="size">{formatBytes(prefs.lang, item.bytes)}</span>
         </a>
       </li>
@@ -117,6 +120,11 @@
   .panel a:hover {
     background: var(--bg-panel);
     text-decoration: underline;
+  }
+  .hint {
+    display: block;
+    color: var(--accent);
+    font-size: 0.8em;
   }
   .size {
     color: var(--accent);

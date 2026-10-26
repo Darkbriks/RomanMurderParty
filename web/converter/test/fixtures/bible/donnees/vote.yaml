@@ -1,0 +1,8 @@
+# Vote de la fixture.
+# vote  detruire · donner · suit:<ID>
+
+votes:
+  - qui: SER
+    vote: detruire
+  - qui: WHI
+    vote: suit:SER

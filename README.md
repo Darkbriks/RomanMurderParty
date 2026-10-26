@@ -28,6 +28,7 @@ Pour ne compiler qu'une partie pendant l'écriture : décommenter `\includeonly{
 | --- | --- |
 | `\partie[épigraphe]{Ouverture}{Seraphina}` | Page de partie ; le narrateur devient le titre courant |
 | `\chapitre{Titre}` ou `\chapitre{}` | Chapitre numéroté en romain, titre facultatif |
+| `\lieudate{Belgravia, Londres}{27 novembre 1890}` | Lieu et date sous le titre du chapitre, juste après `\chapitre` (deux lignes : lieu en petites capitales, filet, date en italique) |
 | `\separation` | Changement de scène (ornement) |
 | `\debut{L}{a pluie}` | Lettrine en ouverture de chapitre |
 | `\fin` | Ornement de fin |

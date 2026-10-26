@@ -3,6 +3,7 @@ import type { Component } from 'svelte';
 import AnnexPage from './blocks/AnnexPage.svelte';
 import Card from './blocks/Card.svelte';
 import Clipping from './blocks/Clipping.svelte';
+import Dateline from './blocks/Dateline.svelte';
 import Diary from './blocks/Diary.svelte';
 import End from './blocks/End.svelte';
 import Image from './blocks/Image.svelte';
@@ -42,6 +43,7 @@ export const blockRenderers: {
   card: Card,
   image: Image,
   annexPage: AnnexPage,
+  dateline: Dateline,
 };
 
 export const inlineRenderers: {
