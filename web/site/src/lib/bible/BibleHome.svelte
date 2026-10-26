@@ -2,9 +2,11 @@
   import type { Bible } from '@rmp/model';
   import { t } from '#lib/i18n/index.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
+  import BibleSearch from './BibleSearch.svelte';
   import { orderedFiles, type BibleCharacter, type CharacterIndex } from './catalog.ts';
+  import { searchDocs } from './search.ts';
 
-  // The bible's contents: the characters by group, then the files.
+  // The bible's contents: the search, the characters by group, then the files.
   let { bible, index }: { bible: Bible; index: CharacterIndex } = $props();
 
   const groups = $derived.by(() => {
@@ -16,9 +18,11 @@
     }
     return out;
   });
+  const docs = $derived(searchDocs(bible, index));
 </script>
 
 <h1>{t(prefs.lang, 'bibleTitle')}</h1>
+<BibleSearch {docs} />
 
 {#each groups as group (group.name)}
   <section>

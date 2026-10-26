@@ -12,6 +12,7 @@
   import { t } from '#lib/i18n/index.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
   import SettingsMenu from '#lib/reader/SettingsMenu.svelte';
+  import { tick } from 'svelte';
 
   // Rendered in the browser only (+page.ts): nothing of the bible is in the prerendered page, and
   // data/bible.json is fetched once the reader has accepted the spoilers.
@@ -38,6 +39,17 @@
       (b) => (bible = b),
       (e: unknown) => (failure = e instanceof Error ? e.message : String(e)),
     );
+  });
+
+  // The views only exist once the bible is loaded, after the browser's own jump to the URL's
+  // fragment: scroll to it once the view is rendered (deep links, search results).
+  $effect(() => {
+    if (!bible || !index) return;
+    const hash = page.url.hash;
+    tick().then(() => {
+      if (hash.length > 1) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
+      else window.scrollTo(0, 0);
+    });
   });
 
   function accept() {

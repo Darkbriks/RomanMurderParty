@@ -60,4 +60,6 @@ export const fr = {
   bibleFiles: 'Fichiers',
   bibleHome: 'Sommaire de la bible',
   bibleUnknownView: 'Cette page de la bible n’existe pas.',
+  bibleSearch: 'Chercher dans la bible',
+  bibleNoResults: 'Aucun résultat.',
 } as const;

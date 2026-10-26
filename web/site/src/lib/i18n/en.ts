@@ -61,4 +61,6 @@ export const en: Record<keyof typeof fr, string> = {
   bibleFiles: 'Files',
   bibleHome: 'Bible contents',
   bibleUnknownView: 'This bible page does not exist.',
+  bibleSearch: 'Search the bible',
+  bibleNoResults: 'No results.',
 };

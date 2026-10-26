@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
+import { searchDocs } from '../src/lib/bible/search.ts';
 import { bible, hasDedicatedView, secrets } from './bible.ts';
 import { gotoReady, reloadReady } from './book.ts';
 
@@ -82,4 +83,42 @@ test('ids link to their character', async ({ page }) => {
   await consent(page);
   await gotoReady(page, 'bible/?vue=vote');
   await expect(main(page).locator(`a[href="?perso=${c.id}"]`, { hasText: c.short }).first()).toBeVisible();
+});
+
+const docs = bible ? searchDocs(bible, index) : [];
+const target = (page: Page, id: string) => page.locator(`[id="${id}"]`);
+
+test('search leads to the entry', async ({ page }) => {
+  const relations = bible!.files.find((f) => f.slug === 'relations');
+  const first = relations?.kind === 'yaml' && isRecord(relations.data) && Array.isArray(relations.data.relations) ? relations.data.relations[0] : null;
+  const word = isRecord(first) && typeof first.libelle === 'string' ? first.libelle.split(/[^\p{L}]+/u).find((w) => w.length > 5) : undefined;
+  test.skip(!word, 'no relation label to search for');
+  await consent(page);
+  await gotoReady(page, 'bible/');
+  await page.getByRole('searchbox', { name: 'Chercher dans la bible' }).fill(word!);
+  await main(page).locator('a[href*="?vue=relations#"]').first().click();
+  await expect(page).toHaveURL(/\?vue=relations#/);
+  const id = decodeURIComponent(new URL(page.url()).hash.slice(1));
+  await expect(target(page, id)).toBeInViewport();
+});
+
+test('a deep link to an entry scrolls to it once the bible is loaded', async ({ page }) => {
+  const counts = new Map<string, number>();
+  for (const d of docs) counts.set(d.slug, (counts.get(d.slug) ?? 0) + 1);
+  const slug = [...counts].sort((a, b) => b[1] - a[1])[0]![0];
+  const last = docs.filter((d) => d.slug === slug).at(-1)!;
+  await consent(page);
+  await gotoReady(page, `bible/?vue=${slug}#${encodeURIComponent(last.anchor)}`);
+  await expect(target(page, last.anchor)).toBeInViewport();
+});
+
+test('every search result has its target in its view', async ({ page }) => {
+  await consent(page);
+  for (const file of bible!.files) {
+    await gotoReady(page, `bible/?vue=${file.slug}`);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(file.title);
+    const ids = docs.filter((d) => d.slug === file.slug).map((d) => d.anchor);
+    const missing = await page.evaluate((list) => list.filter((id) => !document.getElementById(id)), ids);
+    expect(missing, file.slug).toEqual([]);
+  }
 });
