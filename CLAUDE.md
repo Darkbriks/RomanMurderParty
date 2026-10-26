@@ -29,7 +29,8 @@ A novel written in French, adapted from a murder party. It is typeset with LaTeX
 - Dialogue: put `\rep` at the start of each new speaker's line. It inserts a new paragraph, an em dash and a non-breaking space, so do not type the dash yourself. If the same speaker's reply goes on over several sentences, put each sentence on its own line, with no further `\rep`.
 - A character's unspoken thoughts go in `\pensee{...}` (italics, no dash).
 - Quotation marks are `\enquote{...}` (csquotes adds French « » with the correct spacing). Ellipses are `\ldots`.
-- Scene breaks are `\separation`. A chapter can open with a drop cap, written `\debut{B}{elgravia}`. `\fin` is the closing ornament.
+- Scene breaks are `\separation`. A chapter can open with a drop cap, written `\debut{A}{lors}`. `\fin` is the closing ornament.
+- A chapter gives its place and date with `\lieudate{place}{date}`, right after `\chapitre` (place in spaced small caps, a rule, the date in italics); the drop cap then goes on the first word of the text.
 - Inserted documents (letters, telegrams, newspaper clippings, diaries, cards) use the environments `lettre`, `telegramme`, `coupure`, `journal` and `carton`. Maps and images use `\plan` and `\planpleinepage`. Their syntax is listed in `README.md` and in the comments of `murderparty.sty`.
 - The author's working notes come in three forms: `\areprendre{...}` (a passage to rework), `\noteauteur{...}`, and `%` comments in the part files (scene outlines for chapters still to write, and earlier versions of sentences that were set aside). Many `\areprendre` notes point to the murder party's character sheets ("fiche"), which are not in this repository.
 
