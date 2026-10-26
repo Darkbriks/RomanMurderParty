@@ -54,4 +54,8 @@ cd bible/lieu && python3 gen.py maison_whitmore.tex && xelatex maison_whitmore.t
 
 ## Pistes pour la CI
 
-`verifier.py` sort en code 1 en cas d'erreur : il peut devenir une étape de `.github/workflows/publish.yml` sans toucher au site. Plus tard, le site pourrait lire ces YAML (fiche personnage, chronologie, plan interactif) ; il faudra alors décider si ces pages sont publiques, vu les spoilers.
+`verifier.py` sort en code 1 en cas d'erreur : il peut devenir une étape de `.github/workflows/publish.yml` sans toucher au site.
+
+## Sur le site
+
+Le site de lecture publie ce dossier dans sa section `/bible/`, derrière un avertissement anti-spoil : recherche, page par personnage, grille de la chronologie, matrice des relations, maison, et rendu générique pour tout autre fichier YAML (un nouveau fichier apparaît sans toucher au code). Seul le dernier commit compte ; en local, `npm run data` (dans `web/`) prend aussi les modifications non commitées. Un YAML illisible bloque la construction du site, avec le fichier et la ligne.
