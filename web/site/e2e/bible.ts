@@ -1,5 +1,5 @@
 // Expectations for the bible and the cover's site info, read from the built data (static/data).
-import type { Bible, SiteInfo } from '@rmp/model';
+import type { Bible, BibleFile, SiteInfo } from '@rmp/model';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -20,3 +20,6 @@ export const secrets: string[] = (() => {
     .flatMap((v) => (Array.isArray(v) ? v : []))
     .flatMap((e) => (e && typeof e === 'object' && !Array.isArray(e) && typeof e.secret === 'string' ? [e.secret] : []));
 })();
+
+/** Whether the site shows this file through a dedicated view rather than the generic one. */
+export const hasDedicatedView = (_file: BibleFile): boolean => false;

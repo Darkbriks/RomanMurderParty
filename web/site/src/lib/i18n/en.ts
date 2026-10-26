@@ -54,4 +54,11 @@ export const en: Record<keyof typeof fr, string> = {
   bibleOpen: 'Open the bible',
   bibleClose: 'Close the bible',
   bibleUnavailable: 'This version of the site has no bible.',
+  bibleYes: 'yes',
+  bibleNo: 'no',
+  bibleFollows: 'follows',
+  bibleLegend: 'Key',
+  bibleFiles: 'Files',
+  bibleHome: 'Bible contents',
+  bibleUnknownView: 'This bible page does not exist.',
 };

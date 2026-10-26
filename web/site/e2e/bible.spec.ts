@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
-import { bible, secrets } from './bible.ts';
+import { characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
+import { bible, hasDedicatedView, secrets } from './bible.ts';
 import { gotoReady, reloadReady } from './book.ts';
 
 // Expectations come from the built bible (e2e/bible.ts), never from today's wording of the data.
@@ -44,4 +45,41 @@ test('no secret in the prerendered HTML', async ({ request }) => {
     const html = await (await request.get(path)).text();
     for (const secret of secrets) expect(html).not.toContain(secret);
   }
+});
+
+// ---- With consent given beforehand ----
+
+const consent = (page: Page) => page.addInitScript(() => localStorage.setItem('rmp.bible.v1', '1'));
+const index = characterIndex(bible ?? { schemaVersion: 1, files: [] });
+const main = (page: Page) => page.locator('main');
+
+test('the bible home links every character and every file', async ({ page }) => {
+  await consent(page);
+  await gotoReady(page, 'bible/');
+  for (const c of index.list) await expect(main(page).locator(`a[href="?perso=${c.id}"]`).first()).toBeVisible();
+  for (const f of bible!.files) await expect(main(page).locator(`a[href="?vue=${f.slug}"]`)).toBeVisible();
+});
+
+test('every file has a view, and no value prints as [object Object]', async ({ page }) => {
+  await consent(page);
+  for (const file of bible!.files) {
+    await gotoReady(page, `bible/?vue=${file.slug}`);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(file.title);
+    await expect(main(page)).not.toContainText('[object Object]');
+    if (file.kind === 'yaml' && isRecord(file.data) && !hasDedicatedView(file)) {
+      for (const key of Object.keys(file.data)) {
+        await expect(main(page).getByRole('heading', { level: 2, name: humanizeKey(key), exact: true }).first()).toBeVisible();
+      }
+    }
+  }
+});
+
+test('ids link to their character', async ({ page }) => {
+  const vote = bible!.files.find((f) => f.slug === 'vote');
+  const entry = vote?.kind === 'yaml' && isRecord(vote.data) ? Object.values(vote.data).flat().find((e) => isRecord(e) && typeof e.qui === 'string' && index.byId.has(e.qui)) : undefined;
+  test.skip(!isRecord(entry), 'no vote names a known character');
+  const c = index.byId.get((entry as Record<string, string>).qui!)!;
+  await consent(page);
+  await gotoReady(page, 'bible/?vue=vote');
+  await expect(main(page).locator(`a[href="?perso=${c.id}"]`, { hasText: c.short }).first()).toBeVisible();
 });

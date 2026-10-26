@@ -53,4 +53,11 @@ export const fr = {
   bibleOpen: 'Ouvrir la bible',
   bibleClose: 'Refermer la bible',
   bibleUnavailable: 'Cette version du site n’a pas de bible.',
+  bibleYes: 'oui',
+  bibleNo: 'non',
+  bibleFollows: 'suit',
+  bibleLegend: 'Légende',
+  bibleFiles: 'Fichiers',
+  bibleHome: 'Sommaire de la bible',
+  bibleUnknownView: 'Cette page de la bible n’existe pas.',
 } as const;

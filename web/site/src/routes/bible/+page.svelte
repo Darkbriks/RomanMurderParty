@@ -1,8 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
+  import { page } from '$app/state';
   import type { Bible } from '@rmp/model';
   import BibleGate from '#lib/bible/BibleGate.svelte';
+  import BibleHome from '#lib/bible/BibleHome.svelte';
+  import { characterIndex, fileBySlug } from '#lib/bible/catalog.ts';
+  import FileView from '#lib/bible/FileView.svelte';
   import { clearConsent, readConsent, writeConsent } from '#lib/bible/consent.ts';
   import { loadBible } from '#lib/data/load.ts';
   import { t } from '#lib/i18n/index.ts';
@@ -23,6 +27,10 @@
   let accepted = $state(readConsent(storage));
   let bible = $state<Bible | null | undefined>(undefined);
   let failure = $state<string | null>(null);
+  const index = $derived(bible ? characterIndex(bible) : null);
+  // The view is in the URL: ?vue=<file slug>, ?perso=<character id>, or nothing for the contents.
+  const vue = $derived(page.url.searchParams.get('vue'));
+  const perso = $derived(page.url.searchParams.get('perso'));
 
   $effect(() => {
     if (!accepted || bible !== undefined) return;
@@ -66,12 +74,16 @@
       <p class="status">{t(prefs.lang, 'loading')}</p>
     {:else if bible === null}
       <p class="status">{t(prefs.lang, 'bibleUnavailable')}</p>
-    {:else}
-      <ul>
-        {#each bible.files as file (file.slug)}
-          <li><a href="?vue={file.slug}">{file.title}</a></li>
-        {/each}
-      </ul>
+    {:else if index}
+      {#if vue || perso}<p class="home"><a href="./">← {t(prefs.lang, 'bibleHome')}</a></p>{/if}
+      {#if vue}
+        {@const file = fileBySlug(bible, vue)}
+        {#if file}<FileView {file} {bible} {index} />{:else}<p class="status">{t(prefs.lang, 'bibleUnknownView')}</p>{/if}
+      {:else if perso}
+        <p class="status">{perso}</p>
+      {:else}
+        <BibleHome {bible} {index} />
+      {/if}
     {/if}
   </main>
 {/if}
@@ -108,5 +120,9 @@
   .status {
     text-align: center;
     color: var(--accent);
+  }
+  .home {
+    margin: 0 0 1rem;
+    font-size: 0.9em;
   }
 </style>
