@@ -1,0 +1,763 @@
+# Ce que chaque personnage pense des autres au DÉBUT de la réception (état initial, canon V2.5).
+# Matrice non symétrique : une entrée « de: A, vers: B » dit ce que A pense de B.
+# Identifiants : voir personnages.yaml. Une paire absente = les sources ne disent rien.
+#
+# valence     -2 hostilité, peur, mépris · -1 méfiance, gêne · 0 neutre, intérêt, usage
+#             +1 sympathie, respect · +2 affection, confiance
+# ambivalent  true si la relation mêle attirance et rejet
+# source      fiche   = section « Relations » de la fiche V2.5 de celui qui pense
+#             indices = indices et secrets de la fiche V2.5
+#             plan    = tableau « connaissances et relations (jeu) » de Plan.md (écrit pour la V2)
+#             v2      = fiche MJ archivée (seule source pour Lily)
+#             deduit  = lecture de Claude, à valider ou rejeter
+# Le roman fera évoluer certaines relations (Marcus plus lumineux, notamment).
+
+relations:
+- de: SER
+  vers: EVA
+  valence: 2
+  libelle: Partenaire innocente, meilleure amie
+  source: fiche
+  note: Doit la protéger de la vérité sur les partitions.
+- de: SER
+  vers: FLO
+  valence: 2
+  libelle: Sœur spirituelle, plus fidèle alliée
+  source: fiche
+  note: Florence sait qu'il y a chantage, pas sur quoi.
+- de: SER
+  vers: WHI
+  valence: -2
+  libelle: Menace maternelle
+  source: fiche
+  note: Lady Whitmore enquête sur ses liens avec la veuve et pourrait tout révéler « pour protéger » Evangeline.
+- de: SER
+  vers: VAL
+  valence: -2
+  libelle: Son bourreau
+  source: fiche
+  note: La fait chanter depuis 6 mois ; sa présence le jour de l'anniversaire est une provocation.
+- de: SER
+  vers: OPH
+  valence: 1
+  libelle: Confidente artistique
+  source: fiche
+  note: Pourrait l'aider à trouver une issue.
+- de: SER
+  vers: VIV
+  valence: -1
+  libelle: Analyste redoutable
+  source: fiche
+  note: Pourrait deviner ses secrets.
+- de: SER
+  vers: ISA
+  valence: -1
+  libelle: Méfiance
+  source: plan
+- de: SER
+  vers: LIL
+  valence: 1
+  libelle: Amie, soutien discret
+  source: v2
+  note: Se connaissent depuis l'entrée de Seraphina dans les cercles artistiques ; elle soupçonne la crise
+    du couple Eristoff.
+- de: EVA
+  vers: SER
+  valence: 2
+  libelle: Meilleure amie, devenue inquiétante
+  source: fiche
+  note: Seraphina semble rongée d'angoisse et lui cache des choses.
+- de: EVA
+  vers: WHI
+  valence: 2
+  libelle: Mère adorée, seule confidente
+  source: fiche
+  note: Protection qui confine à l'obsession ; sait qu'elle finance des « recherches » de Marcus.
+- de: EVA
+  vers: MAR
+  valence: 1
+  libelle: Médecin de famille rassurant
+  source: fiche
+  note: Sa présence la rassure.
+- de: EVA
+  vers: OPH
+  valence: 1
+  libelle: Confidente artistique possible
+  source: fiche
+  note: A remarqué sa mélancolie aux concerts.
+- de: EVA
+  vers: MON
+  valence: -1
+  libelle: Observatrice qui l'inquiète
+  source: fiche
+  note: Monica a peut-être percé son secret amoureux.
+- de: EVA
+  vers: LIL
+  valence: -1
+  libelle: Épouse de l'homme qu'elle aimait
+  source: plan
+  note: Elle évite tout sujet lié aux Eristoff. Dans la V2, malaise mutuel.
+- de: WHI
+  vers: EVA
+  valence: 2
+  libelle: Fille adorée
+  source: fiche
+  note: Seule à connaître sa peine amoureuse ; ferait n'importe quoi pour elle.
+- de: WHI
+  vers: MAR
+  valence: 2
+  libelle: Allié protecteur, confiance absolue
+  source: fiche
+  note: Finance ses « recherches » en croyant protéger Evangeline.
+- de: WHI
+  vers: SER
+  valence: -2
+  libelle: Menace à neutraliser
+  source: fiche
+  note: A découvert ses liens avec la veuve Valentini.
+- de: WHI
+  vers: ISA
+  valence: -1
+  libelle: Danger imprévisible
+  source: fiche
+  note: Ses questions pourraient compromettre ses arrangements.
+- de: WHI
+  vers: OPH
+  valence: 1
+  libelle: Sa protégée, qu'elle finance
+  source: plan
+  note: Principale mécène d'Ophelia.
+- de: WHI
+  vers: VIV
+  valence: -1
+  libelle: Méfiance
+  source: plan
+- de: WHI
+  vers: THE
+  valence: 1
+  libelle: Bienveillance
+  source: plan
+  note: Soutient ses travaux.
+- de: WHI
+  vers: BLA
+  valence: -1
+  libelle: Toléré, mais parvenu
+  source: plan
+- de: WHI
+  vers: VAL
+  valence: -1
+  libelle: Menace identifiée
+  source: deduit
+  note: Elle a découvert le lien avec Seraphina ; la veuve la sait sur ses traces.
+- de: FLO
+  vers: SER
+  valence: 2
+  libelle: Protégée adorée, sœur spirituelle
+  source: fiche
+  note: Dévouement absolu ; ignore la nature du chantage.
+- de: FLO
+  vers: WHI
+  valence: 1
+  ambivalent: true
+  libelle: Alliée naturelle, mais intrigante
+  source: fiche
+  note: Même passion de protection ; finance des « arrangements » mystérieux avec Marcus.
+- de: FLO
+  vers: EVA
+  valence: 1
+  libelle: Jeune femme innocente qu'elle apprécie
+  source: fiche
+  note: À protéger des vérités blessantes.
+- de: FLO
+  vers: VAL
+  valence: -2
+  libelle: Ennemie mystérieuse
+  source: fiche
+  note: Détient un pouvoir de destruction sur Seraphina.
+- de: FLO
+  vers: MAR
+  valence: -1
+  libelle: Figure suspecte
+  source: fiche
+  note: Pourrait être lié aux menaces sur Seraphina.
+- de: FLO
+  vers: OPH
+  valence: 1
+  libelle: Alliée artistique
+  source: fiche
+  note: Confidente possible.
+- de: VAL
+  vers: SER
+  valence: -2
+  libelle: Sa cible
+  source: fiche
+  note: Exige un aveu public ou un dédommagement.
+- de: VAL
+  vers: EVA
+  valence: 1
+  libelle: L'innocente
+  source: fiche
+  note: Victime collatérale à préserver.
+- de: VAL
+  vers: WHI
+  valence: 0
+  ambivalent: true
+  libelle: Mère enquêtrice, respect entre mères
+  source: fiche
+  note: La sait sur ses traces ; une négociation reste possible.
+- de: VAL
+  vers: FLO
+  valence: 0
+  libelle: Protectrice dévouée
+  source: fiche
+  note: Reconnaît sa loyauté ; interlocutrice possible.
+- de: LIL
+  vers: EVA
+  valence: -1
+  libelle: Malaise, politesse forcée
+  source: v2
+  note: Sait qu'Evangeline aimait son mari et a vu sa désillusion.
+- de: LIL
+  vers: SER
+  valence: 1
+  libelle: Amie confidente
+  source: v2
+  note: Confiance mesurée.
+- de: LIL
+  vers: ISA
+  valence: -1
+  libelle: Méfiance
+  source: plan
+  note: Dans la V2, son objectif était d'empêcher la journaliste d'apprendre la crise du couple.
+- de: LIL
+  vers: MAR
+  valence: 0
+  libelle: Consulté pour la crise du couple
+  source: plan
+- de: LIL
+  vers: VIV
+  valence: 0
+  libelle: Consultée pour la crise du couple
+  source: plan
+- de: LIL
+  vers: MON
+  valence: -1
+  libelle: Une commère qui la scrute
+  source: deduit
+  note: Monica observe la dégradation de son couple modèle.
+- de: OPH
+  vers: COR
+  valence: 2
+  libelle: Amie depuis 10 ans
+  source: fiche
+  note: Sait qu'elle souffre ; lui offre un soutien sans jugement.
+- de: OPH
+  vers: THE
+  valence: 1
+  libelle: Âme sœur artistique
+  source: fiche
+  note: Pressent qu'il doit être protégé.
+- de: OPH
+  vers: VIV
+  valence: 1
+  libelle: Complice intellectuelle
+  source: fiche
+  note: Elle analyse, Ophelia harmonise.
+- de: OPH
+  vers: WHI
+  valence: 1
+  libelle: Mécène admirée
+  source: fiche
+  note: Pressent qu'elle se met en danger par amour pour sa fille.
+- de: OPH
+  vers: EVA
+  valence: 1
+  libelle: Artiste en souffrance
+  source: fiche
+  note: A vu son chagrin d'amour pour Théodore Eristoff.
+- de: OPH
+  vers: SER
+  valence: 1
+  libelle: Âme tourmentée
+  source: fiche
+  note: A besoin de soutien, refuse de parler.
+- de: OPH
+  vers: FLO
+  valence: 1
+  libelle: Alliée naturelle
+  source: fiche
+- de: OPH
+  vers: MAR
+  valence: 0
+  libelle: Médecin consulté
+  source: plan
+  note: Pour des douleurs liées à la danse.
+- de: OPH
+  vers: BLA
+  valence: 1
+  libelle: L'apprécie malgré ses origines
+  source: plan
+  note: L'une des rares.
+- de: OPH
+  vers: ISA
+  valence: 1
+  libelle: Respect entre femmes créatives
+  source: plan
+- de: OPH
+  vers: LIL
+  valence: 0
+  libelle: A observé les tensions du couple
+  source: plan
+  note: Lors des événements artistiques (Secrets.md).
+- de: COR
+  vers: THE
+  valence: 2
+  libelle: Ami précieux, à protéger
+  source: fiche
+  note: Seul témoin de ses « recherches » ; le sait en danger à cause de ses photos.
+- de: COR
+  vers: ISA
+  valence: 0
+  ambivalent: true
+  libelle: Terreur et espoir
+  source: fiche
+  note: Pourrait l'exposer, mais enquête sur la corruption qu'elle a découverte.
+- de: COR
+  vers: MAR
+  valence: -2
+  libelle: Ennemi masqué
+  source: fiche
+  note: 'Sait qu''il dirige le réseau. Le plan parle de respect mutuel : façade cordiale ?'
+- de: COR
+  vers: OPH
+  valence: 2
+  libelle: Confidente fidèle
+  source: fiche
+  note: Dernier lien avec son « ancienne humanité ».
+- de: COR
+  vers: VIV
+  valence: 0
+  ambivalent: true
+  libelle: Respect teinté de méfiance
+  source: fiche
+  note: Pourrait déchiffrer ses troubles d'un regard.
+- de: THE
+  vers: COR
+  valence: 2
+  libelle: Amie et collaboratrice
+  source: fiche
+  note: Ne juge pas ses méthodes « particulières ».
+- de: THE
+  vers: MAR
+  valence: 1
+  ambivalent: true
+  libelle: Amateur d'innovations
+  source: fiche
+  note: Ses questions précises sur les archives l'intriguent.
+- de: THE
+  vers: ISA
+  valence: 1
+  libelle: Collègue documentariste
+  source: fiche
+- de: THE
+  vers: OPH
+  valence: 1
+  libelle: Affinités artistiques
+  source: fiche
+- de: THE
+  vers: WHI
+  valence: 1
+  libelle: Mécène bienveillante
+  source: fiche
+  note: Ne comprend pas toujours ses motivations.
+- de: VIV
+  vers: ISA
+  valence: 2
+  libelle: Complice intellectuelle
+  source: fiche
+  note: 'Articles cosignés : les faits d''Isadora, son analyse.'
+- de: VIV
+  vers: MAR
+  valence: -2
+  libelle: Rival, pervers soupçonné
+  source: fiche
+  note: Confrontation intellectuelle inévitable.
+- de: VIV
+  vers: OPH
+  valence: 1
+  libelle: Alliée artistique
+  source: fiche
+- de: VIV
+  vers: BEA
+  valence: 0
+  ambivalent: true
+  libelle: Sujet d'analyse prioritaire
+  source: fiche
+  note: Stress post-traumatique lié à Prévost, qu'elle méprisait mais qui lui a sauvé la vie.
+- de: VIV
+  vers: THO
+  valence: 0
+  ambivalent: true
+  libelle: Sujet d'analyse prioritaire
+  source: fiche
+  note: 'Idem ; objectif : faire avouer l''un des deux, par l''hypnose au besoin.'
+- de: VIV
+  vers: MON
+  valence: 0
+  libelle: Énigme aristocratique
+  source: fiche
+  note: Schémas d'évitement pathologiques.
+- de: VIV
+  vers: SER
+  valence: 0
+  libelle: Cas d'étude
+  source: fiche
+  note: Stress chronique, culpabilité refoulée.
+- de: VIV
+  vers: COR
+  valence: 1
+  libelle: Respect entre femmes scientifiques
+  source: plan
+- de: VIV
+  vers: LIL
+  valence: 0
+  libelle: L'a reçue pour la crise du couple
+  source: plan
+- de: ISA
+  vers: MAR
+  valence: -2
+  libelle: Suspect principal
+  source: fiche
+  note: Cerveau probable du réseau qu'elle traque.
+- de: ISA
+  vers: VIV
+  valence: 2
+  libelle: Alliée intellectuelle
+  source: fiche
+  note: Duo redoutable.
+- de: ISA
+  vers: BLA
+  valence: 0
+  ambivalent: true
+  libelle: Respect d'outsider, œil critique
+  source: fiche
+  note: Détecte des incohérences dans son parcours.
+- de: ISA
+  vers: THE
+  valence: 1
+  libelle: Collègue documentariste
+  source: fiche
+- de: ISA
+  vers: BEA
+  valence: 1
+  libelle: Lectrice fidèle
+  source: fiche
+  note: Leur soutien la touche.
+- de: ISA
+  vers: THO
+  valence: 1
+  libelle: Lecteur fidèle
+  source: fiche
+- de: ISA
+  vers: COR
+  valence: 1
+  libelle: Solidarité professionnelle
+  source: plan
+- de: ISA
+  vers: OPH
+  valence: 1
+  libelle: Respect entre femmes créatives
+  source: plan
+- de: MAR
+  vers: WHI
+  valence: 0
+  libelle: Financeuse manipulée
+  source: fiche
+  note: « Complice involontaire parfaite ».
+- de: MAR
+  vers: BLA
+  valence: 0
+  libelle: Victime de chantage
+  source: fiche
+  note: Une relation qui lui procure une satisfaction particulière.
+- de: MAR
+  vers: BEA
+  valence: 0
+  libelle: Débitrice
+  source: fiche
+  note: Leur dépendance garantit leur silence.
+- de: MAR
+  vers: THO
+  valence: 0
+  libelle: Débiteur
+  source: fiche
+- de: MAR
+  vers: MON
+  valence: 1
+  libelle: Complicité silencieuse
+  source: fiche
+  note: Connaît son secret depuis l'opération.
+- de: MAR
+  vers: ISA
+  valence: -1
+  libelle: Menace imprécise
+  source: fiche
+  note: Instinct de danger, effet de l'oubli.
+- de: MAR
+  vers: THE
+  valence: 0
+  ambivalent: true
+  libelle: Fascination, et soupçon
+  source: fiche
+  note: Pressent qu'il détient quelque chose d'important.
+- de: MAR
+  vers: COR
+  valence: 1
+  libelle: Respect, échanges scientifiques
+  source: plan
+- de: MAR
+  vers: VIV
+  valence: -1
+  libelle: Rivale
+  source: plan
+- de: MAR
+  vers: REG
+  valence: 0
+  libelle: Patient
+  source: plan
+  note: Cœur fragile ; conseils de « vitalité ».
+- de: MAR
+  vers: OPH
+  valence: 0
+  libelle: Patiente
+  source: plan
+- de: MAR
+  vers: LIL
+  valence: 0
+  libelle: L'a reçue pour la crise du couple
+  source: plan
+- de: MAR
+  vers: EVA
+  valence: 0
+  libelle: Médecin de la famille
+  source: fiche
+  note: D'après la fiche d'Evangeline.
+- de: MAR
+  vers: SER
+  valence: -1
+  libelle: Témoin gênant
+  source: indices
+  note: Ses notes envisagent de la faire taire.
+- de: MON
+  vers: REG
+  valence: -1
+  ambivalent: true
+  libelle: Mépris affectueux, à éviter
+  source: fiche
+  note: Ne pas rester seule avec lui plus de quelques minutes.
+- de: MON
+  vers: BLA
+  valence: -2
+  libelle: Parvenu détesté
+  source: fiche
+  note: Refuse de l'appeler « Sir ».
+- de: MON
+  vers: MAR
+  valence: 1
+  libelle: Complice médical
+  source: fiche
+  note: Respect pour sa discrétion.
+- de: MON
+  vers: BEA
+  valence: -1
+  libelle: Couple suspect
+  source: fiche
+  note: Ses réseaux disent que quelque chose de grave s'est passé.
+- de: MON
+  vers: THO
+  valence: -1
+  libelle: Couple suspect
+  source: fiche
+- de: MON
+  vers: WHI
+  valence: 0
+  ambivalent: true
+  libelle: Rivale mondaine
+  source: fiche
+  note: Respecte son dévouement ; la sait financer des activités mystérieuses.
+- de: MON
+  vers: EVA
+  valence: 0
+  libelle: Sujet d'observation
+  source: fiche
+  note: A deviné son amour pour Théodore Eristoff.
+- de: MON
+  vers: LIL
+  valence: 0
+  libelle: Couple modèle en ruine
+  source: plan
+  note: Observations mondaines.
+- de: REG
+  vers: MON
+  valence: 2
+  ambivalent: true
+  libelle: Épouse adorée et insaisissable
+  source: fiche
+  note: Amour obsessionnel, frustration ; déterminé ce soir.
+- de: REG
+  vers: BLA
+  valence: -2
+  libelle: Parvenu méprisé
+  source: fiche
+- de: REG
+  vers: MAR
+  valence: 1
+  libelle: Conseiller médical
+  source: fiche
+  note: Confiance, avec dignité aristocratique.
+- de: REG
+  vers: BEA
+  valence: -1
+  libelle: Méfiance de classe
+  source: plan
+- de: REG
+  vers: THO
+  valence: -1
+  libelle: Méfiance de classe
+  source: plan
+- de: BLA
+  vers: MON
+  valence: -2
+  libelle: Mépris aristocratique incarné
+  source: fiche
+  note: Cette guerre sociale l'humilie.
+- de: BLA
+  vers: REG
+  valence: -1
+  libelle: Noblesse condescendante
+  source: fiche
+  note: Politesse glacée.
+- de: BLA
+  vers: THO
+  valence: -1
+  ambivalent: true
+  libelle: Collègue technique suspect
+  source: fiche
+  note: Ses questions révèlent ses lacunes. Le plan parle de bienveillance réciproque.
+- de: BLA
+  vers: BEA
+  valence: 1
+  libelle: Bienveillance entre déplacés
+  source: plan
+- de: BLA
+  vers: MAR
+  valence: 0
+  ambivalent: true
+  libelle: Relation médicale ambiguë
+  source: fiche
+  note: Ignore qu'il est son maître chanteur, mais s'interroge.
+- de: BLA
+  vers: ISA
+  valence: -1
+  libelle: Méfiance
+  source: plan
+- de: BLA
+  vers: OPH
+  valence: 1
+  libelle: Reconnaissant de son estime
+  source: deduit
+  note: Elle est l'une des rares à l'apprécier.
+- de: BEA
+  vers: THO
+  valence: 2
+  libelle: Bien-aimé libérateur
+  source: fiche
+- de: BEA
+  vers: MAR
+  valence: 0
+  ambivalent: true
+  libelle: Sauveur dangereux
+  source: fiche
+  note: Reconnaissance teintée de méfiance.
+- de: BEA
+  vers: VIV
+  valence: -1
+  ambivalent: true
+  libelle: Menace analytique
+  source: fiche
+  note: Pourrait la comprendre ou la démasquer.
+- de: BEA
+  vers: ISA
+  valence: -1
+  ambivalent: true
+  libelle: Admirée, mais menaçante
+  source: fiche
+  note: Le couple aime ses articles (plan).
+- de: BEA
+  vers: COR
+  valence: 1
+  libelle: Admiration
+  source: plan
+  note: Pour son indépendance et ses voyages.
+- de: BEA
+  vers: BLA
+  valence: 1
+  libelle: Bienveillance entre déplacés
+  source: plan
+- de: BEA
+  vers: MON
+  valence: -1
+  libelle: Méfiance de classe
+  source: plan
+- de: BEA
+  vers: REG
+  valence: -1
+  libelle: Méfiance de classe
+  source: plan
+- de: THO
+  vers: BEA
+  valence: 2
+  libelle: Bien-aimée libérée
+  source: fiche
+- de: THO
+  vers: MAR
+  valence: 0
+  ambivalent: true
+  libelle: Sauveur inquiétant
+  source: fiche
+  note: Dette qu'il pressent dangereuse.
+- de: THO
+  vers: BLA
+  valence: 0
+  ambivalent: true
+  libelle: Imposteur technique
+  source: fiche
+  note: Une arme ou un danger.
+- de: THO
+  vers: VIV
+  valence: -1
+  ambivalent: true
+  libelle: Analyste redoutable
+  source: fiche
+- de: THO
+  vers: ISA
+  valence: -1
+  ambivalent: true
+  libelle: Journaliste curieuse
+  source: fiche
+  note: Respecte les femmes indépendantes.
+- de: THO
+  vers: COR
+  valence: 1
+  libelle: Admiration
+  source: plan
+- de: THO
+  vers: MON
+  valence: -1
+  libelle: Méfiance de classe
+  source: plan
+- de: THO
+  vers: REG
+  valence: -1
+  libelle: Méfiance de classe
+  source: plan

@@ -1,0 +1,97 @@
+# Le vote sur l'antidote : lecture de TRAVAIL, rien n'est tranché.
+# Tous les secrets auront des développements, mais tous ne seront pas révélés à l'assemblée :
+# chaque vote dépend de ce que le personnage apprend, d'où les leviers.
+# vote : detruire · donner · indecis · suit:<ID> · depend_du_levier · abstention
+
+contexte: >-
+  Vivienne a préparé une seule dose d'antidote et laisse aux convives, à la lumière de la vérité,
+  le choix de l'utiliser ou de le détruire ; elle ne s'opposera pas à l'avis majoritaire. Ironie : le vote
+  porte sur Marcus, qui n'a pas bu ; Béatrice, qui a bu, vote sans doute pour le sauver.
+verdict: reporté ; il se décidera en écrivant (conclusion et épilogue seulement)
+
+votes:
+  - qui: SER
+    lien_avec_marcus: Il l'a manipulée avec les partitions volées et la menaçait
+    vote: detruire
+    leviers: Ce qu'elle risque si le vol éclate de toute façon ; la peur pour Evangeline
+  - qui: EVA
+    lien_avec_marcus: Leur succès repose sur son vol
+    vote: donner
+    raison: Répugne à tuer
+    leviers: Si sa mère la préserve de la vérité sur les partitions, elle vote sans savoir
+  - qui: WHI
+    lien_avec_marcus: Elle le finançait en croyant protéger sa fille
+    vote: donner
+    raison: Hôtesse, elle ne veut pas d'un mort sous son toit ; sa protection était peut-être réelle
+    leviers: Découvrir que ses fonds servaient au réseau, voire à menacer l'entourage de sa fille
+  - qui: FLO
+    lien_avec_marcus: Il menaçait sa protégée
+    vote: detruire
+    leviers: Découvrir qu'il prévoyait d'éliminer Seraphina (renforce) ; le vote de Seraphina
+  - qui: OPH
+    lien_avec_marcus: Aucun lien direct ; amie de Cordelia, protégée de Lady Whitmore
+    vote: donner
+    raison: >-
+      Sa fiche la décrit compatissante, sans jugement, tournée vers la réconciliation. Débat intérieur
+      entre compassion pour Marcus et pour ses victimes ; c'est aussi elle qui organiserait le débat.
+    leviers: L'étendue des crimes qu'elle apprend ; les votes de Cordelia et de Lady Whitmore
+  - qui: COR
+    lien_avec_marcus: Connaît le réseau par ses contacts ; méprise la science corrompue, alors qu'elle s'est elle-même corrompue
+    vote: detruire
+    raison: >-
+      Après un débat intérieur : la grâce qu'elle vient de recevoir la fait hésiter, mais son journal
+      distingue ses « dérèglements personnels » des « crimes organisés » du réseau. Sa faute ne touchait
+      qu'elle ; Marcus a du sang sur les mains.
+    leviers: Ce qu'elle vient de vivre avec Ophelia et Theodore ; l'ampleur des crimes de Marcus
+  - qui: THE
+    lien_avec_marcus: Il voulait récupérer sa photo
+    vote: suit:COR
+  - qui: ISA
+    lien_avec_marcus: Elle enquêtait sur son réseau ; Vivienne est son alliée et sa collaboratrice
+    vote: donner
+    raison: >-
+      D'après sa fiche, son arme est la plume et la transparence, pas la mort ; un Marcus mort enterrerait
+      aussi le réseau. Antoine pensait d'abord « détruire » : se méfier de la porosité avec la joueuse.
+    leviers: Découvrir qu'elle était elle-même menacée ; la culpabilité de son amie Vivienne
+  - qui: MON
+    lien_avec_marcus: Il connaît son secret et l'a gardé
+    vote: detruire
+    leviers: Savoir s'il a laissé des notes sur son secret ; le vote de Reginald
+  - qui: REG
+    lien_avec_marcus: Ignore presque tout
+    vote: donner
+    raison: Honneur, morale
+    leviers: Apprendre ce que Marcus sait de Monica
+  - qui: BLA
+    lien_avec_marcus: Il le fait chanter pour le meurtre de Müller
+    vote: depend_du_levier
+    leviers: Découvrir ou non que Marcus est son maître chanteur (il le comprend juste avant l'heure X)
+  - qui: BEA
+    lien_avec_marcus: Il l'a aidée après la mort de Prévost
+    vote: donner
+    raison: Gratitude ; ironie cruelle, puisque c'est elle qui a bu
+    leviers: Apprendre qu'il les tenait par ce secret
+  - qui: THO
+    lien_avec_marcus: Idem ; le voit comme un « sauveur inquiétant »
+    vote: donner
+    leviers: Idem, avec un regard plus rationnel
+  - qui: LIL
+    lien_avec_marcus: Aucun lien
+    vote: donner
+    raison: Aversion pour la mort
+    leviers: Le vote de Seraphina, sa seule alliée
+  - qui: VAL
+    lien_avec_marcus: Il est le vrai voleur des partitions
+    vote: depend_du_levier
+    leviers: Découvrir ou non son rôle dans le vol
+  - qui: VIV
+    lien_avec_marcus: La coupable, amnésique jusqu'à l'heure X
+    vote: abstention
+    raison: Ou donner, par ironie
+    leviers: Son principe de s'en remettre à la majorité
+
+bilan: >-
+  Si ces lectures tiennent, « donner » devient probablement majoritaire : l'assemblée sauverait un homme
+  qui n'est pas empoisonné, pendant que Béatrice part en disant qu'il faut qu'elle aille aux toilettes.
+  Blackstone, la veuve et Monica basculent selon ce qu'ils apprennent ; le couple Fairfax peut voter
+  différemment.

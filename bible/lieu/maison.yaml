@@ -1,0 +1,1103 @@
+# La maison Whitmore, Belgravia : source de vérité des plans (gen.py la lit pour produire maison_whitmore.tex).
+# Unités : pieds anglais. Repère : x = largeur de façade (0 à 36, murs mitoyens), y = profondeur depuis la rue (y=0) vers le jardin.
+# cat : rec (réception) · fam (famille) · srv (service) · cir (circulation) · ext (extérieur) · san (sanitaire)
+# rect : [x1, y1, x2, y2] ; etiquette: false = pas de nom sur le plan.
+# portes : [x, y, orientation, largeur=3, type=d] ; orientation h = mur horizontal (y constant), v = mur vertical ; type f = porte double.
+# tikz_extra : TikZ brut ajouté au plan du niveau (escaliers, mobilier…).
+# Les descriptions « Ce soir : … » relient une pièce à l'intrigue ; à affiner scène par scène.
+niveaux:
+- cle: S
+  titre: Sous-sol — les offices
+  hauteur: env. 11 ft sous plafond (3,35 m) ; à demi enterré, éclairé par la cour anglaise côté rue et par la cour arrière côté jardin
+  intro: 'Le domaine des domestiques. On y accède depuis la rue par l''escalier de la cour anglaise (fournisseurs, domestiques), jamais par la porte d''entrée. Kerr place ici toute la vie de service : «
+    Kitchen, Scullery, Pantry, and Larder; Butler''s Pantry, Bedroom, Safe […] Housekeeper''s-room, Still-room, Store-room, and Servants''-Hall ».'
+  pieces:
+  - num: S1
+    nom: Cour anglaise (area)
+    court: Cour anglaise
+    cat: ext
+    rect:
+    - 0
+    - -8
+    - 36
+    - 0
+    desc: 'Fossé de 8 ft entre le trottoir et la façade, fermé par une grille en fer forgé. Un escalier raide y descend depuis la rue : c''est l''entrée des fournisseurs et des domestiques. Les fenêtres
+      du sous-sol donnent dessus.'
+  - num: S2
+    nom: Caves à charbon (sous le trottoir)
+    court: Caves à charbon
+    cat: srv
+    rect:
+    - 0
+    - -14
+    - 36
+    - -8
+    desc: Trois voûtes creusées sous le trottoir. On y déverse le charbon depuis la rue par des trappes rondes en fonte. Il alimente le fourneau de la cuisine et toutes les cheminées de la maison.
+  - num: S3
+    nom: Office du majordome
+    court: Office du majordome
+    cat: srv
+    rect:
+    - 0
+    - 0
+    - 10
+    - 14
+    desc: 'Le poste de commandement du majordome, près de l''entrée de service pour surveiller les allées et venues. On y lave et on y range la verrerie fine et l''argenterie, et c''est là qu''on prépare
+      les plateaux. Il y dort dans un lit pliant, à côté de la chambre forte, comme le veut l''usage. Ce soir : c''est ici que le verre destiné à Marcus est préparé.'
+  - num: S4
+    nom: Chambre forte de l'argenterie
+    court: Ch. forte
+    cat: srv
+    rect:
+    - 0
+    - 14
+    - 10
+    - 20
+    desc: Petite pièce à porte de fer, sans fenêtre, accessible seulement depuis l'office du majordome. On y garde l'argenterie de famille et les plats d'apparat.
+  - num: S5
+    nom: Cave à vin
+    court: Cave à vin
+    cat: srv
+    rect:
+    - 0
+    - 20
+    - 10
+    - 34
+    desc: Voûtée, fraîche, fermée à clé ; seul le majordome en détient la clé. Casiers à bouteilles, fûts de bière dans un recoin.
+  - num: S6
+    nom: Chambre des valets de pied
+    court: Valets
+    cat: srv
+    rect:
+    - 0
+    - 34
+    - 10
+    - 40
+    desc: Deux lits étroits pour les deux valets de pied. Kerr prévoit au sous-sol « a sleeping room for two menservants », pour que les hommes ne dorment pas sous les toits avec les servantes.
+  - num: S7
+    nom: Couloir de service
+    court: Couloir
+    cat: cir
+    rect:
+    - 10
+    - 0
+    - 14
+    - 52
+    etiquette: false
+    desc: Long couloir dallé de pierre qui dessert tout le sous-sol, de l'entrée de service jusqu'à l'escalier de service. Mal éclairé, il sent le charbon et la cuisine.
+  - num: S8
+    nom: Salle des domestiques (servants' hall)
+    court: Salle des domestiques
+    cat: srv
+    rect:
+    - 14
+    - 0
+    - 36
+    - 18
+    desc: 'Grande table de bois brut où les domestiques prennent leurs repas, selon une stricte hiérarchie : le majordome préside, l''intendante en face. Un tableau de sonnettes au mur indique de quelle
+      pièce on appelle.'
+  - num: S9
+    nom: Chambre de l'intendante
+    court: Ch. de l'intendante
+    cat: srv
+    rect:
+    - 14
+    - 18
+    - 26
+    - 30
+    desc: 'Le salon privé de Mrs. Hartwell, intendante et gouvernante en chef depuis 25 ans : fauteuil, bureau aux livres de comptes, clés de la maison. Ce soir la pièce est vide, puisqu''elle est retenue
+      au manoir.'
+  - num: S10
+    nom: Office (still-room)
+    court: Office
+    cat: srv
+    rect:
+    - 26
+    - 18
+    - 36
+    - 30
+    desc: 'Domaine de l''intendante : confitures, conserves, thé, café, gâteaux secs. On y prépare ce qui n''est pas de la cuisine proprement dite.'
+  - num: S11
+    nom: Cuisine
+    court: Cuisine
+    cat: srv
+    rect:
+    - 14
+    - 30
+    - 36
+    - 52
+    desc: 'Grande pièce haute, carrelée, avec un fourneau fermé en fonte (le « range ») et sa chaudière arrière qui chauffe l''eau de la maison. Batterie de cuivre au mur, horloge des domestiques au-dessus
+      de la porte. Les fenêtres donnent sur la cour arrière. Ce soir : la cuisinière et ses aides y préparent le buffet.'
+  - num: S12
+    nom: Escalier de service et monte-charge
+    court: Esc. de service
+    cat: cir
+    rect:
+    - 0
+    - 40
+    - 10
+    - 52
+    etiquette: false
+    desc: 'Escalier étroit qui monte du sous-sol aux combles, réservé aux domestiques. Kerr y place un monte-charge : « The Back-stair has a Lift from bottom to top. » C''est par là que les plats et la
+      verrerie montent vers la salle à manger.'
+  - num: S13
+    nom: Arrière-cuisine (scullery)
+    court: Arrière-cuisine
+    cat: srv
+    rect:
+    - 0
+    - 52
+    - 20
+    - 62
+    desc: Éviers de pierre, eau froide, vaisselle sale. Le domaine de la fille de cuisine la plus jeune.
+  - num: S14
+    nom: Garde-manger (larder)
+    court: Garde-manger
+    cat: srv
+    rect:
+    - 0
+    - 62
+    - 10
+    - 76
+    desc: Pièce fraîche, orientée au nord, avec étagères de pierre et garde-manger grillagé pour la viande et le gibier.
+  - num: S15
+    nom: Salle de nettoyage
+    court: Nettoyage
+    cat: srv
+    rect:
+    - 10
+    - 62
+    - 20
+    - 76
+    desc: On y cire les bottes, on y aiguise les couteaux et on y entretient les lampes et les becs de gaz.
+  - num: S16
+    nom: Cour arrière
+    court: Cour arrière
+    cat: ext
+    rect:
+    - 20
+    - 52
+    - 36
+    - 70
+    desc: Cour dallée en contrebas, au niveau du sous-sol. Elle éclaire la cuisine et l'arrière-cuisine. Quelques marches remontent vers le jardin. Le jardin d'hiver du premier étage la surplombe.
+  portes:
+  - - 10
+    - 7
+    - v
+  - - 5
+    - 14
+    - h
+  - - 10
+    - 27
+    - v
+  - - 10
+    - 37
+    - v
+  - - 14
+    - 9
+    - v
+  - - 14
+    - 24
+    - v
+  - - 26
+    - 24
+    - v
+  - - 14
+    - 41
+    - v
+  - - 10
+    - 46
+    - v
+  - - 5
+    - 52
+    - h
+  - - 14
+    - 52
+    - h
+  - - 5
+    - 62
+    - h
+  - - 15
+    - 62
+    - h
+  - - 20
+    - 57
+    - v
+  - - 28
+    - 52
+    - h
+  - - 12
+    - 0
+    - h
+  tikz_extra:
+  - |-
+    \draw[stair] (31,-8) rectangle (35,-2); \foreach \i in {-7,...,-3} \draw[thin] (31,\i) -- (35,\i); \node[tiny] at (33,-0.9) {de la rue};
+  - |-
+    \draw[stair] (30,66) rectangle (35,70); \foreach \i in {67,68,69} \draw[thin] (30,\i) -- (35,\i);
+- cle: R
+  titre: Rez-de-chaussée — l'accueil et le buffet
+  hauteur: env. 14 ft sous plafond (4,25 m) ; surélevé de quelques marches au-dessus de la rue
+  intro: L'étage qu'on traverse en arrivant. Suivant Kerr, la salle à manger est à l'arrière, « as it ought to be, if possible », et la bibliothèque, « necessarily small », donne sur la rue. Ce soir, la
+    salle à manger accueille le buffet.
+  pieces:
+  - num: R0
+    nom: Perron
+    court: Perron
+    cat: ext
+    rect:
+    - 7
+    - -5
+    - 13
+    - 0
+    etiquette: false
+    desc: Quelques marches de pierre franchissent la cour anglaise jusqu'à la porte d'entrée, sous un porche à deux colonnes. Façade en stuc blanc, typique des terraces de Belgravia.
+  - num: R1
+    nom: Vestibule
+    court: Vestib.
+    cat: cir
+    rect:
+    - 6
+    - 0
+    - 14
+    - 10
+    desc: Sas entre la porte d'entrée et le hall. Le valet de pied y reçoit les invités et y annonce leur arrivée. Sol de marbre en damier noir et blanc.
+  - num: R2
+    nom: Vestiaire et lavabo des messieurs
+    court: Vest.
+    cat: san
+    rect:
+    - 0
+    - 0
+    - 6
+    - 10
+    desc: On y dépose manteaux, cannes et chapeaux haut de forme. Lavabo et cabinet d'aisances à chasse d'eau.
+  - num: R3
+    nom: Hall d'entrée
+    court: Hall
+    cat: cir
+    rect:
+    - 0
+    - 10
+    - 14
+    - 24
+    desc: 'Hall dallé, cheminée, banquette, porte-parapluies. Contre le mur se dresse la grande horloge de parquet : c''est elle qui donne l''heure de la maison et qui sonne les heures. Ce soir : c''est
+      l''horloge que Vivienne entend.'
+  - num: R4
+    nom: Grand escalier
+    court: Grand escalier
+    cat: cir
+    rect:
+    - 0
+    - 24
+    - 14
+    - 40
+    etiquette: false
+    desc: 'Escalier d''apparat en pierre, tapis retenu par des tringles de laiton, rampe d''acajou. Il monte jusqu''au troisième étage. Une verrière, au sommet de la cage, l''éclaire de jour. (Clin d''œil
+      à la vraie soirée : la quatrième marche.)'
+  - num: R5
+    nom: Escalier de service
+    court: Esc. service
+    cat: cir
+    rect:
+    - 0
+    - 40
+    - 10
+    - 52
+    etiquette: false
+    desc: Arrivée du monte-charge. Un domestique y réceptionne plats et verrerie avant de les porter à la salle à manger.
+  - num: R6
+    nom: Couloir arrière et desserte
+    court: Desserte
+    cat: cir
+    rect:
+    - 10
+    - 40
+    - 14
+    - 52
+    etiquette: false
+    desc: 'Passage étroit entre l''escalier de service et la salle à manger. Une console sert d''office de desserte : on y pose les plateaux avant le service. C''est le « Service-closet for the Dining-room
+      » de Kerr.'
+  - num: R7
+    nom: Bibliothèque
+    court: Bibliothèque
+    cat: fam
+    rect:
+    - 14
+    - 0
+    - 36
+    - 20
+    desc: 'Rayonnages d''acajou du sol au plafond, fauteuils de cuir, globe terrestre, grand bureau. C''est la pièce de Lord Whitmore quand il est à Londres. Fenêtres sur le square. (Clin d''œil à la vraie
+      soirée : La Panthère des neiges cachée dans les rayons.)'
+  - num: R8
+    nom: Salle à manger
+    court: Salle à manger
+    cat: rec
+    rect:
+    - 14
+    - 20
+    - 36
+    - 52
+    desc: 'La plus grande pièce du rez-de-chaussée : boiseries sombres, portraits de famille, lustre au gaz. La longue table d''acajou a été poussée contre le mur et sert de buffet. Ce soir : buffet debout,
+      champagne, va-et-vient permanent. C''est là que les invités se servent et que Béatrice trébuche.'
+  - num: R9
+    nom: Passage
+    court: Passage
+    cat: cir
+    rect:
+    - 0
+    - 52
+    - 20
+    - 56
+    etiquette: false
+    desc: Relie la maison principale à l'aile arrière.
+  - num: R10
+    nom: Toilettes
+    court: WC
+    cat: san
+    rect:
+    - 0
+    - 56
+    - 10
+    - 62
+    desc: Cabinet d'aisances à chasse d'eau, cuvette en faïence décorée. Les modèles tout en céramique se répandent depuis l'Exposition d'hygiène de 1884.
+  - num: R11
+    nom: Débarras
+    court: Débarras
+    cat: srv
+    rect:
+    - 10
+    - 56
+    - 20
+    - 62
+    desc: Armoire à fusils de chasse, cannes, imperméables.
+  - num: R12
+    nom: Cabinet de Lord Whitmore (fumoir)
+    court: Fumoir
+    cat: fam
+    rect:
+    - 0
+    - 62
+    - 20
+    - 76
+    desc: 'Pièce d''homme sur le jardin : cuir, tabac, trophées, journaux. En l''absence de Lord Whitmore, elle sert de fumoir aux messieurs. Ce soir : on s''y retire pour fumer, loin des dames.'
+  - num: R13
+    nom: Cour arrière (en contrebas)
+    court: Cour (vide)
+    cat: ext
+    rect:
+    - 20
+    - 52
+    - 36
+    - 70
+    desc: Vue plongeante sur la cour du sous-sol.
+  portes:
+  - - 10
+    - 0
+    - h
+    - 3.5
+  - - 6
+    - 5
+    - v
+  - - 10
+    - 10
+    - h
+  - - 14
+    - 14
+    - v
+  - - 7
+    - 24
+    - h
+    - 6
+  - - 14
+    - 30
+    - v
+    - 4
+  - - 12
+    - 40
+    - h
+  - - 14
+    - 48
+    - v
+  - - 10
+    - 46
+    - v
+  - - 5
+    - 52
+    - h
+  - - 12
+    - 52
+    - h
+  - - 5
+    - 56
+    - h
+  - - 15
+    - 56
+    - h
+  - - 10
+    - 62
+    - h
+- cle: P
+  titre: Premier étage — l'étage noble
+  hauteur: 'env. 16 ft sous plafond (4,90 m) : le plus haut de la maison'
+  intro: L'étage de réception. Kerr y place « two spacious Drawing-rooms and a connecting Ante-room » ; ici, les portes pliantes entre les trois pièces s'ouvrent ce soir en une seule enfilade. Grandes fenêtres
+    et balcon sur le square.
+  pieces:
+  - num: P1
+    nom: Salon de repos des dames
+    court: Repos des dames
+    cat: san
+    rect:
+    - 0
+    - 0
+    - 14
+    - 24
+    desc: 'Pièce attenante aux salons où les dames se recoiffent et rajustent leur toilette : coiffeuse, grands miroirs, sofa, lavabo. Un cabinet d''aisances y est ménagé. (Clin d''œil : le miroir de la
+      vraie soirée.) Ce soir : c''est là que Béatrice demande qu''on l''emmène.'
+  - num: P2
+    nom: Palier du grand escalier
+    court: Palier
+    cat: cir
+    rect:
+    - 0
+    - 24
+    - 14
+    - 40
+    etiquette: false
+    desc: Large palier d'où l'on entre dans l'antichambre. Les invités y patientent et s'y croisent.
+  - num: P3
+    nom: Escalier de service
+    court: Esc. service
+    cat: cir
+    rect:
+    - 0
+    - 40
+    - 10
+    - 52
+    etiquette: false
+    desc: Porte dérobée, tapissée comme le mur.
+  - num: P4
+    nom: Galerie
+    court: Galerie
+    cat: cir
+    rect:
+    - 10
+    - 40
+    - 14
+    - 52
+    etiquette: false
+    desc: Couloir qui mène à l'aile arrière et au petit salon, et que les domestiques empruntent pour rejoindre le salon de musique.
+  - num: P5
+    nom: Grand salon
+    court: Grand salon
+    cat: rec
+    rect:
+    - 14
+    - 0
+    - 36
+    - 22
+    desc: 'Le salon d''apparat sur le square : soieries, dorures, miroirs au-dessus de la cheminée, meubles et bibelots en abondance comme le veut le goût du temps. Trois hautes fenêtres ouvrent sur un
+      balcon.'
+  - num: P6
+    nom: Antichambre
+    court: Antichambre
+    cat: rec
+    rect:
+    - 14
+    - 22
+    - 36
+    - 32
+    desc: 'Pièce de liaison de 10 ft de large, la largeur que Kerr juge suffisante. Tables de jeu, fauteuils. Ce soir : on y joue aux cartes et on y bavarde, à l''écart de la musique.'
+  - num: P7
+    nom: Salon de musique
+    court: Salon de musique
+    cat: rec
+    rect:
+    - 14
+    - 32
+    - 36
+    - 52
+    desc: 'Le cœur de la soirée : piano à queue Broadwood, chaises dorées en rangées, partitions sur un guéridon. L''acoustique est soignée. Ce soir : le duo des Perles de Londres y chante.'
+  - num: P8
+    nom: Jardin d'hiver
+    court: Jardin d'hiver
+    cat: rec
+    rect:
+    - 20
+    - 52
+    - 36
+    - 66
+    desc: 'Serre de fer et de verre accolée au salon de musique, suspendue au-dessus de la cour : palmiers en pots, fougères, orchidées, bancs d''osier. Chaleur humide, lumière tamisée. Le lieu classique
+      des conversations à l''écart.'
+  - num: P9
+    nom: Passage
+    court: Passage
+    cat: cir
+    rect:
+    - 0
+    - 52
+    - 20
+    - 56
+    etiquette: false
+    desc: Mène de la galerie au petit salon.
+  - num: P10
+    nom: Petit salon
+    court: Petit salon
+    cat: fam
+    rect:
+    - 0
+    - 56
+    - 20
+    - 76
+    desc: 'Salon intime sur le jardin, loin du bruit de la réception : cheminée, deux fauteuils face à face, bougies. Une porte vitrée donne sur le jardin d''hiver. Ce soir : la confession de Cordelia à
+      Ophelia et Theodore (journal de Cordelia).'
+  portes:
+  - - 7
+    - 24
+    - h
+    - 6
+  - - 14
+    - 27
+    - v
+    - 4
+  - - 14
+    - 12
+    - v
+  - - 25
+    - 22
+    - h
+    - 12
+    - f
+  - - 25
+    - 32
+    - h
+    - 12
+    - f
+  - - 12
+    - 40
+    - h
+  - - 14
+    - 46
+    - v
+  - - 10
+    - 46
+    - v
+  - - 28
+    - 52
+    - h
+  - - 5
+    - 52
+    - h
+  - - 12
+    - 52
+    - h
+    - 2.5
+  - - 10
+    - 56
+    - h
+  - - 20
+    - 62
+    - v
+- cle: D
+  titre: Deuxième étage — les maîtres de maison
+  hauteur: env. 12 ft sous plafond (3,65 m)
+  intro: Les appartements privés de Lord et Lady Whitmore, et l'appartement des invités. Kerr y prévoit « two complete Private Bedroom-Suites, one for the heads of the family and one for guests » et une
+    salle de bain.
+  pieces:
+  - num: D1
+    nom: Cabinet de toilette de Lady Whitmore
+    court: Toilette de Lady W.
+    cat: fam
+    rect:
+    - 0
+    - 0
+    - 14
+    - 24
+    desc: Garde-robe, psyché, coiffeuse. La femme de chambre de Lady Whitmore y prépare ses toilettes.
+  - num: D2
+    nom: Palier
+    court: Palier
+    cat: cir
+    rect:
+    - 0
+    - 24
+    - 14
+    - 40
+    etiquette: false
+    desc: Plus étroit, sans apparat.
+  - num: D3
+    nom: Escalier de service
+    court: Esc. service
+    cat: cir
+    rect:
+    - 0
+    - 40
+    - 10
+    - 52
+    etiquette: false
+    desc: ''
+  - num: D4
+    nom: Couloir
+    court: Couloir
+    cat: cir
+    rect:
+    - 10
+    - 40
+    - 14
+    - 52
+    etiquette: false
+    desc: ''
+  - num: D5
+    nom: Chambre de Lady Whitmore
+    court: Ch. de Lady W.
+    cat: fam
+    rect:
+    - 14
+    - 0
+    - 36
+    - 24
+    desc: Grand lit à baldaquin, tentures, petit secrétaire où elle tient sa correspondance, y compris ses « arrangements » avec le Dr Harrington.
+  - num: D6
+    nom: Chambre de Lord Whitmore
+    court: Ch. de Lord W.
+    cat: fam
+    rect:
+    - 14
+    - 24
+    - 36
+    - 40
+    desc: 'Fermée, meubles sous des housses : Lord Whitmore est souffrant et resté au manoir. Une pièce vide au cœur de la maison.'
+  - num: D7
+    nom: Cabinet de toilette de Lord Whitmore
+    court: Toilette
+    cat: fam
+    rect:
+    - 14
+    - 40
+    - 25
+    - 52
+    desc: Vide ce soir.
+  - num: D8
+    nom: Salle de bain
+    court: Bains
+    cat: san
+    rect:
+    - 25
+    - 40
+    - 36
+    - 52
+    desc: 'Baignoire en fonte émaillée, lavabo, eau chaude venue de la chaudière de la cuisine : un luxe moderne. Les grandes maisons se dotent de salles de bain fixes à eau courante après 1870.'
+  - num: D9
+    nom: Passage
+    court: Passage
+    cat: cir
+    rect:
+    - 0
+    - 52
+    - 20
+    - 56
+    etiquette: false
+    desc: ''
+  - num: D10
+    nom: WC
+    court: WC
+    cat: san
+    rect:
+    - 0
+    - 56
+    - 8
+    - 62
+    desc: ''
+  - num: D11
+    nom: Lingerie
+    court: Lingerie
+    cat: srv
+    rect:
+    - 8
+    - 56
+    - 20
+    - 62
+    desc: Draps, nappes, serviettes, sous la garde des femmes de chambre.
+  - num: D12
+    nom: Chambre d'amis
+    court: Chambre d'amis
+    cat: fam
+    rect:
+    - 0
+    - 62
+    - 20
+    - 76
+    desc: La meilleure chambre d'invité, sur le jardin. Préparée ce soir pour un invité qui ne pourrait pas rentrer, par exemple les Fairfax, venus de la campagne.
+  - num: D13
+    nom: Verrière du jardin d'hiver
+    court: Verrière
+    cat: ext
+    rect:
+    - 20
+    - 52
+    - 36
+    - 66
+    desc: Toit de verre de la serre, vu d'en haut.
+  portes:
+  - - 7
+    - 24
+    - h
+    - 5
+  - - 14
+    - 12
+    - v
+  - - 14
+    - 30
+    - v
+  - - 25
+    - 24
+    - h
+  - - 20
+    - 40
+    - h
+  - - 14
+    - 46
+    - v
+  - - 30
+    - 40
+    - h
+  - - 12
+    - 40
+    - h
+  - - 25
+    - 46
+    - v
+  - - 10
+    - 46
+    - v
+  - - 12
+    - 52
+    - h
+  - - 4
+    - 56
+    - h
+  - - 14
+    - 56
+    - h
+  - - 10
+    - 62
+    - h
+- cle: T
+  titre: Troisième étage — Evangeline et les invités
+  hauteur: env. 10 ft sous plafond (3,05 m)
+  intro: 'L''étage d''Evangeline, d''une chambre d''amis supplémentaire et de la femme de chambre de Lady Whitmore. L''aile arrière s''arrête au deuxième étage : son toit forme ici une terrasse couverte
+    de plomb.'
+  aile: false
+  pieces:
+  - num: T1
+    nom: Salon d'Evangeline
+    court: Salon d'Eva.
+    cat: fam
+    rect:
+    - 0
+    - 0
+    - 14
+    - 24
+    desc: 'Son petit salon personnel : piano droit, partitions annotées, fleurs séchées, portrait de sa mère. Elle y répète.'
+  - num: T2
+    nom: Palier (fin du grand escalier)
+    court: Palier
+    cat: cir
+    rect:
+    - 0
+    - 24
+    - 14
+    - 40
+    etiquette: false
+    desc: ''
+  - num: T3
+    nom: Escalier de service
+    court: Esc. service
+    cat: cir
+    rect:
+    - 0
+    - 40
+    - 10
+    - 52
+    etiquette: false
+    desc: ''
+  - num: T4
+    nom: Couloir
+    court: Couloir
+    cat: cir
+    rect:
+    - 10
+    - 40
+    - 36
+    - 44
+    etiquette: false
+    desc: ''
+  - num: T4b
+    nom: Couloir
+    court: Couloir
+    cat: cir
+    rect:
+    - 10
+    - 44
+    - 14
+    - 52
+    etiquette: false
+    desc: ''
+  - num: T5
+    nom: Chambre d'Evangeline
+    court: Ch. d'Evangeline
+    cat: fam
+    rect:
+    - 14
+    - 0
+    - 36
+    - 24
+    desc: Chambre claire sur le square, papier peint fleuri. Elle y cache le médaillon au portrait de Théodore Eristoff.
+  - num: T6
+    nom: Chambre d'amis
+    court: Ch. d'amis
+    cat: fam
+    rect:
+    - 14
+    - 24
+    - 36
+    - 40
+    desc: Seconde chambre d'invité, plus simple.
+  - num: T7
+    nom: Salle de bain des dames
+    court: Bains
+    cat: san
+    rect:
+    - 14
+    - 44
+    - 25
+    - 52
+    desc: Kerr prévoit à cet étage « a second Bath-room (for ladies) ».
+  - num: T8
+    nom: Chambre de la femme de chambre
+    court: Femme de ch.
+    cat: srv
+    rect:
+    - 25
+    - 44
+    - 36
+    - 52
+    desc: La femme de chambre de Lady Whitmore, plus considérée que les autres servantes, loge près de sa maîtresse plutôt que sous les toits.
+  - num: T9
+    nom: Terrasse (toit de l'aile)
+    court: Terrasse
+    cat: ext
+    rect:
+    - 0
+    - 52
+    - 20
+    - 76
+    desc: Toit plat couvert de plomb.
+  portes:
+  - - 7
+    - 24
+    - h
+    - 5
+  - - 14
+    - 12
+    - v
+  - - 14
+    - 30
+    - v
+  - - 12
+    - 40
+    - h
+  - - 25
+    - 40
+    - h
+  - - 20
+    - 44
+    - h
+  - - 30
+    - 44
+    - h
+  - - 10
+    - 42
+    - v
+    - 2.5
+- cle: C
+  titre: Combles — les chambres de domestiques
+  hauteur: env. 8 ft sous le brisis du toit mansardé (2,45 m)
+  intro: Sous le toit, on n'accède à ce niveau que par l'escalier de service. Il fait froid l'hiver et étouffant l'été. Les servantes y logent à deux par chambre.
+  aile: false
+  pieces:
+  - num: C1
+    nom: Chambre de domestiques 1
+    court: Ch. 1
+    cat: srv
+    rect:
+    - 0
+    - 0
+    - 9
+    - 20
+    desc: Lit de fer, commode, cuvette et broc, crochets aux murs. Lucarne sur le square.
+  - num: C2
+    nom: Chambre de domestiques 2
+    court: Ch. 2
+    cat: srv
+    rect:
+    - 9
+    - 0
+    - 18
+    - 20
+    desc: Idem.
+  - num: C3
+    nom: Chambre de domestiques 3
+    court: Ch. 3
+    cat: srv
+    rect:
+    - 18
+    - 0
+    - 27
+    - 20
+    desc: Idem.
+  - num: C4
+    nom: Chambre de domestiques 4
+    court: Ch. 4
+    cat: srv
+    rect:
+    - 27
+    - 0
+    - 36
+    - 20
+    desc: Idem.
+  - num: C5
+    nom: Couloir
+    court: Couloir
+    cat: cir
+    rect:
+    - 0
+    - 20
+    - 36
+    - 24
+    etiquette: false
+    desc: ''
+  - num: C6
+    nom: Verrière du grand escalier
+    court: Verrière
+    cat: ext
+    rect:
+    - 0
+    - 24
+    - 14
+    - 40
+    desc: Lanterneau vitré au-dessus de la cage du grand escalier.
+  - num: C7
+    nom: Couloir
+    court: Couloir
+    cat: cir
+    rect:
+    - 14
+    - 24
+    - 18
+    - 52
+    etiquette: false
+    desc: ''
+  - num: C7b
+    nom: Couloir
+    court: Couloir
+    cat: cir
+    rect:
+    - 10
+    - 40
+    - 14
+    - 46
+    etiquette: false
+    desc: ''
+  - num: C8
+    nom: Escalier de service
+    court: Esc. service
+    cat: cir
+    rect:
+    - 0
+    - 40
+    - 10
+    - 52
+    etiquette: false
+    desc: Arrivée de l'escalier de service, seul accès aux combles.
+  - num: C9
+    nom: WC des domestiques
+    court: WC
+    cat: san
+    rect:
+    - 10
+    - 46
+    - 14
+    - 52
+    desc: ''
+  - num: C10
+    nom: Chambre aux malles
+    court: Malles
+    cat: srv
+    rect:
+    - 18
+    - 24
+    - 36
+    - 36
+    desc: 'Malles de voyage, cartons à chapeaux, meubles hors d''usage. Kerr : « Luggage and Lumber-rooms ».'
+  - num: C11
+    nom: Réservoirs d'eau
+    court: Réservoirs
+    cat: srv
+    rect:
+    - 18
+    - 36
+    - 27
+    - 52
+    desc: Citernes alimentées par la compagnie des eaux ; elles donnent la pression à l'eau froide des étages.
+  - num: C12
+    nom: Chambre de domestiques 5
+    court: Ch. 5
+    cat: srv
+    rect:
+    - 27
+    - 36
+    - 36
+    - 52
+    desc: Idem.
+  portes:
+  - - 4.5
+    - 20
+    - h
+    - 2.5
+  - - 13.5
+    - 20
+    - h
+    - 2.5
+  - - 22.5
+    - 20
+    - h
+    - 2.5
+  - - 31.5
+    - 20
+    - h
+    - 2.5
+  - - 16
+    - 24
+    - h
+  - - 18
+    - 30
+    - v
+  - - 18
+    - 44
+    - v
+  - - 27
+    - 44
+    - v
+    - 2.5
+  - - 10
+    - 43
+    - v
+    - 2.5
+  - - 14
+    - 43
+    - v
+    - 2.5
+  - - 12
+    - 46
+    - h
+    - 2.5

@@ -1,0 +1,231 @@
+# Personnages du roman. Les identifiants à trois lettres servent dans tous les fichiers de données.
+# role_recit  narrateur (a sa partie) · secondaire · reserve (narrateur possible) · absent · figurant
+# Âges : Recap.md et fiches V2.5 du dépôt privé murder-party (data/md/), sauf mention.
+# Les prénoms des joueurs de la vraie soirée ne figurent pas ici (dépôt public) : voir le fichier
+# de correspondance gardé hors de ce dépôt.
+
+personnages:
+  - id: SER
+    nom: Seraphina Blackwood
+    usuel: Seraphina, « Sera »
+    nom_de_naissance: Mary Fletcher
+    age: 26
+    role: Alto du duo « Les Perles de Londres » ; invitée d'honneur (ses 26 ans ce soir)
+    role_recit: narrateur
+    partie: ouverture
+    secret: A chanté des partitions volées de feu Giuseppe Valentini, fournies par un « protecteur » (Marcus) ; la veuve la fait chanter.
+    notes:
+      - Orpheline de Whitechapel, chassée de l'orphelinat ; Béatrice l'a aidée à ses débuts.
+      - Ignore que son protecteur est Marcus (intermédiaires, lettres anonymes).
+      - Florence la vouvoie ; elle vouvoie Lady Whitmore (à confirmer, cf. note dans l'ouverture).
+
+  - id: EVA
+    nom: Evangeline Whitmore
+    usuel: Evangeline, « Eva »
+    age: 24
+    role: Soprano du duo ; fille de l'hôtesse
+    role_recit: secondaire
+    secret: Chagrin d'amour pour le pianiste Théodore Eristoff, découvert marié au Royal Opera House.
+    notes:
+      - Vouvoie Seraphina, passe au tutoiement quand l'inquiétude l'emporte (ouverture).
+
+  - id: WHI
+    nom: Lady Margaret Whitmore
+    usuel: Lady Whitmore
+    age: 48
+    role: Mécène, hôtesse de la réception
+    role_recit: narrateur
+    partie: à placer (partie d'enquête)
+    secret: Finance les « recherches médicales » de Marcus en croyant protéger sa fille.
+    notes:
+      - Aristocrate (fiche uniformisée en ce sens). Tutoie Seraphina.
+      - Mariée à Lord Whitmore, souffrant, resté au manoir familial près de Bath.
+
+  - id: FLO
+    nom: Florence Pembroke
+    usuel: Florence
+    age: 33
+    role: Dame de compagnie de Seraphina
+    role_recit: secondaire
+    secret: Sait que Seraphina est victime d'un chantage, ignore sur quoi.
+    notes:
+      - Classe sociale plus modeste ; contrechamp possible dans la partie de Lady Whitmore.
+
+  - id: VAL
+    nom: La veuve Valentini
+    usuel: la signora Valentini
+    role: Veuve du compositeur Giuseppe Valentini ; en séjour à Londres pour « régler de vieilles affaires »
+    role_recit: secondaire
+    secret: Fait chanter Seraphina depuis six mois ; ignore que le vrai voleur est Marcus.
+    notes:
+      - Dans le jeu, rôle tenu par une complice du MJ.
+
+  - id: LIL
+    nom: Lady Elizabeth Eristoff
+    usuel: Lily
+    age: 42
+    role: Épouse du pianiste Théodore Eristoff, mécène
+    role_recit: secondaire
+    secret: Son mariage se défait depuis dix-huit mois ; lettres d'avocats.
+    notes:
+      - Ex-« Lady Margaret Eristoff » (Caro, V2), renommée pour éviter le doublon avec Lady Whitmore.
+      - Personnage resté plat en V2, à enrichir.
+
+  - id: OPH
+    nom: Ophelia Beaumont
+    usuel: Ophelia
+    age: 34
+    role: Danseuse et chorégraphe ; protégée de Lady Whitmore
+    role_recit: reserve
+    secret: Aucun secret lourd ; perçoit les souffrances des autres.
+    notes:
+      - Compatissante, sans jugement, tournée vers la réconciliation (pas « justicière »).
+      - Reçoit la lettre des mains du domestique et la lit à l'assemblée.
+
+  - id: COR
+    nom: Dr Cordelia Pemberton
+    usuel: Cordelia
+    age: 32
+    role: Naturaliste et exploratrice
+    role_recit: narrateur
+    partie: à placer (partie d'enquête)
+    secret: Obsession sexuelle pour les dauphins pendant l'expédition du Pacifique Sud ; découverte par l'équipage (décembre 1888).
+    notes:
+      - Retour à Londres le 28 février 1889 (journal) ; environ 21 mois avant la soirée.
+      - Se confesse à Ophelia et Theodore au petit salon pendant la soirée.
+
+  - id: THE
+    nom: Theodore Bradshaw
+    usuel: Theodore, « Theo »
+    age: 31
+    role: Photographe des expéditions de Cordelia
+    role_recit: secondaire
+    secret: Détient sans le savoir une photo du transport du corps de Prévost.
+    notes:
+      - Suit Cordelia ; leur duo ne doit pas être brisé.
+
+  - id: ISA
+    nom: Isadora Thornfield
+    usuel: Isadora
+    age: 29
+    role: Journaliste d'investigation
+    role_recit: narrateur
+    partie: à placer (partie d'enquête)
+    secret: Enquête sur le réseau de Marcus.
+    notes:
+      - Invitée contre la promesse d'un article sur la réception.
+      - Alliée intellectuelle de Vivienne (articles cosignés).
+
+  - id: VIV
+    nom: Dr Vivienne Ashford
+    usuel: Vivienne
+    age: 38
+    role: Aliéniste
+    role_recit: secondaire
+    secret: LA COUPABLE. A planifié l'empoisonnement de Marcus, puis s'est fait oublier son projet par hypnose.
+    notes:
+      - Ne doit jamais être narratrice : on observe ce qu'elle voit, jamais ce qu'elle pense.
+      - Pratiquait déjà l'hypnose dans sa fiche V2.5 ; Prévost lui avait sauvé la vie (typhoïde).
+
+  - id: MAR
+    nom: Dr Marcus Harrington
+    usuel: Marcus ; le Dr Harrington
+    age: 54
+    role: Chirurgien royal, médecin de la famille Whitmore
+    role_recit: secondaire
+    secret: Dirige un réseau de vol de cadavres et d'expériences ; fait chanter Blackstone ; a fait disparaître le corps de Prévost ; a fourni les partitions volées à Seraphina.
+    notes:
+      - LA CIBLE visée par l'arsenic ; il survit (il n'a pas bu).
+      - Plus lumineux que dans le jeu ; intouchable par la justice.
+      - Le « protecteur » masqué de Whitechapel dans le chapitre « Seule ».
+
+  - id: MON
+    nom: Lady Monica Fairfax
+    usuel: Lady Fairfax, Monica
+    age: 72
+    role: Aristocrate, reine des ragots
+    role_recit: secondaire
+    secret: Secret anatomique (attributs masculins) ; cinquante ans de diversions conjugales.
+
+  - id: REG
+    nom: Lord Reginald Fairfax
+    usuel: Lord Fairfax, Reginald
+    age: 70
+    role: Cinquième baron Fairfax de Thornhill
+    role_recit: narrateur
+    partie: intermède (respiration)
+    secret: Veut enfin consommer son mariage ce soir.
+
+  - id: BLA
+    nom: Sir Edmund Blackstone
+    usuel: Sir Edmund
+    age: 52
+    role: Industriel, baronnet récent
+    role_recit: secondaire
+    secret: A tué l'ingénieur Müller et volé ses plans il y a vingt ans ; Marcus le fait chanter.
+
+  - id: BEA
+    nom: Béatrice Prévost
+    usuel: Béatrice
+    age: 35
+    role: Épouse d'un mari « en voyage d'affaires »
+    role_recit: narrateur
+    partie: à placer (partie d'enquête, en duo avec Thomas)
+    secret: A causé la chute mortelle de son mari ; Marcus a fait disparaître le corps.
+    notes:
+      - LA VICTIME : boit le verre empoisonné que Marcus lui offre après l'avoir rattrapée.
+      - Maladroite ; a aidé Mary Fletcher à ses débuts, en cachette, quand elle vivait à Bloomsbury.
+
+  - id: THO
+    nom: Thomas Davies
+    usuel: Thomas
+    age: 32
+    role: Technicien en télégraphie ; compagnon de Béatrice
+    role_recit: narrateur
+    partie: à placer (en duo avec Béatrice)
+    secret: Complice de la disparition de Prévost.
+    notes:
+      - « Valentin » est le prénom de son joueur, pas un nom du roman.
+
+# Hors scène, évoqués, ou nouveaux pour le roman
+absents_et_figurants:
+  - id: LWH
+    nom: Lord Whitmore
+    statut: absent
+    note: Souffrant, resté au manoir familial près de Bath ; n'a pas pu faire le voyage.
+  - id: HAR
+    nom: Mrs Eleanor Hartwell
+    statut: absent
+    note: "Gouvernante en chef des Whitmore depuis 25 ans ; retenue au manoir, auprès de Lord Whitmore. Piste : absence provoquée par Vivienne."
+  - id: ERI
+    nom: Maestro Théodore Eristoff
+    statut: absent
+    note: Pianiste, mari de Lily. Absent ce soir (fixé par l'ouverture) ; son absence alimente les conversations.
+  - id: PRE
+    nom: M. Édouard Prévost
+    statut: mort
+    note: Mari tyrannique de Béatrice, mort il y a quatre mois. « Édouard » (Recap, chapitre « Seule ») l'emporte sur « Alain » (nouvelle bonus).
+  - id: GVA
+    nom: Giuseppe Valentini
+    statut: mort
+    note: Compositeur, mort il y a un an.
+  - id: DOM
+    nom: Le domestique hypnotisé
+    statut: figurant
+    note: Sert le verre préparé à Marcus, puis remet la lettre à Ophelia, sous suggestion post-hypnotique. Aucun souvenir.
+  - id: FDC
+    nom: Une femme de chambre
+    statut: figurant
+    note: Surprend au salon des dames la conversation de Florence et Seraphina et la rapporte à Lady Whitmore.
+  - id: MAJ
+    nom: Le majordome
+    statut: figurant
+    note: Annonce les invités « de sa voix claire et sans émotions ».
+  - id: ELV
+    nom: L'ancien élève de Vivienne
+    statut: hors scène
+    note: "Jeune médecin atteint d'un cancer avancé ; a hypnotisé Vivienne. Motifs : complicité morale contre Marcus, avenir de sa famille assuré."
+  - id: DET
+    nom: Le détective privé de Theodore
+    statut: hors scène
+    note: Envoie un télégramme volontairement flou vers les deux tiers de la soirée.

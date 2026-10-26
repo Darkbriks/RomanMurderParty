@@ -1,0 +1,100 @@
+# Repères historiques et médicaux vérifiés (sources consultées), avec leur conséquence pour le roman.
+# libertes : écarts assumés par Antoine, à ne pas « corriger ».
+
+verifies:
+  - sujet: Arsenic et peau
+    fait: L'arsenic blanc irrite la peau, mais son absorption à travers une peau saine est négligeable.
+    consequence: Ingestion obligatoire ; l'échange de verres est le bon mécanisme (le verre renversé seul ne suffit pas).
+    sources: ["https://www.atsdr.cdc.gov/MHMI/mmg2.pdf"]
+    verifie_le: 2026-10-10
+  - sujet: Délai des symptômes
+    fait: >-
+      Premiers symptômes en général dans l'heure, parfois plusieurs heures plus tard si l'arsenic est pris
+      avec de la nourriture. Des récits du XIXe siècle décrivent des morts de cinq à plus de cinquante heures après la prise.
+    sources:
+      - https://19january2017snapshot.epa.gov/sites/production/files/documents/rmpp_6thed_ch15_arsenicals.pdf
+      - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5621315/
+    verifie_le: 2026-10-10
+  - sujet: Délai du décès
+    fait: En cas de dose mortelle, la mort survient en général un à trois jours après les premiers symptômes.
+    consequence: Pas de mort pendant la soirée ; Béatrice « s'éteint des suites de la soirée ».
+    sources: ["https://19january2017snapshot.epa.gov/sites/production/files/documents/rmpp_6thed_ch15_arsenicals.pdf"]
+    verifie_le: 2026-10-10
+  - sujet: Confusion avec le choléra
+    fait: Les symptômes de l'arsenic pouvaient être confondus avec le choléra.
+    sources: ["https://www.chm.bris.ac.uk/motm/arsine/arsinev.htm"]
+    verifie_le: 2026-10-10
+  - sujet: Antidote
+    fait: >-
+      Bunsen et Berthold publient en 1834 l'oxyde de fer hydraté comme antidote. Il doit être fraîchement
+      préparé et n'agit qu'avant l'absorption de l'arsenic.
+    consequence: Plausible ; le temps compte autant que la dose.
+    sources:
+      - https://en.wikisource.org/wiki/The_American_Cyclop%C3%A6dia_(1879)/Bunsen,_Robert_Wilhelm
+      - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6872304/
+    verifie_le: 2026-10-10
+  - sujet: Détection
+    fait: Test de Marsh publié en 1836, très sensible et spécifique.
+    sources: ["https://en.wikipedia.org/wiki/Marsh_test"]
+    verifie_le: 2026-10-10
+  - sujet: Affaire Maybrick
+    fait: Florence Maybrick, accusée d'avoir tiré l'arsenic de papiers tue-mouches, est condamnée à mort le 7 août 1889 à Liverpool ; peine commuée.
+    consequence: Sujet de conversation certain en 1890 ; écho pour Lily et Béatrice.
+    sources: ["https://www.stgeorgeshallliverpool.co.uk/?p=56659"]
+    verifie_le: 2026-10-10
+  - sujet: Condamnés à mort
+    fait: Trois dimanches pleins devaient séparer la sentence de l'exécution.
+    consequence: Trop court pour former un hypnotiseur ; piste écartée.
+    sources: ["https://www.the-medium-is-not-enough.com/2015/04/the_wednesday_play_james_oconnors_three_clear_sund.php"]
+    verifie_le: 2026-10-10
+  - sujet: Broadmoor
+    fait: Asile pour criminels aliénés ouvert en 1863 ; un directeur médical et deux médecins seulement.
+    consequence: Piste écartée au profit de l'ancien élève malade.
+    sources: ["https://magazine.familytreeforum.com/?p=155"]
+    verifie_le: 2026-10-10
+  - sujet: Hypnose
+    fait: >-
+      Écoles rivales de Charcot (Salpêtrière) et de Bernheim (Nancy) dans les années 1880 ; la suggestion
+      post-hypnotique, oubliée par le sujet, est un phénomène étudié.
+    consequence: L'amnésie de Vivienne et la suggestion donnée au domestique sont crédibles.
+    sources: ["https://en.wikipedia.org/wiki/Nancy_School"]
+    verifie_le: 2026-10-10
+  - sujet: Diabète maigre
+    fait: Lancereaux distingue diabète maigre et diabète gras vers 1880, mais ses patients ne correspondent pas clairement au type 1.
+    consequence: Écarté pour l'ancien élève de Vivienne ; cancer avancé retenu.
+    sources: ["https://pmc.ncbi.nlm.nih.gov/articles/PMC9109214"]
+    verifie_le: 2026-10-10
+  - sujet: Formol
+    fait: >-
+      Le formol (formaline) n'est testé comme fixateur et conservateur qu'en 1892 (Blum) ; avant, on conserve
+      surtout à l'alcool (« esprit-de-vin »).
+    consequence: >-
+      L'odeur de formol sur le protecteur de Whitechapel (chapitre « Seule », vers 1886-1888) serait
+      anachronique. L'alcool, l'acide phénique (phénol) ou une odeur de chair morte sont plus sûrs.
+    sources: ["https://www.nsh.org/blogs/neil-macintyre/2018/08/10/fixation-history-and-speed"]
+    verifie_le: 2026-10-25
+  - sujet: Maisons de ville londoniennes
+    fait: >-
+      Plan type d'une « really good house » : offices au sous-sol, salle à manger à l'arrière du rez-de-chaussée,
+      deux salons et une antichambre au premier, monte-charge dans l'escalier de service, écuries sur la ruelle.
+    sources: ["https://www.victorianlondon.org/houses/londontownhouse.htm"]
+    verifie_le: 2026-10-15
+  - sujet: Équipements vers 1890
+    fait: >-
+      Salles de bain fixes à eau chaude dans les grandes maisons après 1870 ; WC tout céramique présenté en 1884 ;
+      manchon Welsbach à partir de 1885 ; électricité encore très rare.
+    sources: ["https://fet.uwe.ac.uk/conweb/house_ages/services/section4.htm"]
+    verifie_le: 2026-10-15
+
+a_verifier:
+  - Le cancer avancé comme maladie de l'ancien élève (diagnostic et survie crédibles en 1890).
+  - Les usages d'un toast lors d'une réception musicale (avant ou après le chant).
+  - La présence habituelle d'une domestique au salon des dames pendant une réception.
+  - Les heures usuelles d'une réception du soir sans dîner (vers 21 h, souper tardif).
+
+libertes:
+  - Les femmes exercent des métiers peu accessibles en 1890 (aliéniste, journaliste, exploratrice). Quelques remarques ponctuelles possibles, jamais un enjeu central.
+  - La dose d'arsenic est calculée pour que les premiers symptômes n'apparaissent qu'après la conclusion.
+  - L'antidote reste efficace quelques minutes à quelques heures après la prise, tant que les symptômes ne sont pas apparus.
+  - Le coffret à antidote (serrure à code, destruction en cas de forçage ou à heure fixe) est un objet fait sur mesure.
+  - Quelques minutes d'écart entre les horloges de la maison ne posent pas de problème.

@@ -1,0 +1,89 @@
+# Pourquoi chacun est là. Beaucoup sont invités par obligation mondaine plus que par amitié,
+# ce qui explique la présence de gens que l'hôtesse redoute ou connaît à peine.
+# source : Antoine = décision d'Antoine ; Recap, Herald, fiche, journal = documents du dépôt privé.
+
+hotesse: WHI
+hotesse_raison_cachee: Confronter les menaces qui pèsent sur Evangeline, Seraphina en tête (Herald, fiche).
+occasion: Les 26 ans de Seraphina ; la réception rend hommage à l'art vocal britannique.
+pourquoi_londres: >-
+  Hors saison, mais la plupart des invités vivent à Londres toute l'année, souvent pour leur métier ;
+  seuls les Fairfax font le déplacement.
+
+invites:
+  - qui: SER
+    invitation: Invitée d'honneur, ses 26 ans
+    raison_cachee: Négocier avec la veuve Valentini la fin du chantage
+    source: [Recap, fiche]
+    etat: solide
+  - qui: EVA
+    invitation: Fille de l'hôtesse, partenaire du duo
+    source: [Recap, Herald]
+    etat: solide
+  - qui: FLO
+    invitation: Dame de compagnie de Seraphina, l'accompagne
+    raison_cachee: Percer enfin le secret du chantage
+    source: [fiche]
+    etat: solide
+  - qui: OPH
+    invitation: Protégée de Lady Whitmore, qui la finance ; habituée des concerts du duo
+    raison_cachee: Recueillir des histoires pour son spectacle
+    source: [Plan, Herald]
+    etat: solide
+  - qui: MAR
+    invitation: Médecin de la famille Whitmore, « allié » de l'hôtesse
+    source: [fiches]
+    etat: solide
+  - qui: [MON, REG]
+    invitation: Aristocratie dont la présence honore les réceptions
+    raison_cachee: "Reginald : consommer enfin son mariage ; Monica : l'en empêcher"
+    source: [Herald, fiches]
+    etat: solide
+  - qui: COR
+    invitation: Figure des hauts cercles intellectuels, sa présence apporte du prestige
+    raison_cachee: Plusieurs proches sont présents, et la date tombe au moment où elle se sent capable de se confesser
+    source: [Antoine, Herald, journal]
+    etat: solide
+  - qui: THE
+    invitation: Collaborateur et ami proche de Cordelia, l'inviter va presque de soi ; l'hôtesse soutient aussi ses travaux
+    source: [Antoine, fiche]
+    etat: solide
+  - qui: VAL
+    invitation: >-
+      A gardé une place importante dans les hautes sphères culturelles ; en séjour à Londres pour
+      quelques mois. Ne pas l'inviter à une soirée qui célèbre la musique serait très mal vu.
+    raison_cachee: Confronter Seraphina le jour de son anniversaire
+    source: [Antoine, fiche]
+    etat: solide
+  - qui: LIL
+    invitation: Proche de Seraphina ; mécène, elle fréquente les mêmes cercles que Lady Whitmore
+    raison_cachee: Maintenir les apparences de son mariage
+    source: [Antoine, fiche V2]
+    etat: a_ajuster
+  - qui: VIV
+    invitation: Fréquente les cercles intellectuels de Lady Whitmore ; ne pas l'inviter serait mal vu
+    raison_cachee: Percer le mystère Prévost ; dans le roman, empoisonner Marcus
+    source: [Antoine, fiche]
+    etat: solide
+    note: Elle n'a pas eu à manipuler la liste ; il lui suffisait d'exploiter une soirée où Marcus serait présent.
+  - qui: ISA
+    invitation: A consenti à écrire un article sur la réception en échange de l'invitation
+    raison_cachee: Approcher d'un coup plusieurs personnes qui pourraient nourrir ses enquêtes, dont Marcus
+    source: [Antoine, fiche]
+    etat: solide
+    consequences:
+      - Le lien noué avec Cordelia et Theodore mène à son départ de Londres avec eux.
+      - Après la conclusion, Lady Whitmore la supplie de ne jamais rien écrire sur la soirée.
+  - qui: BLA
+    invitation: Sa position impose de l'inviter, même s'il n'est pas vraiment accepté
+    raison_cachee: Démasquer son maître chanteur
+    source: [Antoine, fiche]
+    etat: solide
+  - qui: BEA
+    invitation: A aidé Seraphina au début de son ascension ; une réception en son honneur sans elle n'aurait pas de sens
+    raison_cachee: Profiter d'être enfin acceptée en couple
+    source: [Antoine]
+    etat: solide
+  - qui: THO
+    invitation: Compagnon de Béatrice, désormais affiché
+    source: [Antoine]
+    etat: solide

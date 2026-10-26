@@ -1,0 +1,485 @@
+# Chronologie maître de la soirée du 27 novembre 1890 (jets 1 et 2, plus ce que l'ouverture a fixé).
+# Phases RELATIVES (P0 à P10) : leur ordre est fixé, pas leurs heures, sauf les arrivées.
+# statut  decide  = décidé par Antoine
+#         piste   = idée d'Antoine, à confirmer
+#         propose = proposition de Claude, à valider ou rejeter
+# source  ouverture = fixé par le texte déjà écrit (parties/ouverture.tex) ; le texte fait foi.
+# Une case (personnage × phase) absente est un TROU à combler.
+# Les ressentis des personnages ne vont pas ici mais dans ../notes-de-scene.md.
+
+debut_reception: '21:00'
+heures_absolues: non fixées, sauf les arrivées ; l'heure X sera fixée quand on verra la durée que remplissent
+  les scènes
+phases:
+- id: P0
+  titre: Après-midi
+  resume: Préparatifs, avant l'arrivée des invités
+- id: P1
+  titre: Les arrivées
+  resume: De 21 h à l'arrivée de Marcus
+- id: P2
+  titre: Le verre
+  resume: De l'arrivée de Marcus à la fin du premier morceau
+- id: P3
+  titre: La lettre
+  resume: Lecture, ramassage des verres, premières réactions
+- id: P4
+  titre: Début de l'enquête
+  resume: Premier tiers des énigmes
+- id: P5
+  titre: Mi-soirée
+  resume: Rencontres et alliances
+- id: P6
+  titre: Deux tiers
+  resume: Le télégramme de Theodore
+- id: P7
+  titre: Avant l'heure X
+  resume: Confession de Cordelia
+- id: P8
+  titre: L'heure X
+  resume: L'horloge sonne, fin des investigations
+- id: P9
+  titre: Le vote
+  resume: Coffret ouvert, l'assemblée décide
+- id: P10
+  titre: La fin
+  resume: Après le vote
+groupes:
+- groupe: La maison
+  personnages:
+  - WHI
+  - EVA
+  - SER
+  - FLO
+  - DOM
+  - FDC
+- groupe: Le cercle de Cordelia
+  personnages:
+  - COR
+  - THE
+  - OPH
+  - ISA
+- groupe: Les autres convives
+  personnages:
+  - VIV
+  - MAR
+  - BEA
+  - THO
+  - MON
+  - REG
+  - BLA
+  - LIL
+  - VAL
+tous:
+- phase: P8
+  quoi: Fin des investigations.
+- phase: P9
+  quoi: Vote sur l'antidote.
+evenements:
+- qui: WHI
+  phase: P0
+  statut: decide
+  quoi: Derniers préparatifs, avec Seraphina.
+- qui: SER
+  phase: P0
+  statut: decide
+  quoi: Arrive dans la journée pour assister aux préparatifs.
+- qui: EVA
+  phase: P0
+  statut: propose
+  quoi: Répète avec Seraphina.
+- qui: FLO
+  phase: P0
+  statut: propose
+  quoi: Accompagne Seraphina.
+- qui: DOM
+  phase: P0
+  statut: propose
+  quoi: La suggestion est posée depuis quelques jours ; il attend son déclencheur.
+- qui: WHI
+  phase: P1
+  statut: decide
+  quoi: Accueille les invités.
+- qui: EVA
+  phase: P1
+  statut: propose
+  quoi: Accueille aux côtés de sa mère.
+- qui: FLO
+  phase: P1
+  statut: propose
+  quoi: En retrait ; guette l'arrivée de la veuve.
+- qui: COR
+  phase: P1
+  statut: decide
+  quoi: Parmi les premiers, avec Theodore, en fiacre.
+  heure: '21:00'
+- qui: THE
+  phase: P1
+  statut: decide
+  quoi: Arrive avec Cordelia.
+  heure: '21:00'
+- qui: ISA
+  phase: P1
+  statut: decide
+  quoi: Très ponctuelle.
+  heure: 21:00 – 21:20
+- qui: OPH
+  phase: P1
+  statut: decide
+  quoi: Arrive juste après Cordelia et Theodore (ordre fixé par l'ouverture).
+  heure: 21:00 – 21:20
+  source: ouverture
+- qui: BLA
+  phase: P1
+  statut: decide
+  quoi: Arrive après Isadora, avant Vivienne (ordre fixé par l'ouverture).
+  heure: 21:00 – 21:20
+  source: ouverture
+- qui: VIV
+  phase: P1
+  statut: decide
+  quoi: Dernière du premier groupe, avant les Fairfax (ordre fixé par l'ouverture).
+  heure: 21:00 – 21:20
+  source: ouverture
+- qui: MON
+  phase: P1
+  statut: decide
+  quoi: 'Arrivée calculée : ni trop tôt, ni trop tard.'
+  heure: '21:22'
+  source: ouverture
+- qui: REG
+  phase: P1
+  statut: decide
+  quoi: Amusé par tant d'efforts, épaté par la précision de sa femme.
+  heure: '21:22'
+  source: ouverture
+- qui: VAL
+  phase: P1
+  statut: decide
+  quoi: Annoncée par le majordome peu après les Fairfax (« La signora Valentini ! »).
+  heure: peu après 21:22
+  source: ouverture
+- qui: BEA
+  phase: P1
+  statut: decide
+  quoi: Plus attendue.
+  heure: 21 h 30 – 21 h 40
+- qui: THO
+  phase: P1
+  statut: decide
+  quoi: Avec Béatrice.
+  heure: 21 h 30 – 21 h 40
+- qui: LIL
+  phase: P1
+  statut: decide
+  quoi: Déjà là quand Seraphina la remarque, sans se souvenir de son arrivée. Son mari, le Maestro Eristoff,
+    est absent.
+  source: ouverture
+- qui: MAR
+  phase: P1
+  statut: decide
+  quoi: Le dernier, retardé par une « consultation d'urgence ».
+  heure: 21 h 50 – 22 h 05
+- qui: DOM
+  phase: P1
+  statut: propose
+  quoi: Attend l'arrivée de Marcus.
+- qui: SER
+  phase: P1
+  statut: decide
+  source: ouverture
+  quoi: Accueille les invités comme spectatrice d'elle-même. À 21 h 22, en quittant la salle à manger
+    pour accueillir les Fairfax, elle regarde l'horloge du hall.
+- qui: FLO
+  phase: P1
+  statut: decide
+  source: ouverture
+  quoi: Apporte à Seraphina un verre de citronnade et lui tend un mouchoir brodé « M.F. » (refusé), juste
+    avant l'annonce de la veuve.
+- qui: EVA
+  phase: P1
+  statut: decide
+  source: ouverture
+  quoi: Avec Theodore, demande à Seraphina pourquoi le Maestro Eristoff est absent ; s'inquiète de sa
+    pâleur et propose de s'isoler au salon de musique ou dans sa chambre en attendant le Dr Harrington.
+- qui: EVA
+  phase: P1
+  statut: piste
+  source: ouverture
+  quoi: A les yeux rouges, peut-être une larme ; Theodore le remarque et pourra le dire plus tard.
+- qui: THE
+  phase: P1
+  statut: decide
+  source: ouverture
+  quoi: Discute avec Evangeline et Seraphina de l'absence du Maestro Eristoff.
+- qui: WHI
+  phase: P2
+  statut: decide
+  quoi: Fait servir Marcus ; porte un toast à Seraphina ; invite les convives au piano.
+- qui: DOM
+  phase: P2
+  statut: decide
+  quoi: Reçoit la demande transmise ; prépare et apporte le verre.
+- qui: MAR
+  phase: P2
+  statut: decide
+  quoi: Rattrape Béatrice, lui offre son verre intact, en demande un autre.
+- qui: BEA
+  phase: P2
+  statut: decide
+  quoi: Trébuche dans sa robe ; reçoit le verre de Marcus ; boit au toast.
+- qui: THO
+  phase: P2
+  statut: propose
+  quoi: À côté de Béatrice au moment de la chute.
+- qui: SER
+  phase: P2
+  statut: decide
+  quoi: Chante en sauvant les apparences ; une prestation très bonne, mais loin de ce qu'elle offrait
+    autrefois. Beaucoup y voient le trac.
+- qui: EVA
+  phase: P2
+  statut: decide
+  quoi: Chante le premier morceau.
+- qui: OPH
+  phase: P2
+  statut: decide
+  quoi: Sent que le trouble de Seraphina dépasse de loin le trac.
+- qui: COR
+  phase: P2
+  statut: piste
+  quoi: Sent elle aussi que Seraphina porte autre chose, sans savoir quoi en faire.
+- qui: WHI
+  phase: P3
+  statut: decide
+  quoi: Fait ramasser tous les verres et les boissons (la preuve disparaît).
+- qui: DOM
+  phase: P3
+  statut: decide
+  quoi: Le regard vide, tend la lettre à Ophelia.
+- qui: OPH
+  phase: P3
+  statut: decide
+  quoi: Lit la lettre à l'assemblée, puis emmène Cordelia au jardin d'hiver et la calme (la plume).
+- qui: COR
+  phase: P3
+  statut: decide
+  quoi: Sous le choc ; crise d'angoisse au jardin d'hiver, devant les plantes de son expédition.
+- qui: FLO
+  phase: P3
+  statut: decide
+  quoi: Juste après la lettre, isole Seraphina au salon des dames sous prétexte d'ajuster sa robe ; lui
+    demande si c'est lié au chantage.
+- qui: SER
+  phase: P3
+  statut: decide
+  quoi: Isolée par Florence au salon des dames ; pressée de questions sur le chantage.
+- qui: FDC
+  phase: P3
+  statut: decide
+  quoi: Surprend des bribes de la conversation, les plus accablantes pour Seraphina.
+- qui: FDC
+  phase: P3
+  statut: piste
+  quoi: Présente dans la pièce sans être remarquée, ou passant sur le palier devant une porte entrebâillée.
+- qui: EVA
+  phase: P3
+  statut: decide
+  quoi: Étonnée de l'empressement avec lequel Florence met Seraphina à l'écart.
+- qui: FDC
+  phase: P4
+  statut: decide
+  quoi: Rapporte aussitôt ce qu'elle a entendu à Lady Whitmore.
+- qui: WHI
+  phase: P4
+  statut: decide
+  quoi: Alertée par la femme de chambre, cherche à confronter Seraphina discrètement, loin d'Evangeline.
+- qui: EVA
+  phase: P4
+  statut: decide
+  quoi: Cherche désespérément à parler à cœur ouvert avec Seraphina.
+- qui: SER
+  phase: P4
+  statut: decide
+  quoi: Poursuivie à la fois par Lady Whitmore et par Evangeline, qui se gênent l'une l'autre sans le
+    savoir.
+- qui: COR
+  phase: P4
+  statut: decide
+  quoi: Se reprend ; aide aux énigmes par sa science ; craint d'être la coupable.
+- qui: OPH
+  phase: P4
+  statut: propose
+  quoi: Revient avec Cordelia et reste près d'elle.
+- qui: VIV
+  phase: P4
+  statut: propose
+  quoi: 'Poursuit son objectif de fiche : analyser Béatrice et Thomas au sujet de Prévost.'
+- qui: BLA
+  phase: P4
+  statut: decide
+  quoi: Parle de ses débuts et de ses affaires avec plusieurs convives pour débusquer son maître chanteur.
+- qui: BLA
+  phase: P5
+  statut: decide
+  quoi: Continue sa recherche ; aide à quelques énigmes par son expérience, sans briller comme Cordelia.
+- qui: WHI
+  phase: P5
+  statut: decide
+  quoi: Cherche toujours son tête-à-tête avec Seraphina.
+- qui: EVA
+  phase: P5
+  statut: decide
+  quoi: Cherche toujours son tête-à-tête avec Seraphina.
+- qui: THE
+  phase: P5
+  statut: decide
+  quoi: Présente Isadora à Cordelia devant une énigme qui demande leurs deux compétences.
+- qui: COR
+  phase: P5
+  statut: decide
+  quoi: Rencontre Isadora ; leurs échanges deviennent confiance.
+- qui: COR
+  phase: P5
+  statut: piste
+  quoi: Parle à Isadora du trouble qu'elle a senti chez Seraphina.
+- qui: ISA
+  phase: P5
+  statut: decide
+  quoi: Se lie à Cordelia ; lui confie une partie de son enquête.
+- qui: ISA
+  phase: P5
+  statut: piste
+  quoi: Évoque l'état de l'ancien élève de Vivienne, sans en mesurer la portée.
+- qui: VIV
+  phase: P5
+  statut: piste
+  quoi: Isadora lui demande des nouvelles de son ancien élève ; elle répond avec une tristesse sincère.
+- qui: THE
+  phase: P6
+  statut: decide
+  quoi: Reçoit le télégramme du détective ; le confie à Cordelia dès qu'ils sont seuls.
+- qui: COR
+  phase: P6
+  statut: decide
+  quoi: Lit le télégramme ; hésite ; le partage sans doute avec Isadora.
+- qui: ISA
+  phase: P6
+  statut: decide
+  quoi: Apprend le contenu du télégramme (probable).
+- qui: DOM
+  phase: P6
+  statut: propose
+  quoi: Le majordome apporte le télégramme.
+- qui: COR
+  phase: P7
+  statut: decide
+  quoi: Emmène Ophelia et Theodore au petit salon et se confesse.
+- qui: THE
+  phase: P7
+  statut: decide
+  quoi: Écoute la confession.
+- qui: OPH
+  phase: P7
+  statut: decide
+  quoi: Écoute la confession.
+- qui: BLA
+  phase: P7
+  statut: decide
+  quoi: Son tour vient de parler avec Marcus, qui lâche sans s'en rendre compte un détail qu'il ne devrait
+    pas connaître. Blackstone écourte pour remettre de l'ordre dans ses idées.
+- qui: MAR
+  phase: P7
+  statut: decide
+  quoi: Lâche devant Blackstone, sans s'en rendre compte, un détail qu'il ne devrait pas connaître.
+- qui: VIV
+  phase: P8
+  statut: decide
+  quoi: 'L''horloge sonne : ses souvenirs reviennent.'
+- qui: BLA
+  phase: P8
+  statut: decide
+  quoi: Pris de court par la sonnerie claire de l'horloge, en plein désordre intérieur.
+- qui: VIV
+  phase: P9
+  statut: decide
+  quoi: Explique tout, après le vote.
+- qui: BEA
+  phase: P10
+  statut: decide
+  quoi: « Thomas, aide-moi, il faut que j'aille aux toilettes, c'est… urgent. »
+- qui: THO
+  phase: P10
+  statut: decide
+  quoi: L'aide à monter.
+- qui: COR
+  phase: P10
+  statut: decide
+  quoi: 'Débrief à la bibliothèque avec Isadora et Theodore : propose de monter vite une nouvelle expédition
+    pour se mettre à l''abri ; il faut cacher la photo au plus vite.'
+- qui: THE
+  phase: P10
+  statut: decide
+  quoi: 'Débrief à la bibliothèque : décision de mettre sa photo compromettante à l''abri.'
+- qui: ISA
+  phase: P10
+  statut: decide
+  quoi: 'Débrief à la bibliothèque : annonce une série d''articles contre Marcus et son réseau. Lady Whitmore
+    la supplie ensuite de ne rien écrire sur la soirée.'
+- qui: WHI
+  phase: P10
+  statut: decide
+  quoi: Supplie Isadora de garder le silence.
+a_placer:
+  WHI:
+  - 'Obtenir son tête-à-tête avec Seraphina : quand, et y parvient-elle ?'
+  EVA:
+  - 'Obtenir son cœur-à-cœur avec Seraphina : quand, et y parvient-elle ?'
+  SER:
+  - 'Négocier avec la veuve la fin du chantage (difficile : Florence, sa mère et Evangeline la tiennent
+    occupée)'
+  - Retrouvailles avec Béatrice, qui l'a aidée à ses débuts
+  - 'Confrontation avec Lady Whitmore : a-t-elle lieu ?'
+  FLO:
+  - Découvrir la nature exacte du chantage
+  DOM:
+  - Qui sert le second verre à Marcus ?
+  THE:
+  - Découvrir qui s'intéresse à ses archives
+  OPH:
+  - Recueillir des histoires pour son spectacle
+  ISA:
+  - Identifier le cerveau du réseau
+  VIV:
+  - Percer le mystère Prévost (objectif de fiche, toujours actif malgré l'oubli)
+  MAR:
+  - 'Repérer les menaces : Isadora, la photo de Theodore'
+  BEA:
+  - Protéger le secret de la mort de Prévost
+  THO:
+  - Protéger Béatrice ; ses doutes techniques sur Blackstone
+  MON:
+  - Ne jamais rester seule avec Reginald plus de quelques minutes
+  REG:
+  - S'isoler cinq minutes avec Monica
+  BLA:
+  - Qui interroge-t-il avant Marcus ?
+  - Que fait-il de sa découverte au moment du vote ?
+  LIL:
+  - Maintenir les apparences de son mariage
+  - Son mari vient-il ?
+  VAL:
+  - Confronter Seraphina, exiger un aveu public
+flottants:
+- quoi: Ouverture du coffret à antidote
+  contrainte: Entre la lettre et le vote, avant ou après l'heure X ; le vote suppose seulement qu'il soit
+    ouvert. Qui trouve le code, et où est le coffret ?
+- quoi: Débrief de la bibliothèque (Cordelia, Isadora, Theodore)
+  contrainte: Tout à la fin si l'antidote est détruit, une fois clair que Béatrice a bu le poison ; un
+    peu après le vote s'il est donné.
+- quoi: Toast à Seraphina
+  contrainte: Placé avant le chant pour que Béatrice boive avant la lettre ; à confirmer avec les usages.
+meteo: La neige commence à tomber le soir de la réception (ouverture).
+lieux_fixes:
+- Les premiers arrivés se réunissent dans la salle à manger, « bien trop étouffante ».
+- La grande glace du hall vient de Venise.

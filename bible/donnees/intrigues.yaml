@@ -1,0 +1,76 @@
+# Carte des sous-intrigues. Règle des triplets : chaque sous-intrigue doit pouvoir justifier,
+# pour le lecteur, un triplet victime / mobile / coupable. Aucune n'est « mineure ».
+# triplet  solide · a_renforcer
+
+intrigues:
+  - id: partitions
+    titre: Les partitions de Valentini
+    au_coeur: [SER, MAR, VAL]
+    soupconnent: [FLO, EVA, WHI, VIV]
+    narrateurs: [SER, WHI]
+    triplet: solide
+
+  - id: dauphins
+    titre: Les dauphins
+    au_coeur: [COR, THE]
+    soupconnent: [VIV, ISA, OPH]
+    narrateurs: [COR]
+    triplet: solide
+
+  - id: secret_monica
+    titre: Le secret de Monica
+    au_coeur: [MON, REG, MAR]
+    soupconnent: [VIV]
+    narrateurs: [REG]
+    triplet: solide
+    note: Reginald ignore le secret ; Marcus le connaît depuis l'opération de péritonite.
+
+  - id: fortune_blackstone
+    titre: La fortune de Blackstone
+    au_coeur: [BLA, MAR]
+    soupconnent: [MON, ISA, THO, VIV]
+    narrateurs: [ISA, THO]
+    triplet: solide
+
+  - id: reseau_marcus
+    titre: Le réseau de Marcus
+    au_coeur: [MAR, WHI, BLA]
+    soupconnent: [ISA, VIV, COR]
+    narrateurs: [ISA, COR, WHI]
+    triplet: solide
+    note: Lady Whitmore finance sans le savoir ; Blackstone paie sous chantage. Les disparitions de Whitechapel en relèvent.
+
+  - id: couple_eristoff
+    titre: Le couple Eristoff
+    au_coeur: [LIL, ERI]
+    soupconnent: [SER, MON, OPH]
+    narrateurs: [SER]
+    triplet: a_renforcer
+    note: Gagne en tension avec la présence de Lily ; triplet encore à définir.
+
+  - id: chagrin_evangeline
+    titre: Le chagrin d'Evangeline
+    au_coeur: [EVA, WHI]
+    soupconnent: [OPH, MON, LIL]
+    narrateurs: [WHI]
+    triplet: a_renforcer
+
+  - id: mort_prevost
+    titre: La mort de Prévost
+    au_coeur: [BEA, THO, MAR]
+    soupconnent: [VIV, MON, ISA]
+    narrateurs: [BEA, THO]
+    triplet: solide
+
+  - id: photo
+    titre: La photo
+    au_coeur: [THE, MAR]
+    soupconnent: [BEA, THO]
+    narrateurs: [COR]
+    triplet: solide
+    note: Béatrice et Thomas sont compromis sans le savoir ; Cordelia voit Theodore « pour la mauvaise raison ».
+
+risque: >-
+  Le lecteur accumule ce que chaque personnage ne voit que localement. Marcus touche six intrigues
+  sur neuf : après trois parties, il peut sembler désigné d'avance, d'où l'inversion (il est la cible,
+  pas l'empoisonneur).
