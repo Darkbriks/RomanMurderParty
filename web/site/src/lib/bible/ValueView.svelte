@@ -16,6 +16,7 @@
     slug,
     index,
     hide = [],
+    ambiguous = new Set<string>(),
   }: {
     value: BibleValue;
     path: (string | number)[];
@@ -23,6 +24,8 @@
     index: CharacterIndex;
     /** Keys not shown in the entries of this value (fields used elsewhere, e.g. plan coordinates). */
     hide?: readonly string[];
+    /** The ids the file repeats (ambiguousIds): their entries are anchored by path. */
+    ambiguous?: ReadonlySet<string>;
   } = $props();
 
   const isScalar = (v: BibleValue): boolean => v === null || typeof v !== 'object';
@@ -40,7 +43,7 @@
         {#if STATUS_KEYS.has(key) && isScalar(v) && !refOf(v, index)}
           <span class="badge">{v}</span>
         {:else}
-          <Self value={v} path={[...at, key]} {slug} {index} {hide} />
+          <Self value={v} path={[...at, key]} {slug} {index} {hide} {ambiguous} />
         {/if}
       </dd>
     {/each}
@@ -56,22 +59,22 @@
   {t(prefs.lang, value ? 'bibleYes' : 'bibleNo')}
 {:else if Array.isArray(value)}
   {#if value.every(isScalar) && value.every((v) => typeof v !== 'string' || v.length <= 40)}
-    {#each value.filter(shown) as v, i (i)}{#if i > 0}{', '}{/if}<Self value={v} path={[...path, i]} {slug} {index} {hide} />{/each}
+    {#each value.filter(shown) as v, i (i)}{#if i > 0}{', '}{/if}<Self value={v} path={[...path, i]} {slug} {index} {hide} {ambiguous} />{/each}
   {:else if value.every(isScalar)}
     <ul class="items">
-      {#each value.filter(shown) as v, i (i)}<li><Self value={v} path={[...path, i]} {slug} {index} {hide} /></li>{/each}
+      {#each value.filter(shown) as v, i (i)}<li><Self value={v} path={[...path, i]} {slug} {index} {hide} {ambiguous} /></li>{/each}
     </ul>
   {:else}
     <div class="entries">
       {#each value as item, i (i)}
         {#if isRecord(item)}
           {@const key = titleKey(item)}
-          <article class="entry" id={anchorFor(slug, [...path, i], item)}>
-            {#if key}<h3><Self value={item[key]!} path={[...path, i, key]} {slug} {index} {hide} /></h3>{/if}
+          <article class="entry" id={anchorFor(slug, [...path, i], item, ambiguous)}>
+            {#if key}<h3><Self value={item[key]!} path={[...path, i, key]} {slug} {index} {hide} {ambiguous} /></h3>{/if}
             {@render dl(item, [...path, i], key)}
           </article>
         {:else}
-          <div class="entry"><Self value={item} path={[...path, i]} {slug} {index} {hide} /></div>
+          <div class="entry"><Self value={item} path={[...path, i]} {slug} {index} {hide} {ambiguous} /></div>
         {/if}
       {/each}
     </div>

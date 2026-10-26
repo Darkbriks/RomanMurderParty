@@ -2,9 +2,9 @@
   import type { Bible, BibleYamlFile } from '@rmp/model';
   import { t } from '#lib/i18n/index.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
-  import { entryTitle, type CharacterIndex } from './catalog.ts';
+  import { ambiguousIds, entryTitle, type CharacterIndex } from './catalog.ts';
   import CharacterRef from './CharacterRef.svelte';
-  import { mentionsIn, relationsOf, sceneNotesFor, timelineOf } from './character.ts';
+  import { mentionsIn, relationsOf, sceneNotesFor, timelineOf, unplacedOf } from './character.ts';
   import { asChronology, asRelations, type ChronoEvent, type Relation } from './shapes.ts';
   import Valence from './Valence.svelte';
   import ValueView from './ValueView.svelte';
@@ -72,10 +72,11 @@
   {/if}
 
   {#if chronology}
+    {@const unplaced = unplacedOf(chronology, id)}
     <section>
       <h2>{t(prefs.lang, 'bibleEvening')}</h2>
       <ol class="timeline">
-        {#each timelineOf(chronology, id) as { phase, events, all } (phase.id)}
+        {#each timelineOf(chronology, id) as { phase, events, all }, pi (pi)}
           <li>
             <span class="phase" title={phase.summary ?? undefined}>{phase.id} · {phase.title}</span>
             <ul>
@@ -85,6 +86,12 @@
             </ul>
           </li>
         {/each}
+        {#if unplaced.length > 0}
+          <li>
+            <span class="phase">{t(prefs.lang, 'bibleUnplaced')}</span>
+            <ul>{#each unplaced as e (e.path.join('.'))}{@render eventLine(e, false)}{/each}</ul>
+          </li>
+        {/if}
       </ol>
     </section>
   {/if}
@@ -92,10 +99,10 @@
   {#each mentioned as { file, found } (file.slug)}
     <section>
       <h2>{file.title}</h2>
-      {#each found as m (m.anchor)}
+      {#each found as m, mi (mi)}
         <article class="entry">
           <h3><a href="?vue={file.slug}#{encodeURIComponent(m.anchor)}">{entryTitle(m.value, index) ?? file.title}</a></h3>
-          <ValueView value={m.value} path={[m.key]} slug={file.slug} {index} />
+          <ValueView value={m.value} path={[m.key]} slug={file.slug} {index} ambiguous={ambiguousIds(file.data)} />
         </article>
       {/each}
     </section>

@@ -1,5 +1,5 @@
 import type { Bible, BibleValue } from '@rmp/model';
-import { anchorFor, entryTitle, humanizeKey, isRecord, refOf, type CharacterIndex } from './catalog.ts';
+import { ambiguousIds, anchorFor, entryTitle, humanizeKey, isRecord, refOf, type CharacterIndex } from './catalog.ts';
 
 // Search through the whole bible, in the browser. At this size (a few thousand lines) a substring
 // search over prepared documents is instant; no index library needed.
@@ -64,12 +64,13 @@ export function searchDocs(bible: Bible, index: CharacterIndex): SearchDoc[] {
       for (const s of file.sections) doc(s.id, s.heading || file.title, s.text);
       continue;
     }
+    const ambiguous = ambiguousIds(file.data);
     // Every object in a list, at any depth, is a document of its own (the views give it an anchor).
     const walkList = (list: BibleValue[], path: (string | number)[], fallback: string): void => {
       list.forEach((item, i) => {
         if (Array.isArray(item)) return walkValue(item, [...path, i], fallback);
         if (!isRecord(item)) return;
-        doc(anchorFor(file.slug, [...path, i], item), entryTitle(item, index) ?? fallback, textOf(item, index));
+        doc(anchorFor(file.slug, [...path, i], item, ambiguous), entryTitle(item, index) ?? fallback, textOf(item, index));
         for (const [key, v] of Object.entries(item)) walkValue(v, [...path, i, key], humanizeKey(key));
       });
     };

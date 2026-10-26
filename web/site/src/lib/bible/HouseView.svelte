@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { BibleYamlFile } from '@rmp/model';
-  import { anchorFor, type CharacterIndex } from './catalog.ts';
+  import { ambiguousIds, anchorFor, type CharacterIndex } from './catalog.ts';
   import { HOUSE_HIDDEN, type Level } from './shapes.ts';
   import ValueView from './ValueView.svelte';
 
@@ -11,10 +11,11 @@
   const LEVEL_SHOWN_ELSEWHERE = ['cle', 'titre', 'pieces'];
   const ROOM_SHOWN_ELSEWHERE = ['num', 'nom', 'cat'];
   const hidden = [...HOUSE_HIDDEN];
+  const ambiguous = $derived(ambiguousIds(file.data));
 </script>
 
 {#each levels as level (level.path.join('.'))}
-  <section class="level" id={anchorFor(file.slug, level.path, level.raw)}>
+  <section class="level" id={anchorFor(file.slug, level.path, level.raw, ambiguous)}>
     <h2>{level.title}</h2>
     <ValueView
       value={Object.fromEntries(Object.entries(level.raw).filter(([k]) => !LEVEL_SHOWN_ELSEWHERE.includes(k)))}
@@ -22,10 +23,11 @@
       slug={file.slug}
       {index}
       hide={hidden}
+      {ambiguous}
     />
     <div class="rooms">
-      {#each level.rooms as room (room.num)}
-        <article class="room" id={anchorFor(file.slug, room.path, room.raw)}>
+      {#each level.rooms as room (room.path.join('.'))}
+        <article class="room" id={anchorFor(file.slug, room.path, room.raw, ambiguous)}>
           <h3>
             <span class="num">{room.num}</span> · {room.raw.nom}
             {#if typeof room.raw.cat === 'string'}<span class="badge">{room.raw.cat}</span>{/if}
@@ -36,6 +38,7 @@
             slug={file.slug}
             {index}
             hide={hidden}
+            {ambiguous}
           />
         </article>
       {/each}

@@ -1,8 +1,8 @@
 import type { BibleYamlFile } from '@rmp/model';
 import { describe, expect, it } from 'vitest';
 import { characterIndex } from './catalog.ts';
-import { mentions, mentionsIn, noteHeadingMatches, relationsOf, sceneNotesFor, timelineOf } from './character.ts';
-import { asChronology, asRelations } from './shapes.ts';
+import { mentions, mentionsIn, noteHeadingMatches, relationsOf, sceneNotesFor, timelineOf, unplacedOf } from './character.ts';
+import { asChronology, asRelations, type Chronology } from './shapes.ts';
 import { fixtureBible } from './test-fixture.ts';
 
 const bible = fixtureBible();
@@ -60,5 +60,14 @@ describe('mentions', () => {
   it('leaves out what a dedicated section already shows', () => {
     expect(mentionsIn(file('relations'), 'SER')).toEqual([]);
     expect(mentionsIn(file('chronologie'), 'SER')).toEqual([]);
+  });
+});
+
+describe('unplacedOf', () => {
+  it('gives the events of a character whose phase is unknown', () => {
+    const chrono = asChronology(file('chronologie').data)!;
+    const more: Chronology = { ...chrono, events: [...chrono.events, { ...chrono.events[0]!, what: 'Ailleurs.', phases: ['P42'] }] };
+    expect(unplacedOf(more, 'WHI').map((e) => e.what)).toEqual(['Ailleurs.']);
+    expect(unplacedOf(chrono, 'WHI')).toEqual([]);
   });
 });

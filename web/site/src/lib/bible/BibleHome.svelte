@@ -24,11 +24,11 @@
 <h1>{t(prefs.lang, 'bibleTitle')}</h1>
 <BibleSearch {docs} />
 
-{#each groups as group (group.name)}
+{#each groups as group, gi (gi)}
   <section>
     <h2>{group.name}</h2>
     <ul class="people">
-      {#each group.people as c (c.id)}
+      {#each group.people as c, ci (ci)}
         <li><a href="?perso={c.id}">{c.short}</a>{#if c.name !== c.short} <small>{c.name}</small>{/if}</li>
       {/each}
     </ul>

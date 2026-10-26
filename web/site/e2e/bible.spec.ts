@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { anchorFor, characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
+import { ambiguousIds, anchorFor, characterIndex, humanizeKey, isRecord } from '../src/lib/bible/catalog.ts';
 import { relationsOf } from '../src/lib/bible/character.ts';
 import { searchDocs } from '../src/lib/bible/search.ts';
 import { chronologyGrid } from '../src/lib/bible/chronology.ts';
@@ -192,11 +192,82 @@ test('the house shows its rooms level by level, without the plan generator data'
   const room = asHouse(file.data)![0]!.rooms[0]!;
   await consent(page);
   await gotoReady(page, `bible/?vue=${file.slug}`);
-  const shown = target(page, anchorFor(file.slug, room.path, room.raw));
+  const shown = target(page, anchorFor(file.slug, room.path, room.raw, ambiguousIds(file.data)));
   await expect(shown).toContainText(room.num);
   await expect(shown).toContainText(String(room.raw.nom));
   if (file.pdfs.length > 0) await expect(main(page).getByRole('link', { name: 'Plans (PDF)' })).toHaveAttribute('href', new RegExp(`${file.pdfs[0]!.url}$`));
   for (const key of ['rect', 'portes', 'tikz_extra', 'etiquette']) {
     await expect(main(page).getByText(humanizeKey(key), { exact: true })).toHaveCount(0);
   }
+});
+
+// ---- Review fixes ----
+
+test('repeated ids in the data never blank a page', async ({ page }) => {
+  const twisted = structuredClone(bible!);
+  twisted.files.push({
+    kind: 'yaml', path: 'bible/donnees/fiches.yaml', slug: 'fiches', title: 'Fiches', legend: null, pdfs: [],
+    data: { avant: [{ id: index.list[0]!.id, note: 'zxqv un' }], apres: [{ id: index.list[0]!.id, note: 'zxqv deux' }] },
+  });
+  for (const f of twisted.files) {
+    if (f.kind !== 'yaml' || !isRecord(f.data)) continue;
+    const phases = f.data.phases;
+    if (asChronology(f.data) && Array.isArray(phases)) phases.push(structuredClone(phases[0]!));
+    const levels = f.data.niveaux;
+    if (asHouse(f.data) && Array.isArray(levels) && isRecord(levels[0]) && Array.isArray(levels[0].pieces)) {
+      levels[0].pieces.push(structuredClone(levels[0].pieces[0]!));
+    }
+  }
+  await page.route('**/data/bible.json', (route) => route.fulfill({ json: twisted }));
+  await consent(page);
+  const c = index.list[0]!;
+  await gotoReady(page, `bible/?perso=${c.id}`);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(c.name);
+  await gotoReady(page, 'bible/');
+  await page.getByRole('searchbox', { name: 'Chercher dans la bible' }).fill('zxqv');
+  await expect(main(page).locator('a[href*="?vue=fiches#"]')).toHaveCount(2);
+  for (const f of twisted.files) {
+    await gotoReady(page, `bible/?vue=${f.slug}`);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(f.title);
+  }
+});
+
+test('the phase row stays in view at the bottom of the chronology', async ({ page }) => {
+  test.skip(!chronology, 'no chronology');
+  await page.setViewportSize({ width: 375, height: 700 });
+  await consent(page);
+  await gotoReady(page, `bible/?vue=${chronologyFile!.slug}`);
+  // The reader brings the grid into view, then scrolls inside it to its last row.
+  const frame = main(page).locator('table').first().locator('xpath=..');
+  await frame.scrollIntoViewIfNeeded();
+  await frame.evaluate((el) => (el.scrollTop = el.scrollHeight));
+  await expect(main(page).locator('tr[data-row]').last()).toBeInViewport();
+  await expect(main(page).locator('thead th[scope="col"]').first()).toBeInViewport();
+});
+
+test('a matrix cell shows its relation in view, on click and on hover', async ({ page }) => {
+  test.skip(!relations || relations.length < 2, 'not enough relations');
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await consent(page);
+  await gotoReady(page, `bible/?vue=${relationsFile!.slug}`);
+  const [a, b] = relations!;
+  const cell = (r: typeof a) => main(page).locator(`button[data-from="${r!.from}"][data-to="${r!.to}"]`);
+  await cell(a).click();
+  await expect(main(page).locator('[data-relation-detail]')).toBeInViewport();
+  await cell(b).hover();
+  await expect(main(page).locator('[data-relation-detail]')).toContainText(b!.label ?? '');
+  await expect(cell(b)).toHaveAttribute('title', new RegExp(b!.label ?? ''));
+});
+
+test('the search is still there after going back from a result', async ({ page }) => {
+  const word = index.list[0]!.short;
+  await consent(page);
+  await gotoReady(page, 'bible/');
+  const box = page.getByRole('searchbox', { name: 'Chercher dans la bible' });
+  await box.fill(word);
+  await main(page).locator('a[href*="?vue="][href*="#"]').first().click();
+  await expect(page).toHaveURL(/\?vue=/);
+  await page.goBack();
+  await expect(box).toHaveValue(word);
+  await expect(main(page).locator('a[href*="?vue="][href*="#"]').first()).toBeVisible();
 });

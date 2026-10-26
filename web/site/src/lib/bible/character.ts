@@ -1,5 +1,5 @@
 import type { Bible, BibleValue, BibleYamlFile, MarkdownSection } from '@rmp/model';
-import { anchorFor, isRecord, usualForms, type CharacterIndex } from './catalog.ts';
+import { ambiguousIds, anchorFor, isRecord, usualForms, type CharacterIndex } from './catalog.ts';
 import { foldForSearch } from './search.ts';
 import { asChronology, asRelations, CHRONOLOGY_KEYS, RELATIONS_KEYS, type ChronoEvent, type Chronology, type Phase, type Relation } from './shapes.ts';
 
@@ -29,6 +29,12 @@ export function timelineOf(chrono: Chronology, id: string): { phase: Phase; even
   }));
 }
 
+/** The character's events that no phase of the chronology holds (an unknown phase id). */
+export function unplacedOf(chrono: Chronology, id: string): ChronoEvent[] {
+  const known = new Set(chrono.phases.map((p) => p.id));
+  return chrono.events.filter((e) => e.who.includes(id) && !e.phases.some((p) => known.has(p)));
+}
+
 /**
  * The entries of a file's top-level lists that mention the character, except in the characters
  * file and in what the page's dedicated sections already show (relations, the evening).
@@ -40,10 +46,11 @@ export function mentionsIn(file: BibleYamlFile, id: string): { anchor: string; k
     ...(asRelations(file.data) ? RELATIONS_KEYS : []),
   ]);
   const out: { anchor: string; key: string; value: Record<string, BibleValue> }[] = [];
+  const ambiguous = ambiguousIds(file.data);
   for (const [key, list] of Object.entries(file.data)) {
     if (shown.has(key) || !Array.isArray(list)) continue;
     list.forEach((entry, i) => {
-      if (isRecord(entry) && mentions(entry, id)) out.push({ anchor: anchorFor(file.slug, [key, i], entry), key, value: entry });
+      if (isRecord(entry) && mentions(entry, id)) out.push({ anchor: anchorFor(file.slug, [key, i], entry, ambiguous), key, value: entry });
     });
   }
   return out;

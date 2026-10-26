@@ -3,19 +3,22 @@
   import type { BibleYamlFile } from '@rmp/model';
   import { t } from '#lib/i18n/index.ts';
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
-  import { anchorFor, type CharacterIndex } from './catalog.ts';
+  import { ambiguousIds, anchorFor, type CharacterIndex } from './catalog.ts';
   import CharacterRef from './CharacterRef.svelte';
   import { relationsMatrix } from './relations.ts';
   import type { Relation } from './shapes.ts';
   import Valence, { signed, valenceClass } from './Valence.svelte';
 
   // What each character thinks of the others: who thinks in rows, who is thought of in columns.
-  // A cell gives the valence; choosing it (click, tap or focus) shows the relation below the matrix.
+  // A cell gives the valence; hovering, tapping or focusing it shows the relation in a panel that
+  // stays at the bottom of the window.
   let { file, relations, index }: { file: BibleYamlFile; relations: Relation[]; index: CharacterIndex } = $props();
 
   const matrix = $derived(relationsMatrix(relations, index));
-  const anchorOf = (r: Relation): string => anchorFor(file.slug, r.path, r.raw);
+  const anchorOf = (r: Relation): string => anchorFor(file.slug, r.path, r.raw, ambiguousIds(file.data));
   const nameOf = (id: string): string => index.byId.get(id)?.short ?? id;
+  const describe = (r: Relation): string =>
+    `${nameOf(r.from)} → ${nameOf(r.to)} : ${signed(r.valence)}${r.label ? ` ${r.label}` : ''}`;
   let chosen = $state<string | null>(null);
   // A link to a relation (a search result) selects it too.
   const current = $derived.by(() => {
@@ -51,9 +54,11 @@
                   data-to={col}
                   class:current={current === r}
                   class:deduced={r.source === 'deduit'}
-                  aria-label="{nameOf(row)} → {nameOf(col)} : {r.label ?? signed(r.valence)}"
+                  aria-label={describe(r)}
+                  title={describe(r)}
                   onclick={() => (chosen = anchorOf(r))}
                   onfocus={() => (chosen = anchorOf(r))}
+                  onpointerenter={() => (chosen = anchorOf(r))}
                 >
                   {signed(r.valence)}{#if r.ambivalent}*{/if}
                 </button>
@@ -142,8 +147,12 @@
     outline-offset: -2px;
   }
   .detail {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
     min-height: 4.5em;
     margin: 0.8rem 0 2rem;
+    box-shadow: 0 -4px 12px rgb(0 0 0 / 0.08);
     padding: 0.5em 0.8em;
     border: 1px solid var(--rule);
     background: var(--doc-paper);

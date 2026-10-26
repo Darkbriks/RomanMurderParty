@@ -73,4 +73,16 @@ describe('search', () => {
     expect(search(more, 'abysse').map((h) => h.doc.anchor)).toEqual(['extra-a-b-0']);
     expect(search(more, 'gouffre').map((h) => h.doc.anchor)).toEqual(['extra-l-0-0']);
   });
+
+  it('gives unique anchors even when a file repeats ids', () => {
+    const extra = fixtureBible([
+      {
+        kind: 'yaml', path: 'bible/donnees/fiches.yaml', slug: 'fiches', title: 'Fiches', legend: null, pdfs: [],
+        data: { avant: [{ id: 'SER', note: 'un' }], apres: [{ id: 'SER', note: 'deux' }, { id: 'WHI', note: 'trois' }] },
+      },
+    ]);
+    const anchors = searchDocs(extra, characterIndex(extra)).filter((d) => d.slug === 'fiches').map((d) => d.anchor);
+    expect(new Set(anchors).size).toBe(anchors.length);
+    expect(anchors).toContain('fiches-whi');
+  });
 });

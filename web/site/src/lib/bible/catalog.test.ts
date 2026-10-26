@@ -1,5 +1,6 @@
+import type { BibleValue } from '@rmp/model';
 import { describe, expect, it } from 'vitest';
-import { anchorFor, characterIndex, entryTitle, humanizeKey, orderedFiles, refOf, shortName } from './catalog.ts';
+import { ambiguousIds, anchorFor, characterIndex, entryTitle, humanizeKey, orderedFiles, refOf, shortName, titleKey } from './catalog.ts';
 import { fixtureBible } from './test-fixture.ts';
 
 const bible = fixtureBible();
@@ -75,5 +76,27 @@ describe('orderedFiles', () => {
     expect(orderedFiles(extra).map((f) => f.slug)).toEqual([
       'personnages', 'chronologie', 'relations', 'vote', 'maison', 'notes-de-scene', 'alpha', 'zeta',
     ]);
+  });
+});
+
+describe('anchors stay unique when ids repeat', () => {
+  it('lists the id and num values a file repeats, as anchors (so SER and ser collide too)', () => {
+    const data: BibleValue = { a: [{ id: 'SER' }, { id: 'WHI' }], b: [{ id: 'ser' }, { num: 'S1' }, { num: 'S1' }] };
+    expect([...ambiguousIds(data)].sort()).toEqual(['s1', 'ser']);
+  });
+
+  it('falls back to the path for a repeated id', () => {
+    const ambiguous = new Set(['ser']);
+    expect(anchorFor('f', ['a', 0], { id: 'SER' }, ambiguous)).toBe('f-a-0');
+    expect(anchorFor('f', ['a', 1], { id: 'WHI' }, ambiguous)).toBe('f-whi');
+  });
+});
+
+describe('titles never print an object', () => {
+  it('skips title keys that hold objects', () => {
+    expect(titleKey({ titre: { a: 1 }, nom: 'B' })).toBe('nom');
+    expect(entryTitle({ titre: { a: 1 }, nom: 'B' }, index)).toBe('B');
+    expect(entryTitle({ titre: [{ a: 1 }] }, index)).toBeNull();
+    expect(entryTitle({ qui: ['SER', 'WHI'] }, index)).toBe('Seraphina et Lady Whitmore');
   });
 });

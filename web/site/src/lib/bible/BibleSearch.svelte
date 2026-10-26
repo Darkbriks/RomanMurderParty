@@ -3,9 +3,26 @@
   import { prefs } from '#lib/prefs/prefs.svelte.ts';
   import { search, type SearchDoc } from './search.ts';
 
-  // Filters as you type; each result opens its file's view on the entry.
+  // Filters as you type; each result opens its file's view on the entry. The query is kept for the
+  // tab (sessionStorage), so coming back from a result finds it again.
   let { docs }: { docs: SearchDoc[] } = $props();
-  let query = $state('');
+  const KEY = 'rmp.bible.search';
+  let query = $state(
+    (() => {
+      try {
+        return sessionStorage.getItem(KEY) ?? '';
+      } catch {
+        return '';
+      }
+    })(),
+  );
+  $effect(() => {
+    try {
+      sessionStorage.setItem(KEY, query);
+    } catch {
+      // storage unavailable: the query is not kept
+    }
+  });
   const hits = $derived(search(docs, query));
 </script>
 
@@ -17,7 +34,7 @@
       <p class="none">{t(prefs.lang, 'bibleNoResults')}</p>
     {:else}
       <ul>
-        {#each hits as hit (`${hit.doc.slug}#${hit.doc.anchor}`)}
+        {#each hits as hit, i (i)}
           <li>
             <a href="?vue={hit.doc.slug}#{encodeURIComponent(hit.doc.anchor)}">
               <span class="where">{hit.doc.fileTitle} · {hit.doc.title}</span>

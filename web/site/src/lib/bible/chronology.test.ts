@@ -1,7 +1,7 @@
 import type { BibleYamlFile } from '@rmp/model';
 import { describe, expect, it } from 'vitest';
 import { chronologyGrid } from './chronology.ts';
-import { asChronology } from './shapes.ts';
+import { asChronology, type Chronology } from './shapes.ts';
 import { fixtureBible } from './test-fixture.ts';
 
 const bible = fixtureBible();
@@ -28,5 +28,15 @@ describe('chronologyGrid', () => {
 
   it('leaves out characters with no event and no group', () => {
     expect(grid.sections.flatMap((s) => s.rows.map((r) => r.id))).not.toContain('EVA');
+  });
+
+  it('keeps the events it cannot place: unknown phase, nobody', () => {
+    const orphan = (what: string, who: string[], phases: string[]) => ({ ...chrono.events[0]!, what, who, phases });
+    const more: Chronology = {
+      ...chrono,
+      events: [...chrono.events, orphan('Phase inconnue.', ['WHI'], ['P42']), orphan('Personne.', [], ['P0'])],
+    };
+    expect(chronologyGrid(more).orphans.map((e) => e.what)).toEqual(['Phase inconnue.', 'Personne.']);
+    expect(grid.orphans).toEqual([]);
   });
 });

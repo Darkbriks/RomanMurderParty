@@ -99,9 +99,13 @@ export function humanizeKey(key: string): string {
 
 const TITLE_KEYS = ['titre', 'nom', 'sujet', 'qui', 'id'];
 
-/** The key that titles an entry: the first of titre, nom, sujet, qui, id it has. */
-export const titleKey = (obj: Record<string, BibleValue>): string | null =>
-  TITLE_KEYS.find((k) => obj[k] !== undefined && obj[k] !== null && obj[k] !== '') ?? null;
+const isTitle = (v: BibleValue | undefined): boolean =>
+  (typeof v === 'string' && v !== '') ||
+  typeof v === 'number' ||
+  (Array.isArray(v) && v.length > 0 && v.every((x) => typeof x === 'string' || typeof x === 'number'));
+
+/** The key that titles an entry: the first of titre, nom, sujet, qui, id holding text (or a list of it). */
+export const titleKey = (obj: Record<string, BibleValue>): string | null => TITLE_KEYS.find((k) => isTitle(obj[k])) ?? null;
 
 /** The title of an entry: its first title-like key, ids replaced by names. */
 export function entryTitle(obj: Record<string, BibleValue>, index: CharacterIndex): string | null {
@@ -112,10 +116,46 @@ export function entryTitle(obj: Record<string, BibleValue>, index: CharacterInde
   return Array.isArray(value) ? value.map(name).join(' et ') : name(value);
 }
 
-/** The HTML id of an entry or a section: from its `id` or `num` when it has one, else its path. */
-export function anchorFor(slug: string, path: readonly (string | number)[], obj?: Record<string, BibleValue>): string {
+const ownId = (obj: Record<string, BibleValue> | undefined): string | null => {
   const own = obj?.id ?? obj?.num;
-  if (typeof own === 'string' || typeof own === 'number') return `${slug}-${slugify(String(own))}`;
+  return typeof own === 'string' || typeof own === 'number' ? slugify(String(own)) : null;
+};
+
+const NONE: ReadonlySet<string> = new Set();
+const ambiguousCache = new WeakMap<object, ReadonlySet<string>>();
+
+/** The `id`/`num` values (as anchors) that several entries of a file share: those entries are anchored by path. */
+export function ambiguousIds(data: BibleValue): ReadonlySet<string> {
+  if (typeof data !== 'object' || data === null) return NONE;
+  const cached = ambiguousCache.get(data);
+  if (cached) return cached;
+  const counts = new Map<string, number>();
+  const walk = (v: BibleValue, inList: boolean): void => {
+    if (Array.isArray(v)) v.forEach((x) => walk(x, true));
+    else if (isRecord(v)) {
+      const own = inList ? ownId(v) : null;
+      if (own !== null) counts.set(own, (counts.get(own) ?? 0) + 1);
+      Object.values(v).forEach((x) => walk(x, false));
+    }
+  };
+  walk(data, false);
+  const out = new Set([...counts].filter(([, n]) => n > 1).map(([id]) => id));
+  ambiguousCache.set(data, out);
+  return out;
+}
+
+/**
+ * The HTML id of an entry or a section: from its `id` or `num` when it has one that no other entry
+ * of the file shares (`ambiguous`, from ambiguousIds), else from its path, unique by construction.
+ */
+export function anchorFor(
+  slug: string,
+  path: readonly (string | number)[],
+  obj?: Record<string, BibleValue>,
+  ambiguous: ReadonlySet<string> = NONE,
+): string {
+  const own = ownId(obj);
+  if (own !== null && !ambiguous.has(own)) return `${slug}-${own}`;
   return [slug, ...path.map((p) => slugify(String(p)))].join('-');
 }
 

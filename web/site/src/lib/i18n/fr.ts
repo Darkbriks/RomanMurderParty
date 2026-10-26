@@ -72,4 +72,5 @@ export const fr = {
   bibleOthers: 'Autres',
   bibleChooseRelation: 'Choisir une case pour lire la relation.',
   biblePlans: 'Plans (PDF)',
+  bibleUnplaced: 'Hors de la grille',
 } as const;
