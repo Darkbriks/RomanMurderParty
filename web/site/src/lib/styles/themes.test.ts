@@ -22,6 +22,11 @@ describe.each(Object.entries(THEMES))('theme %s', (_name, t) => {
   it('note on docPaper ≥ 4.5', () => expect(contrast(t.note, t.docPaper)).toBeGreaterThanOrEqual(4.5));
   it('frame (borders only) on bg ≥ 3', () => expect(contrast(t.frame, t.bg)).toBeGreaterThanOrEqual(3));
   it('ink on docPaper ≥ 4.5', () => expect(contrast(t.ink, t.docPaper)).toBeGreaterThanOrEqual(4.5));
+  // Relation valences colour the bible's matrix cells, always next to their signed number.
+  it('valence colours on bg ≥ 3', () => {
+    expect(contrast(t.negative, t.bg)).toBeGreaterThanOrEqual(3);
+    expect(contrast(t.positive, t.bg)).toBeGreaterThanOrEqual(3);
+  });
 });
 
 describe('themeCss', () => {

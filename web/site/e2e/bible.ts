@@ -1,7 +1,7 @@
 // Expectations for the bible and the cover's site info, read from the built data (static/data).
 import type { Bible, BibleFile, SiteInfo } from '@rmp/model';
 import { existsSync, readFileSync } from 'node:fs';
-import { asChronology, CHRONOLOGY_KEYS } from '../src/lib/bible/shapes.ts';
+import { asChronology, asRelations, CHRONOLOGY_KEYS, RELATIONS_KEYS } from '../src/lib/bible/shapes.ts';
 import { fileURLToPath } from 'node:url';
 
 const DATA = fileURLToPath(new URL('../static/data/', import.meta.url));
@@ -26,5 +26,6 @@ export const secrets: string[] = (() => {
 export const handledKeys = (file: BibleFile): readonly string[] => {
   if (file.kind !== 'yaml') return [];
   if (asChronology(file.data)) return CHRONOLOGY_KEYS;
+  if (asRelations(file.data)) return RELATIONS_KEYS;
   return [];
 };

@@ -71,4 +71,5 @@ export const en: Record<keyof typeof fr, string> = {
   bibleAmbivalent: 'ambivalent',
   bibleEveryone: 'Everyone',
   bibleOthers: 'Others',
+  bibleChooseRelation: 'Pick a cell to read the relation.',
 };

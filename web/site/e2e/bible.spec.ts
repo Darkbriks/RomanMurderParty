@@ -169,3 +169,17 @@ for (const view of ['chronology', 'relations'] as const) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 }
+
+const relationsFile = bible?.files.find((f) => f.kind === 'yaml' && asRelations(f.data));
+const relations = relationsFile?.kind === 'yaml' ? asRelations(relationsFile.data) : null;
+
+test('relations are a matrix whose cells tell their relation', async ({ page }) => {
+  test.skip(!relations?.length, 'no relations');
+  await consent(page);
+  await gotoReady(page, `bible/?vue=${relationsFile!.slug}`);
+  const cells = main(page).locator('button[data-from][data-to]');
+  await expect(cells).toHaveCount(new Set(relations!.map((r) => `${r.from}>${r.to}`)).size);
+  const first = relations![0]!;
+  await main(page).locator(`button[data-from="${first.from}"][data-to="${first.to}"]`).click();
+  await expect(main(page).locator('[data-relation-detail]')).toContainText(first.label ?? '');
+});

@@ -11,11 +11,12 @@
 
 <script lang="ts">
   // A relation's valence: its signed value on a background from hostility (red) to affection
-  // (green), so that the colour is never the only cue.
+  // (green), so that the colour is never the only cue. The backgrounds are in global.css, shared
+  // with the relations matrix.
   let { value }: { value: number } = $props();
 </script>
 
-<span class="valence v-{valenceClass(value)}">{signed(value)}</span>
+<span class="valence valence-{valenceClass(value)}">{signed(value)}</span>
 
 <style>
   .valence {
@@ -25,20 +26,5 @@
     border-radius: 2px;
     text-align: center;
     font-variant-numeric: tabular-nums;
-  }
-  .v-p2 {
-    background: color-mix(in srgb, var(--valence-pos) 55%, var(--bg));
-  }
-  .v-p1 {
-    background: color-mix(in srgb, var(--valence-pos) 25%, var(--bg));
-  }
-  .v-0 {
-    background: var(--bg-panel);
-  }
-  .v-m1 {
-    background: color-mix(in srgb, var(--valence-neg) 25%, var(--bg));
-  }
-  .v-m2 {
-    background: color-mix(in srgb, var(--valence-neg) 55%, var(--bg));
   }
 </style>

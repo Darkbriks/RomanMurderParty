@@ -70,4 +70,5 @@ export const fr = {
   bibleAmbivalent: 'ambivalent',
   bibleEveryone: 'Tous',
   bibleOthers: 'Autres',
+  bibleChooseRelation: 'Choisir une case pour lire la relation.',
 } as const;
